@@ -1,0 +1,63 @@
+:root {
+    /* Colors */
+    --color-background: #ffffff;
+    --color-sidebar-bg: #f5f5f7;
+    --color-text: #1d1d1f;
+    --color-text-secondary: #86868b;
+    --color-border: #d2d2d7;
+    --color-primary: #0071e3;
+    --color-primary-hover: #0077ed;
+    --color-hover: rgba(0, 0, 0, 0.05);
+    --color-selected: rgba(0, 113, 227, 0.1);
+    --color-danger: #ff3b30;
+    --color-success: #34c759;
+    --color-warning: #ff9500;
+    --color-code-bg: #f6f6f6;
+    
+    /* User and Assistant message colors */
+    --color-user-message-bg: #f5f5f7;
+    --color-assistant-message-bg: #ffffff;
+    
+    /* Fonts */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Borders */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+    
+    /* Transitions */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.3s;
+  }
+  
+  /* Dark mode support for future implementation */
+  @media (prefers-color-scheme: dark) {
+    :root.dark-theme {
+      --color-background: #1d1d1f;
+      --color-sidebar-bg: #2c2c2e;
+      --color-text: #f5f5f7;
+      --color-text-secondary: #a1a1a6;
+      --color-border: #38383a;
+      --color-primary: #0a84ff;
+      --color-primary-hover: #409cff;
+      --color-hover: rgba(255, 255, 255, 0.05);
+      --color-selected: rgba(10, 132, 255, 0.2);
+      --color-code-bg: #2c2c2e;
+      
+      --color-user-message-bg: #2c2c2e;
+      --color-assistant-message-bg: #1d1d1f;
+    }
+  }

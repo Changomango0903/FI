@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import ModelSelector from './ModelSelector';
+import React from 'react';
 import { useModelContext } from '../context/ModelContext';
 
 const Sidebar = ({ closeMobileMenu }) => {
-  const { chats, currentChat, createNewChat, switchChat, deleteChat } = useModelContext();
-  const [showSettings, setShowSettings] = useState(false);
+  const { 
+    chats, 
+    currentChat, 
+    createNewChat, 
+    switchChat, 
+    deleteChat 
+  } = useModelContext();
   
   return (
     <aside className="sidebar">
@@ -56,26 +60,10 @@ const Sidebar = ({ closeMobileMenu }) => {
       </div>
       
       <div className="sidebar-footer">
-        <button 
-          className="settings-button"
-          onClick={() => setShowSettings(!showSettings)}
-        >
-          ⚙️ Settings
-        </button>
-        
-        {showSettings && (
-          <div className="settings-panel">
-            <h3>Model Selection</h3>
-            <ModelSelector />
-            
-            <h3>Future Features</h3>
-            <div className="future-features">
-              <span className="feature-badge">RAG</span>
-              <span className="feature-badge">Agents</span>
-              <span className="feature-badge">Tools</span>
-            </div>
-          </div>
-        )}
+        <div className="sidebar-info">
+          <p className="sidebar-info-text">FI v0.1.0</p>
+          <p className="sidebar-info-text">Your fast intelligence companion</p>
+        </div>
       </div>
     </aside>
   );

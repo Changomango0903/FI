@@ -1,7 +1,9 @@
+// frontend/src/components/ChatWindow.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import Message from './Message';
 import { useModelContext } from '../context/ModelContext';
 import ModelSelector from './ModelSelector';
+import Settings from './Settings';
 
 const ChatWindow = () => {
   const { 
@@ -9,15 +11,15 @@ const ChatWindow = () => {
     selectedModel, 
     addMessage, 
     isGenerating, 
-    stopGeneration 
+    stopGeneration,
+    temperature
   } = useModelContext();
   
   const [showSettings, setShowSettings] = useState(false);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const [temperature, setTemperature] = useState(0.7);
-
+  
   useEffect(() => {
     // Scroll to bottom when messages change
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -45,6 +47,24 @@ const ChatWindow = () => {
     setInput('');
   };
   
+  const handleOpenSettings = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+  
+  // If settings are being shown, display the settings interface
+  if (showSettings) {
+    return (
+      <div className="chat-window">
+        <Settings onClose={handleCloseSettings} />
+      </div>
+    );
+  }
+  
+  // If no chat is selected, show welcome screen
   if (!currentChat) {
     return (
       <div className="empty-chat">
@@ -62,6 +82,7 @@ const ChatWindow = () => {
     );
   }
   
+  // Normal chat interface
   return (
     <div className="chat-window">
       <div className="chat-header">
@@ -94,87 +115,68 @@ const ChatWindow = () => {
       
       <form className="input-form" onSubmit={handleSubmit}>
         <div className="input-container">
-            <textarea
+          <textarea
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Send a message..."
             onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
+              if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 handleSubmit(e);
-                }
+              }
             }}
             disabled={isGenerating || !selectedModel}
-            />
-            {isGenerating ? (
+          />
+          {isGenerating ? (
             <button 
-                type="button" 
-                className="stop-button" 
-                onClick={stopGeneration}
-                aria-label="Stop generation"
+              type="button" 
+              className="stop-button" 
+              onClick={stopGeneration}
+              aria-label="Stop generation"
             >
-                ■
+              ■
             </button>
-            ) : (
+          ) : (
             <button 
-                type="submit" 
-                className="send-button" 
-                disabled={!input.trim() || !selectedModel}
-                aria-label="Send message"
+              type="submit" 
+              className="send-button" 
+              disabled={!input.trim() || !selectedModel}
+              aria-label="Send message"
             >
-                ↑
+              ↑
             </button>
-            )}
+          )}
         </div>
         
-        {/* New model info bar */}
+        {/* Model info bar */}
         <div className="model-info-bar">
-            <div className="model-info-item">
+          <div className="model-info-item">
             <span className="info-label">Model:</span>
             <span className="model-badge">{selectedModel?.name || 'None'}</span>
-            </div>
-            <div className="model-info-item">
+          </div>
+          <div className="model-info-item">
             <span className="info-label">Temperature:</span>
             <span className="info-value">{temperature}</span>
-            </div>
-            <div className="model-info-item">
+          </div>
+          <div className="model-info-item">
             <span className="info-label">Provider:</span>
             <span className="info-value">{selectedModel?.provider || 'None'}</span>
-            </div>
-            <button 
-              className="model-switch-link"
-              onClick={() => {
-                console.log("Switch Model clicked!");
-                setShowSettings(true);
-              }}
-            >
-              Switch Model
+          </div>
+          <button 
+            className="model-switch-link"
+            onClick={handleOpenSettings}
+          >
+            Settings
           </button>
         </div>
         
         {!selectedModel && (
-            <div className="no-model-warning">
+          <div className="no-model-warning">
             Please select a model from the sidebar to start chatting.
-            </div>
-        )}
-        {showSettings && (
-        <div className="settings-overlay">
-          <div className="settings-panel">
-            <div className="settings-header">
-              <h3>Select Model</h3>
-              <button 
-                className="close-button"
-                onClick={() => setShowSettings(false)}
-              >
-                ✕
-              </button>
-            </div>
-            <ModelSelector />
           </div>
-        </div>
-      )}
-        </form>
+        )}
+      </form>
     </div>
   );
 };

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Circular background -->
+  <circle cx="100" cy="100" r="95" fill="#0071e3" />
+  
+  <!-- Inner circle for depth -->
+  <circle cx="100" cy="100" r="85" fill="#1982e8" />
+  
+  <!-- User chat bubble -->
+  <path d="M45 70 C45 60, 55 50, 65 50 L105 50 C115 50, 125 60, 125 70 L125 90 C125 100, 115 110, 105 110 L75 110 L60 130 L60 110 L65 110 C55 110, 45 100, 45 90 Z" 
+        fill="white" />
+  
+  <!-- Assistant chat bubble -->
+  <path d="M155 130 C155 140, 145 150, 135 150 L95 150 C85 150, 75 140, 75 130 L75 110 C75 100, 85 90, 95 90 L125 90 L140 70 L140 90 L135 90 C145 90, 155 100, 155 110 Z" 
+        fill="white" opacity="0.8" />
+        
+  <!-- "FI" text in the user bubble -->
+  <text x="75" y="88" font-family="Arial, sans-serif" font-weight="bold" font-size="32" fill="#0071e3">FI</text>
+</svg>

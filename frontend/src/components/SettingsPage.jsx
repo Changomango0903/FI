@@ -97,13 +97,18 @@ const SettingsPage = ({ onClose }) => {
       
       <div className="settings-content">
         <section className="settings-section model-selection-section">
-          <h3>Model Selection</h3>
+          <div className="settings-section-header">
+            <h3>Model Selection</h3>
+            <p className="section-description">Choose the AI model for your conversations</p>
+          </div>
+          
           <ModelSelector />
         </section>
         
         <section className="settings-section generation-settings-section">
           <div className="settings-section-header">
             <h3>Generation Settings</h3>
+            <p className="section-description">Control how the AI generates responses</p>
           </div>
           
           <div className="settings-card">
@@ -141,7 +146,7 @@ const SettingsPage = ({ onClose }) => {
               
               {/* Notification box below slider */}
               {showFeedback && (
-                <div className={`temperature-notification ${feedbackMessage.includes('Failed') || feedbackMessage.includes('Error') ? 'error' : ''}`} aria-live="polite">
+                <div className={`temperature-notification ${feedbackMessage.includes('Failed') || feedbackMessage.includes('Error') ? 'error' : 'success'}`} aria-live="polite">
                   <span className="notification-icon">{feedbackMessage.includes('Failed') || feedbackMessage.includes('Error') ? '!' : '✓'}</span>
                   <span className="notification-text">{feedbackMessage}</span>
                 </div>
@@ -151,13 +156,19 @@ const SettingsPage = ({ onClose }) => {
         </section>
         
         <section className="settings-section future-features-section">
-          <h3>Coming Soon</h3>
-          <div className="future-features-refined">
-            <span className="feature-badge">RAG</span>
-            <span className="feature-badge">Agents</span>
-            <span className="feature-badge">Tools</span>
-            <span className="feature-badge">File Upload</span>
-            <span className="feature-badge">Dark Mode</span>
+          <div className="settings-section-header">
+            <h3>Coming Soon</h3>
+            <p className="section-description">Features planned for future releases</p>
+          </div>
+          
+          <div className="settings-card">
+            <div className="future-features-refined">
+              <span className="feature-badge">RAG</span>
+              <span className="feature-badge">Agents</span>
+              <span className="feature-badge">Tools</span>
+              <span className="feature-badge">File Upload</span>
+              <span className="feature-badge">Dark Mode</span>
+            </div>
           </div>
         </section>
       </div>

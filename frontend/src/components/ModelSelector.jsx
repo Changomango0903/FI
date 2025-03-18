@@ -42,8 +42,10 @@ const ModelSelector = () => {
   return (
     <div className="model-selector">
       {Object.entries(modelsByProvider).map(([provider, models]) => (
-        <div key={provider} className="provider-group">
-          <h4>{provider.charAt(0).toUpperCase() + provider.slice(1)}</h4>
+        <div key={provider} className="provider-group settings-card">
+          <div className="provider-header">
+            <h4>{provider.charAt(0).toUpperCase() + provider.slice(1)} Models</h4>
+          </div>
           <div className="model-options">
             {models.map(model => (
               <div 
@@ -51,9 +53,14 @@ const ModelSelector = () => {
                 className={`model-option ${selectedModel?.id === model.id && selectedModel?.provider === provider ? 'selected' : ''}`}
                 onClick={() => setSelectedModel({ ...model, provider })}
               >
-                <div className="model-name">{model.name}</div>
-                {model.description && (
-                  <div className="model-description">{model.description}</div>
+                <div className="model-info">
+                  <div className="model-name">{model.name}</div>
+                  {model.description && (
+                    <div className="model-description">{model.description}</div>
+                  )}
+                </div>
+                {selectedModel?.id === model.id && selectedModel?.provider === provider && (
+                  <div className="model-selected-indicator">✓</div>
                 )}
               </div>
             ))}

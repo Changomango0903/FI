@@ -53,6 +53,9 @@ class ChatService:
     ) -> str:
         """Generate a chat response using the specified model"""
         try:
+            # Log the temperature being used
+            logger.info(f"USING TEMPERATURE: {temperature} for {provider}/{model_id}")
+            
             # Add system prompt if provided
             if system_prompt:
                 messages = [{"role": "system", "content": system_prompt}] + messages
@@ -84,6 +87,9 @@ class ChatService:
     ) -> AsyncGenerator[str, None]:
         """Stream a chat response using the specified model"""
         try:
+            # Log the temperature being used for streaming
+            logger.info(f"USING TEMPERATURE FOR STREAMING: {temperature} for {provider}/{model_id}")
+            
             # Add system prompt if provided
             if system_prompt:
                 messages = [{"role": "system", "content": system_prompt}] + messages
@@ -105,86 +111,3 @@ class ChatService:
         except Exception as e:
             logger.error(f"Error in streaming response: {str(e)}")
             raise
-    
-    async def get_chat_history(self, chat_id: str) -> List[Dict[str, str]]:
-        """
-        Retrieve chat history for a specific chat ID
-        This is a placeholder for future database integration
-        """
-        # In a real implementation, this would fetch from a database
-        # For now, we'll return an empty list as we're using client-side storage
-        return []
-    
-    async def save_chat_message(self, chat_id: str, message: Dict[str, str]) -> bool:
-        """
-        Save a chat message to the database
-        This is a placeholder for future database integration
-        """
-        # In a real implementation, this would save to a database
-        # For now, we'll just return True as we're using client-side storage
-        return True
-    
-    async def create_embeddings(self, text: str, provider: str = "huggingface", model_id: str = None) -> List[float]:
-        """
-        Create embeddings for text - useful for future RAG capabilities
-        This is a placeholder for future functionality
-        """
-        # This is a stub for future RAG implementation
-        if provider == "huggingface":
-            # In real implementation, this would use a proper embedding model
-            return await self.hf_service.create_embeddings(text, model_id)
-        else:
-            raise ValueError(f"Embedding generation not supported for provider: {provider}")
-    
-    async def count_tokens(self, text: str, provider: str, model_id: str) -> int:
-        """
-        Count tokens in text for a specific model
-        """
-        try:
-            if provider == "huggingface":
-                return await self.hf_service.count_tokens(text, model_id)
-            elif provider == "ollama":
-                # Most Ollama models use tiktoken-compatible tokenizers
-                # For simplicity, estimate token count as words/0.75
-                return int(len(text.split()) / 0.75)
-            else:
-                raise ValueError(f"Token counting not supported for provider: {provider}")
-        except Exception as e:
-            logger.error(f"Error counting tokens: {str(e)}")
-            # Fallback to a rough estimation
-            return int(len(text.split()) / 0.75)
-                
-    async def get_model_parameters(self, provider: str, model_id: str) -> Dict[str, Any]:
-        """
-        Get available parameters for a specific model
-        """
-        try:
-            if provider == "huggingface":
-                model_info = await self.hf_service.get_model_info(model_id)
-                return model_info.parameters or {}
-            elif provider == "ollama":
-                model_info = await self.ollama_service.get_model_info(model_id)
-                return model_info.parameters or {}
-            else:
-                raise ValueError(f"Unsupported provider: {provider}")
-        except Exception as e:
-            logger.error(f"Error getting model parameters: {str(e)}")
-            return {}
-    
-    def convert_to_markdown(self, text: str) -> str:
-        """
-        Convert certain text patterns to markdown for better display
-        """
-        # This is a simple implementation - could be enhanced
-        import re
-        
-        # Convert code blocks
-        text = re.sub(r'```(\w+)?\n(.*?)\n```', r'```\1\n\2\n```', text, flags=re.DOTALL)
-        
-        # Convert inline code
-        text = re.sub(r'`([^`]+)`', r'`\1`', text)
-        
-        # Convert bullet points
-        text = re.sub(r'^- ', r'- ', text, flags=re.MULTILINE)
-        
-        return text

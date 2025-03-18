@@ -82,3 +82,11 @@ export async function streamChatMessage(payload, callbacks) {
     };
   });
 }
+
+// New function to update temperature setting
+export async function updateTemperature(temperature) {
+  return apiRequest('/settings/temperature', {
+    method: 'POST',
+    body: JSON.stringify({ temperature })
+  });
+}

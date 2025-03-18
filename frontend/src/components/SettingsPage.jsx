@@ -5,9 +5,11 @@ import ModelSelector from './ModelSelector';
 const SettingsPage = ({ onClose }) => {
   const { temperature, setTemperature } = useModelContext();
   const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
   const [sliderValue, setSliderValue] = useState(temperature);
   const timerRef = useRef(null);
   const lastValueRef = useRef(temperature);
+  const updatePendingRef = useRef(false);
   
   // Cleanup timer on unmount
   useEffect(() => {
@@ -18,31 +20,51 @@ const SettingsPage = ({ onClose }) => {
     };
   }, []);
   
-  // Update slider value during dragging without showing notification
+  // Update slider value during dragging without pushing to backend
   const handleSliderChange = (value) => {
     setSliderValue(value);
-    setTemperature(value); // Update in real-time for responsive UX
   };
   
-  // Show feedback message only when slider is released and value has changed
-  const handleSliderRelease = () => {
-    // Only show notification if the value actually changed
-    if (lastValueRef.current !== sliderValue) {
+  // Update backend when slider is released and value has changed
+  const handleSliderRelease = async () => {
+    // Only update if the value actually changed and no update is in progress
+    if (lastValueRef.current !== sliderValue && !updatePendingRef.current) {
+      // Set update pending flag to prevent multiple simultaneous updates
+      updatePendingRef.current = true;
+      
       // Clear any existing timer
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
       
-      // Show the notification
-      setShowFeedback(true);
-      
-      // Set timer to hide notification after 2.5 seconds
-      timerRef.current = setTimeout(() => {
-        setShowFeedback(false);
-      }, 2500);
-      
-      // Update the last value reference
-      lastValueRef.current = sliderValue;
+      try {
+        // Update temperature on backend
+        const success = await setTemperature(sliderValue);
+        
+        // Show appropriate feedback
+        if (success) {
+          setFeedbackMessage('Temperature has been updated');
+          setShowFeedback(true);
+        } else {
+          setFeedbackMessage('Failed to update temperature');
+          setShowFeedback(true);
+        }
+        
+        // Set timer to hide notification after 2.5 seconds
+        timerRef.current = setTimeout(() => {
+          setShowFeedback(false);
+        }, 2500);
+        
+        // Update the last value reference
+        lastValueRef.current = sliderValue;
+      } catch (error) {
+        console.error('Error updating temperature:', error);
+        setFeedbackMessage('Error updating temperature');
+        setShowFeedback(true);
+      } finally {
+        // Reset pending flag
+        updatePendingRef.current = false;
+      }
     }
   };
   
@@ -117,11 +139,11 @@ const SettingsPage = ({ onClose }) => {
                 {getTemperatureDescription(sliderValue)}
               </p>
               
-              {/* Blue notification box below slider */}
+              {/* Notification box below slider */}
               {showFeedback && (
-                <div className="temperature-notification" aria-live="polite">
-                  <span className="notification-icon">✓</span>
-                  <span className="notification-text">Temperature has been updated</span>
+                <div className={`temperature-notification ${feedbackMessage.includes('Failed') || feedbackMessage.includes('Error') ? 'error' : ''}`} aria-live="polite">
+                  <span className="notification-icon">{feedbackMessage.includes('Failed') || feedbackMessage.includes('Error') ? '!' : '✓'}</span>
+                  <span className="notification-text">{feedbackMessage}</span>
                 </div>
               )}
             </div>

@@ -5,198 +5,209 @@
 
 /* Sidebar container */
 .sidebar-container {
-    width: 280px;
-    flex-shrink: 0;
-    background-color: var(--color-sidebar-bg);
-    border-right: 1px solid var(--color-border);
-    transition: transform var(--transition-medium) ease;
-    z-index: 10;
+  width: 280px;
+  flex-shrink: 0;
+  background-color: var(--color-sidebar-bg);
+  border-right: 1px solid var(--color-border);
+  transition: transform var(--transition-medium) ease;
+  z-index: 10;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-md);
+}
+
+/* Sidebar header */
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+}
+
+.logo h1 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 0;
+}
+
+/* New chat button */
+.new-chat-button {
+  width: 100%;
+  padding: var(--spacing-md);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.new-chat-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Chat list */
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md) 0;
+}
+
+.chat-list h2 {
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.chat-list ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.chat-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-xs);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.chat-list li:hover {
+  background-color: var(--color-hover);
+}
+
+.chat-list li.active {
+  background-color: var(--color-selected);
+}
+
+.chat-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Delete chat button */
+.delete-chat {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.chat-list li:hover .delete-chat {
+  opacity: 1;
+}
+
+.delete-chat:hover {
+  color: var(--color-danger);
+}
+
+/* No chats state */
+.no-chats {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.settings-button {
+  width: 100%;
+  padding: var(--spacing-md);
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.settings-button:hover {
+  background-color: var(--color-hover);
+}
+
+/* Settings panel */
+.settings-panel {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.settings-panel h3 {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Future features */
+.future-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.feature-badge {
+  background-color: var(--color-sidebar-bg);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-pill);
+  font-size: var(--font-size-xs);
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
   }
-  
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: var(--spacing-md);
+
+  .sidebar-container.open {
+    transform: translateX(0);
   }
-  
-  /* Sidebar header */
-  .sidebar-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--color-border);
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-  
-  .logo img {
-    width: 32px;
-    height: 32px;
-  }
-  
-  .logo h1 {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: 0;
-  }
-  
-  /* New chat button */
-  .new-chat-button {
-    width: 100%;
-    padding: var(--spacing-md);
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .new-chat-button:hover {
-    background-color: var(--color-primary-hover);
-  }
-  
-  /* Chat list */
-  .chat-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: var(--spacing-md) 0;
-  }
-  
-  .chat-list h2 {
-    font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .chat-list ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
-  }
-  
-  .chat-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    margin-bottom: var(--spacing-xs);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .chat-list li:hover {
-    background-color: var(--color-hover);
-  }
-  
-  .chat-list li.active {
-    background-color: var(--color-selected);
-  }
-  
-  .chat-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* Delete chat button */
-  .delete-chat {
-    background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity var(--transition-fast), color var(--transition-fast);
-  }
-  
-  .chat-list li:hover .delete-chat {
-    opacity: 1;
-  }
-  
-  .delete-chat:hover {
-    color: var(--color-danger);
-  }
-  
-  /* No chats state */
-  .no-chats {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    text-align: center;
-    padding: var(--spacing-md);
-  }
-  
-  /* Sidebar footer */
-  .sidebar-footer {
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--color-border);
-  }
-  
-  .settings-button {
-    width: 100%;
-    padding: var(--spacing-md);
-    background-color: transparent;
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .settings-button:hover {
-    background-color: var(--color-hover);
-  }
-  
-  /* Settings panel */
-  .settings-panel {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: white;
-    border-radius: var(--border-radius-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
-  }
-  
-  .settings-panel h3 {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  /* Future features */
-  .future-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-  }
-  
-  .feature-badge {
-    background-color: var(--color-sidebar-bg);
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--border-radius-pill);
-    font-size: var(--font-size-xs);
-  }
-  
-  /* Responsive behavior */
-  @media (max-width: 768px) {
-    .sidebar-container {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      transform: translateX(-100%);
-    }
-  
-    .sidebar-container.open {
-      transform: translateX(0);
-    }
-  }
+}
+
+/* Active state for settings button */
+.settings-button.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.settings-button.active:hover {
+  background-color: var(--color-primary-hover);
+}

@@ -26,12 +26,9 @@ function App() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   
-  const handleOpenSettings = () => {
-    setShowSettings(true);
-  };
-  
-  const handleCloseSettings = () => {
-    setShowSettings(false);
+  // Toggle settings visibility - can now open OR close settings
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
   };
   
   return (
@@ -40,7 +37,8 @@ function App() {
         <div className={`sidebar-container ${isMobileMenuOpen ? 'open' : ''}`}>
           <Sidebar 
             closeMobileMenu={() => setIsMobileMenuOpen(false)} 
-            onOpenSettings={handleOpenSettings}
+            onToggleSettings={toggleSettings}
+            showSettings={showSettings}
           />
         </div>
         
@@ -56,7 +54,7 @@ function App() {
           )}
           
           {showSettings ? (
-            <SettingsPage onClose={handleCloseSettings} />
+            <SettingsPage onClose={toggleSettings} />
           ) : (
             <ChatWindow />
           )}

@@ -163,12 +163,6 @@ const ChatWindow = () => {
             <span className="info-label">Provider:</span>
             <span className="info-value">{selectedModel?.provider || 'None'}</span>
           </div>
-          <button 
-            className="model-switch-link"
-            onClick={handleOpenSettings}
-          >
-            Settings
-          </button>
         </div>
         
         {!selectedModel && (

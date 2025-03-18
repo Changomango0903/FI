@@ -1,7 +1,7 @@
 import React from 'react';
 import { useModelContext } from '../context/ModelContext';
 
-const Sidebar = ({ closeMobileMenu, onOpenSettings }) => {
+const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
   const { chats, currentChat, createNewChat, switchChat, deleteChat } = useModelContext();
   
   return (
@@ -55,10 +55,10 @@ const Sidebar = ({ closeMobileMenu, onOpenSettings }) => {
       
       <div className="sidebar-footer">
         <button 
-          className="settings-button"
-          onClick={onOpenSettings}
+          className={`settings-button ${showSettings ? 'active' : ''}`}
+          onClick={onToggleSettings}
         >
-          ⚙️ Settings
+          {showSettings ? '← Back to Chat' : '⚙️ Settings'}
         </button>
       </div>
     </aside>

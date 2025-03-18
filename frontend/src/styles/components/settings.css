@@ -418,3 +418,54 @@
 .settings-section:not(:hover) {
   opacity: 0.98;
 }
+
+
+/* Theme toggle pill style in settings */
+.theme-toggle-pill {
+    display: flex;
+    background-color: var(--color-sidebar-bg);
+    border-radius: var(--border-radius-pill);
+    overflow: hidden;
+    width: 160px;
+    height: 36px;
+    padding: 2px;
+  }
+  
+  .theme-option {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 0 12px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    border-radius: var(--border-radius-pill);
+    transition: all var(--transition-fast);
+  }
+  
+  .theme-option.active {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .theme-option:not(.active):hover {
+    background-color: var(--color-hover);
+    color: var(--color-text);
+  }
+  
+  /* Completed feature badge */
+  .feature-badge.completed {
+    background-color: rgba(52, 199, 89, 0.2);
+    color: var(--color-success);
+  }
+  
+  /* Dark mode styling for theme toggle */
+  .dark-theme .theme-toggle-pill {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Dark mode specific adjustments for the theme toggle */
+  .dark-theme .appearance-section .setting-description-refined {
+    opacity: 0.8;
+  }

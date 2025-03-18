@@ -1,0 +1,61 @@
+/* Base styles for theme toggle elements */
+.theme-toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-sidebar-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .theme-toggle-button:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.05);
+  }
+  
+  .theme-toggle-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Position for the theme toggle in different containers */
+  .sidebar-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar-controls .settings-button {
+    flex: 1;
+  }
+  
+  .theme-indicator {
+    font-size: var(--font-size-xs);
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+  }
+  
+  /* Dark mode specific styles for the theme toggle */
+  .dark-theme .theme-toggle-button {
+    background-color: var(--color-sidebar-bg);
+    border-color: #3a3a3c;
+    color: var(--color-text);
+  }
+  
+  .dark-theme .theme-toggle-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Animation for the theme toggle icon */
+  .theme-toggle-button svg {
+    transition: transform var(--transition-medium);
+  }
+  
+  .theme-toggle-button:hover svg {
+    transform: rotate(15deg);
+  }

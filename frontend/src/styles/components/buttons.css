@@ -186,3 +186,91 @@
     display: block;
     width: 100%;
   }
+
+  /* Theme toggle button */
+.theme-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-sidebar-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--color-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle-button:active {
+  transform: scale(0.95);
+}
+
+/* Sidebar controls layout */
+.sidebar-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar-controls .settings-button {
+  flex: 1;
+}
+
+/* Theme indicator text */
+.theme-indicator {
+  font-size: var(--font-size-xs);
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-top: 8px;
+}
+
+/* Smooth theme transition */
+body, button, input, textarea, .app, .sidebar, .main-content, 
+.message, .sidebar-container, .chat-window, .settings-card,
+.model-option, .provider-group, .chat-header, .input-form,
+.message-content, .code-block, pre, code {
+  transition: background-color var(--transition-medium),
+              color var(--transition-medium),
+              border-color var(--transition-medium),
+              box-shadow var(--transition-medium);
+}
+
+/* Dark mode overrides for specific components */
+.dark-theme .settings-card,
+.dark-theme .provider-group {
+  background-color: var(--color-card-bg);
+}
+
+.dark-theme .model-option {
+  background-color: var(--color-sidebar-bg);
+}
+
+.dark-theme .chat-header,
+.dark-theme .input-form {
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+.dark-theme .menu-toggle {
+  background-color: var(--color-sidebar-bg);
+  color: var(--color-text);
+}
+
+.dark-theme code {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .temperature-slider-refined::-webkit-slider-thumb {
+  border-color: var(--color-primary);
+  background-color: var(--color-card-bg);
+}
+
+.dark-theme .temperature-slider-refined::-moz-range-thumb {
+  border-color: var(--color-primary);
+  background-color: var(--color-card-bg);
+}

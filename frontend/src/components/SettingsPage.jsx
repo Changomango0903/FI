@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useModelContext } from '../context/ModelContext';
+import { useTheme } from '../context/ThemeContext';
 import ModelSelector from './ModelSelector';
 
 const SettingsPage = ({ onClose }) => {
   const { temperature, setTemperature } = useModelContext();
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [sliderValue, setSliderValue] = useState(temperature);
@@ -155,6 +157,39 @@ const SettingsPage = ({ onClose }) => {
           </div>
         </section>
         
+        <section className="settings-section appearance-section">
+          <div className="settings-section-header">
+            <h3>Appearance</h3>
+            <p className="section-description">Customize the look and feel of the interface</p>
+          </div>
+          
+          <div className="settings-card">
+            <div className="setting-item-refined">
+              <div className="setting-header">
+                <div className="setting-label">Theme</div>
+                <div className="theme-toggle-pill">
+                  <button 
+                    className={`theme-option ${!isDarkMode ? 'active' : ''}`}
+                    onClick={() => isDarkMode && toggleDarkMode()}
+                  >
+                    Light
+                  </button>
+                  <button 
+                    className={`theme-option ${isDarkMode ? 'active' : ''}`}
+                    onClick={() => !isDarkMode && toggleDarkMode()}
+                  >
+                    Dark
+                  </button>
+                </div>
+              </div>
+              
+              <p className="setting-description-refined">
+                Choose between light and dark interface theme
+              </p>
+            </div>
+          </div>
+        </section>
+        
         <section className="settings-section future-features-section">
           <div className="settings-section-header">
             <h3>Coming Soon</h3>
@@ -167,7 +202,7 @@ const SettingsPage = ({ onClose }) => {
               <span className="feature-badge">Agents</span>
               <span className="feature-badge">Tools</span>
               <span className="feature-badge">File Upload</span>
-              <span className="feature-badge">Dark Mode</span>
+              <span className="feature-badge completed">Dark Mode</span>
             </div>
           </div>
         </section>

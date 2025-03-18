@@ -1,8 +1,11 @@
 import React from 'react';
 import { useModelContext } from '../context/ModelContext';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 
 const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
   const { chats, currentChat, createNewChat, switchChat, deleteChat } = useModelContext();
+  const { isDarkMode } = useTheme();
   
   return (
     <aside className="sidebar">
@@ -54,12 +57,18 @@ const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
       </div>
       
       <div className="sidebar-footer">
-        <button 
-          className={`settings-button ${showSettings ? 'active' : ''}`}
-          onClick={onToggleSettings}
-        >
-          {showSettings ? '← Back to Chat' : '⚙️ Settings'}
-        </button>
+        <div className="sidebar-controls">
+          <ThemeToggle />
+          <button 
+            className={`settings-button ${showSettings ? 'active' : ''}`}
+            onClick={onToggleSettings}
+          >
+            {showSettings ? '← Back to Chat' : '⚙️ Settings'}
+          </button>
+        </div>
+        <div className="theme-indicator">
+          {isDarkMode ? 'Dark Mode' : 'Light Mode'}
+        </div>
       </div>
     </aside>
   );

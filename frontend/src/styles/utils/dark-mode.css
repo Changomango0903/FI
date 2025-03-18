@@ -1,0 +1,98 @@
+/* Additional styling for dark mode code blocks */
+.dark-theme .markdown-content pre {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+  }
+  
+  .dark-theme .markdown-content code {
+    color: #e83e8c;
+  }
+  
+  .dark-theme .markdown-content :not(pre) > code {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Adjust link colors in dark mode */
+  .dark-theme a {
+    color: #409cff;
+  }
+  
+  /* Message styling in dark mode */
+  .dark-theme .message.user .message-content {
+    background-color: var(--color-user-message-bg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark-theme .message.assistant .message-content {
+    background-color: var(--color-assistant-message-bg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-color: #3a3a3c;
+  }
+  
+  .dark-theme .message-avatar {
+    background-color: #3a3a3c;
+  }
+  
+  /* Input area styling in dark mode */
+  .dark-theme .input-form textarea {
+    background-color: #2c2c2e;
+    border-color: #3a3a3c;
+    color: var(--color-text);
+  }
+  
+  .dark-theme .input-form textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.25);
+  }
+  
+  /* Empty states in dark mode */
+  .dark-theme .empty-messages,
+  .dark-theme .no-chats {
+    color: #a1a1a6;
+  }
+  
+  /* Sidebar specific dark mode adjustments */
+  .dark-theme .chat-list li:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .dark-theme .chat-list li.active {
+    background-color: rgba(10, 132, 255, 0.2);
+  }
+  
+  /* Settings page specific dark mode adjustments */
+  .dark-theme .settings-header {
+    background-color: rgba(40, 40, 40, 0.95);
+    border-bottom-color: #3a3a3c;
+  }
+  
+  .dark-theme .settings-section-header h3 {
+    color: var(--color-text);
+  }
+  
+  /* Fix any conflicting styles with highlight.js dark themes */
+  .dark-theme .hljs {
+    background-color: transparent;
+  }
+  
+  /* Scrollbar for dark mode */
+  .dark-theme ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .dark-theme ::-webkit-scrollbar-thumb {
+    background-color: #3a3a3c;
+  }
+  
+  .dark-theme ::-webkit-scrollbar-thumb:hover {
+    background-color: #48484a;
+  }
+  
+  /* Dark mode for notifications */
+  .dark-theme .temperature-notification.success {
+    background-color: rgba(10, 132, 255, 0.15);
+  }
+  
+  .dark-theme .temperature-notification.error {
+    background-color: rgba(255, 59, 48, 0.15);
+  }

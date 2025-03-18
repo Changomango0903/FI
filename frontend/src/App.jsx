@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ModelProvider } from './context/ModelContext';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
-import './styles/App.css';
+import SettingsPage from './components/SettingsPage';
+import './styles/index.css';
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showSettings, setShowSettings] = useState(false);
   
   useEffect(() => {
     const handleResize = () => {
@@ -24,11 +26,22 @@ function App() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   
+  const handleOpenSettings = () => {
+    setShowSettings(true);
+  };
+  
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+  
   return (
     <ModelProvider>
       <div className="app">
         <div className={`sidebar-container ${isMobileMenuOpen ? 'open' : ''}`}>
-          <Sidebar closeMobileMenu={() => setIsMobileMenuOpen(false)} />
+          <Sidebar 
+            closeMobileMenu={() => setIsMobileMenuOpen(false)} 
+            onOpenSettings={handleOpenSettings}
+          />
         </div>
         
         <div className="main-content">
@@ -41,7 +54,12 @@ function App() {
               {isMobileMenuOpen ? '✕' : '☰'}
             </button>
           )}
-          <ChatWindow />
+          
+          {showSettings ? (
+            <SettingsPage onClose={handleCloseSettings} />
+          ) : (
+            <ChatWindow />
+          )}
         </div>
       </div>
     </ModelProvider>

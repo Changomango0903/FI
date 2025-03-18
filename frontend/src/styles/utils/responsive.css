@@ -1,0 +1,140 @@
+/* 
+ * utils/responsive.css
+ * Media queries for responsive design
+ */
+
+/* 
+ * Breakpoints:
+ * - Small: 576px (phones, portrait)
+ * - Medium: 768px (tablets, small laptops)
+ * - Large: 992px (desktops, laptops)
+ * - Extra Large: 1200px (large desktops)
+ */
+
+/* Small devices (phones, 576px and below) */
+@media (max-width: 576px) {
+    /* Font size adjustments for small screens */
+    html {
+      font-size: 14px;
+    }
+    
+    /* Adjust spacing for tighter layouts */
+    .messages-container {
+      padding: var(--spacing-sm);
+    }
+    
+    .input-form {
+      padding: var(--spacing-sm);
+    }
+    
+    .message {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .message-content {
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    /* Simplify UI elements */
+    .model-info-bar {
+      display: none;
+    }
+  }
+  
+  /* Medium devices (tablets, 768px and below) */
+  @media (max-width: 768px) {
+    /* Sidebar becomes a mobile drawer */
+    .sidebar-container {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      width: 280px;
+      z-index: 100;
+    }
+    
+    .sidebar-container.open {
+      transform: translateX(0);
+    }
+    
+    /* Show menu toggle button */
+    .menu-toggle {
+      display: flex;
+    }
+    
+    /* Adjust header for menu toggle */
+    .chat-header {
+      padding-left: 4rem;
+    }
+    
+    /* Simplify model info bar */
+    .model-info-bar {
+      font-size: 11px;
+    }
+    
+    .model-badge {
+      padding: 1px 8px;
+    }
+    
+    .model-info-item {
+      margin-right: 10px;
+    }
+  }
+  
+  /* Large devices (desktops, 992px and below) */
+  @media (max-width: 992px) {
+    /* Slightly reduce the maximum width of the chat content */
+    .message-content {
+      max-width: 90%;
+    }
+  }
+  
+  /* Extra large devices (large desktops, 1200px and below) */
+  @media (max-width: 1200px) {
+    /* Optional adjustments for large screens */
+  }
+  
+  /* Handling orientations */
+  @media (orientation: landscape) and (max-height: 500px) {
+    /* Adjustments for landscape phones */
+    .input-form {
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .input-form textarea {
+      min-height: 2.5rem;
+    }
+    
+    .message-avatar {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  /* High-density displays */
+  @media (-webkit-min-device-pixel-ratio: 2), 
+         (min-resolution: 192dpi) {
+    /* Optional adjustments for high-resolution screens */
+  }
+  
+  /* Print styles */
+  @media print {
+    .menu-toggle,
+    .input-form,
+    .sidebar-container,
+    .send-button,
+    .stop-button {
+      display: none !important;
+    }
+    
+    .messages-container {
+      overflow: visible;
+      height: auto;
+    }
+    
+    .message {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  }

@@ -1,0 +1,100 @@
+/* 
+ * components/input.css
+ * Input form styles
+ */
+
+/* Input form container */
+.input-form {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Textarea styling */
+  .input-form textarea {
+    flex: 1;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-pill);
+    padding: var(--spacing-md) 3.5rem var(--spacing-md) var(--spacing-md);
+    resize: none;
+    outline: none;
+    background-color: white;
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-normal);
+    min-height: 3rem;
+    max-height: 10rem;
+    overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  }
+  
+  .input-form textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+  }
+  
+  .input-form textarea:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  /* Send/Stop buttons */
+  .send-button,
+  .stop-button {
+    position: absolute;
+    right: var(--spacing-sm);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: white;
+    font-size: var(--font-size-md);
+    transition: background-color var(--transition-fast);
+    z-index: 2;
+  }
+  
+  /* Send button */
+  .send-button {
+    background-color: var(--color-primary);
+  }
+  
+  .send-button:hover {
+    background-color: var(--color-primary-hover);
+  }
+  
+  .send-button:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+  }
+  
+  /* Stop button - used during generation */
+  .stop-button {
+    background-color: var(--color-danger);
+  }
+  
+  .stop-button:hover {
+    background-color: #ff4d4d;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .input-form {
+      padding: var(--spacing-md);
+    }
+    
+    .input-form textarea {
+      padding: var(--spacing-md) 3rem var(--spacing-md) var(--spacing-sm);
+    }
+  }

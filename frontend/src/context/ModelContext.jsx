@@ -94,10 +94,6 @@ export const ModelProvider = ({ children }) => {
     }
     
     // Load generation parameters
-    const savedTemperature = localStorage.getItem('fi-temperature');
-    if (savedTemperature) {
-      setTemperature(parseFloat(savedTemperature));
-    }
     
     const savedMaxTokens = localStorage.getItem('fi-max-tokens');
     if (savedMaxTokens) {
@@ -120,6 +116,13 @@ export const ModelProvider = ({ children }) => {
     }
   }, []);
   
+  useEffect(() => {
+    const savedTemperature = localStorage.getItem('fi-temperature');
+    if (savedTemperature) {
+      setTemperature(parseFloat(savedTemperature));
+    }
+  }, []);
+
   // Save settings to localStorage when they change
   useEffect(() => {
     if (chats.length > 0) {
@@ -251,69 +254,90 @@ export const ModelProvider = ({ children }) => {
       setIsGenerating(true);
       
       try {
-        // Add system prompt if provided
-        let messagesWithSystem = [...updatedMessages];
-        if (systemPrompt.trim()) {
-          messagesWithSystem = [
-            { role: 'system', content: systemPrompt },
-            ...updatedMessages
-          ];
+        // Ensure WebSocket is connected
+        if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+          console.log("Initializing WebSocket connection...");
+          await initializeWebSocket();
+          
+          // Wait for connection to establish
+          await new Promise((resolve, reject) => {
+            const checkInterval = setInterval(() => {
+              if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+                clearInterval(checkInterval);
+                resolve();
+              } else if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
+                clearInterval(checkInterval);
+                reject(new Error("Failed to establish WebSocket connection"));
+              }
+            }, 100);
+            
+            // Set a timeout to prevent waiting forever
+            setTimeout(() => {
+              clearInterval(checkInterval);
+              reject(new Error("WebSocket connection timeout"));
+            }, 5000);
+          });
         }
         
-        if (streaming) {
-          // Ensure WebSocket is connected
-          if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-            console.log("Initializing WebSocket connection...");
-            await initializeWebSocket();
+        // Important: Use the explicitly created updatedMessages array
+        // Don't reference currentChat.messages which might not have updated yet
+        console.log("Sending message with history:", updatedMessages);
+        
+        // Clear previous response accumulator
+        let fullResponse = '';
+        
+        // Create a unique handler for this specific message
+        const messageId = Date.now();
+        const responseHandler = (event) => {
+          try {
+            const data = JSON.parse(event.data);
             
-            // Wait for connection to establish
-            await new Promise((resolve, reject) => {
-              const checkInterval = setInterval(() => {
-                if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-                  clearInterval(checkInterval);
-                  resolve();
-                } else if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
-                  clearInterval(checkInterval);
-                  reject(new Error("Failed to establish WebSocket connection"));
-                }
-              }, 100);
+            if (data.error) {
+              console.error(`[${messageId}] Stream error:`, data.error);
+              wsRef.current.removeEventListener('message', responseHandler);
+              setIsGenerating(false);
+            } else if (data.done) {
+              console.log(`[${messageId}] Stream complete`);
+              wsRef.current.removeEventListener('message', responseHandler);
+              setIsGenerating(false);
+            } else if (data.token) {
+              fullResponse += data.token;
               
-              // Set a timeout to prevent waiting forever
-              setTimeout(() => {
-                clearInterval(checkInterval);
-                reject(new Error("WebSocket connection timeout"));
-              }, 5000);
-            });
-          }
-          
-          // Clear previous response accumulator
-          let fullResponse = '';
-          
-          // Create a unique handler for this specific message
-          const messageId = Date.now();
-          const responseHandler = (event) => {
-            try {
-              const data = JSON.parse(event.data);
-              
-              if (data.error) {
-                console.error(`[${messageId}] Stream error:`, data.error);
-                wsRef.current.removeEventListener('message', responseHandler);
-                setIsGenerating(false);
-              } else if (data.done) {
-                console.log(`[${messageId}] Stream complete`);
-                wsRef.current.removeEventListener('message', responseHandler);
-                setIsGenerating(false);
-              } else if (data.token) {
-                fullResponse += data.token;
+              // Update the UI with the streaming response
+              setCurrentChat(prev => {
+                // Make sure we're updating the right conversation
+                if (!prev || prev.id !== currentChat.id) return prev;
                 
-                // Update the UI with the streaming response
-                setCurrentChat(prev => {
-                  // Make sure we're updating the right conversation
-                  if (!prev || prev.id !== currentChat.id) return prev;
+                const messages = [...prev.messages];
+                
+                // Check if we already have an assistant response
+                if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
+                  // Update existing assistant message
+                  messages[messages.length - 1] = {
+                    ...messages[messages.length - 1],
+                    content: fullResponse
+                  };
+                } else {
+                  // Add new assistant message
+                  messages.push({
+                    role: 'assistant',
+                    content: fullResponse
+                  });
+                }
+                
+                return {
+                  ...prev,
+                  messages
+                };
+              });
+              
+              // Also update the chats state
+              setChats(prevChats => 
+                prevChats.map(chat => {
+                  if (chat.id !== currentChat.id) return chat;
                   
-                  const messages = [...prev.messages];
+                  const messages = [...chat.messages];
                   
-                  // Check if we already have an assistant response
                   if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
                     // Update existing assistant message
                     messages[messages.length - 1] = {
@@ -329,96 +353,37 @@ export const ModelProvider = ({ children }) => {
                   }
                   
                   return {
-                    ...prev,
+                    ...chat,
                     messages
                   };
-                });
-                
-                // Also update the chats state
-                setChats(prevChats => 
-                  prevChats.map(chat => {
-                    if (chat.id !== currentChat.id) return chat;
-                    
-                    const messages = [...chat.messages];
-                    
-                    if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
-                      // Update existing assistant message
-                      messages[messages.length - 1] = {
-                        ...messages[messages.length - 1],
-                        content: fullResponse
-                      };
-                    } else {
-                      // Add new assistant message
-                      messages.push({
-                        role: 'assistant',
-                        content: fullResponse
-                      });
-                    }
-                    
-                    return {
-                      ...chat,
-                      messages
-                    };
-                  })
-                );
-              }
-            } catch (err) {
-              console.error(`[${messageId}] Error parsing WebSocket message:`, err);
+                })
+              );
             }
-          };
-          
-          // Add the message event listener
-          wsRef.current.addEventListener('message', responseHandler);
-          
-          // Send the request with the full conversation history
-          wsRef.current.send(JSON.stringify({
-            provider: selectedModel.provider,
-            model_id: selectedModel.id,
-            messages: messagesWithSystem,
-            temperature: temperature,
-            max_tokens: maxTokens,
-            top_p: topP,
-            messageId: messageId
-          }));
-        } else {
-          // Use non-streaming API
-          const response = await sendChatMessage({
-            provider: selectedModel.provider,
-            model_id: selectedModel.id,
-            messages: messagesWithSystem,
-            temperature: temperature,
-            max_tokens: maxTokens,
-            top_p: topP
-          });
-          
-          // Add assistant response to the chat
-          const assistantMessage = {
-            role: 'assistant',
-            content: response.response
-          };
-          
-          setCurrentChat(prev => ({
-            ...prev,
-            messages: [...prev.messages, assistantMessage]
-          }));
-          
-          setChats(prevChats => 
-            prevChats.map(chat => 
-              chat.id === currentChat.id ? {
-                ...chat, 
-                messages: [...chat.messages, assistantMessage]
-              } : chat
-            )
-          );
-          
-          setIsGenerating(false);
-        }
+          } catch (err) {
+            console.error(`[${messageId}] Error parsing WebSocket message:`, err);
+          }
+        };
+        
+        // Add the message event listener
+        wsRef.current.addEventListener('message', responseHandler);
+        
+        // Send the request with the full conversation history
+        // USE THE CURRENT TEMPERATURE STATE HERE
+        wsRef.current.send(JSON.stringify({
+          provider: selectedModel.provider,
+          model_id: selectedModel.id,
+          messages: updatedMessages, // Use the explicit array we created
+          temperature: temperature, // Use the temperature from state
+          max_tokens: 1024,
+          messageId: messageId // Add message ID for tracking
+        }));
+        
       } catch (err) {
         console.error("Error in message handling:", err);
         setIsGenerating(false);
       }
     }
-  }, [currentChat, selectedModel, temperature, maxTokens, topP, streaming, systemPrompt, initializeWebSocket]);
+  }, [currentChat, selectedModel, temperature, initializeWebSocket]); // Add temperature to dependencies
   
   const stopGeneration = useCallback(() => {
     if (wsRef.current) {
@@ -446,18 +411,10 @@ export const ModelProvider = ({ children }) => {
     updateChatTitle,
     addMessage,
     stopGeneration,
-
-    // Model parameters
+  
+    // Add these two lines
     temperature,
-    setTemperature,
-    maxTokens,
-    setMaxTokens,
-    topP,
-    setTopP,
-    streaming,
-    setStreaming,
-    systemPrompt,
-    setSystemPrompt
+    setTemperature
   };
   
   return (

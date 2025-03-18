@@ -1,0 +1,128 @@
+/* 
+ * layout/app.css
+ * Main application layout styles
+ */
+
+/* App container */
+.app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  /* Main content area */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-background);
+    /* Subtle background pattern */
+    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: -25px -25px;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    opacity: 0.8;
+  }
+  
+  /* Empty chat state / welcome screen */
+  .empty-chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--spacing-xl);
+  }
+  
+  .welcome-container {
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  .welcome-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .welcome-container h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .welcome-container p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .start-options {
+    margin-top: var(--spacing-xl);
+  }
+  
+  .start-options h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  /* Mobile menu toggle */
+  .menu-toggle {
+    display: none;
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 15;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--border-radius-sm);
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-lg);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Status indicators */
+  .loading-indicator,
+  .error-message {
+    padding: var(--spacing-md);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+  
+  .error-message {
+    color: var(--color-danger);
+  }
+  
+  .retry-button {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn var(--transition-medium) ease;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: flex;
+    }
+  }

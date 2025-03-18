@@ -1,0 +1,27 @@
+/* 
+ * index.css
+ * Main stylesheet that imports all other CSS files
+ */
+
+/* Core styles */
+@import './variables.css';
+@import './base.css';
+
+/* Layout */
+@import './layout/app.css';
+@import './layout/sidebar.css';
+@import './layout/chat-window.css';
+
+/* Components */
+@import './components/messages.css';
+@import './components/input.css';
+@import './components/buttons.css';
+@import './components/model-selector.css';
+
+/* Utilities */
+@import './utils/markdown.css';
+@import './utils/animations.css';
+@import './utils/responsive.css';
+
+/* Highlight.js styles (for code highlighting) */
+@import 'highlight.js/styles/github.css';

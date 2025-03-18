@@ -1,0 +1,78 @@
+/* 
+ * components/model-selector.css
+ * Model selector component styles
+ */
+
+ .model-selector {
+    margin-top: var(--spacing-md);
+  }
+  
+  /* Provider group */
+  .provider-group {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .provider-group h4 {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-secondary);
+  }
+  
+  /* Model options list */
+  .model-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  /* Individual model option */
+  .model-option {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .model-option:hover {
+    background-color: var(--color-hover);
+  }
+  
+  .model-option.selected {
+    border-color: var(--color-primary);
+    background-color: var(--color-selected);
+  }
+  
+  /* Model details */
+  .model-name {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .model-description {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+  }
+  
+  /* Loading and error states */
+  .loading-indicator {
+    padding: var(--spacing-md);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+  
+  .error-message {
+    padding: var(--spacing-md);
+    text-align: center;
+    color: var(--color-danger);
+  }
+  
+  .retry-button {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+  }

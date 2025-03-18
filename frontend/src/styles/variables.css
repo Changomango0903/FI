@@ -1,152 +1,100 @@
-:root {
-  /* Colors - Base Palette */
-  --color-background: #ffffff;
-  --color-sidebar-bg: #f5f5f7;
-  --color-text: #1d1d1f;
-  --color-text-secondary: #86868b;
-  --color-border: #d2d2d7;
-  --color-primary: #0071e3;
-  --color-primary-hover: #0077ed;
-  --color-hover: rgba(0, 0, 0, 0.05);
-  --color-selected: rgba(0, 113, 227, 0.1);
-  --color-danger: #ff3b30;
-  --color-success: #34c759;
-  --color-warning: #ff9500;
-  --color-code-bg: #f6f6f6;
-  
-  /* Primary Color Gradient Palette */
-  --color-primary-light: #3a95f0;
-  --color-primary-lighter: #8cc2f5;
-  --color-primary-lightest: #e0effe;
-  --color-primary-dark: #0062c3;
-  --color-primary-darker: #00468f;
-  
-  /* User and Assistant message colors */
-  --color-user-message-bg: #f5f5f7;
-  --color-assistant-message-bg: #ffffff;
-  
-  /* User and Assistant message gradients */
-  --gradient-user-message: linear-gradient(135deg, #f5f5f7 0%, #eaeaec 100%);
-  --gradient-assistant-message: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  
-  /* Status Colors - Extended for feedback */
-  --color-info: #0c84fe;
-  --color-info-light: #e5f1fc;
-  --color-success-light: #e8f7ed;
-  --color-warning-light: #fff7e6;
-  --color-danger-light: #ffeeee;
-  
-  /* Fonts */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
-  
-  /* Font Sizes */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  
-  /* Font Weights */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 2.5rem;
-  --spacing-3xl: 3rem;
-  
-  /* Borders */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
-  --border-radius-2xl: 24px;
-  --border-radius-full: 9999px;
-  
-  /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.15);
-  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, #0077ed 100%);
-  --gradient-background: linear-gradient(135deg, #f5f7fa 0%, #e9ebee 100%);
-  --gradient-sidebar: linear-gradient(180deg, var(--color-sidebar-bg) 0%, #eaedf2 100%);
-  --gradient-message: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
-  
-  /* Transitions */
-  --transition-fast: 0.2s;
-  --transition-medium: 0.3s;
-  --transition-slow: 0.5s;
-  
-  /* Z-Index Layers */
-  --z-index-dropdown: 10;
-  --z-index-sticky: 20;
-  --z-index-fixed: 30;
-  --z-index-modal-backdrop: 40;
-  --z-index-modal: 50;
-  --z-index-popover: 60;
-  --z-index-tooltip: 70;
-}
-  
-/* Dark mode support for future implementation */
-@media (prefers-color-scheme: dark) {
-  :root.dark-theme {
-    --color-background: #1d1d1f;
-    --color-sidebar-bg: #2c2c2e;
-    --color-text: #f5f5f7;
-    --color-text-secondary: #a1a1a6;
-    --color-border: #38383a;
-    --color-primary: #0a84ff;
-    --color-primary-hover: #409cff;
-    --color-hover: rgba(255, 255, 255, 0.05);
-    --color-selected: rgba(10, 132, 255, 0.2);
-    --color-code-bg: #2c2c2e;
+/* 
+ * variables.css
+ * Global CSS variables for theming the application
+ */
+
+ :root {
+    /* Color System */
     
-    /* Dark mode primary color variations */
-    --color-primary-light: #4ca5ff;
-    --color-primary-lighter: #7ebfff;
-    --color-primary-lightest: #d0e7ff;
-    --color-primary-dark: #0065c5;
-    --color-primary-darker: #004a92;
+    /* Primary Colors */
+    --color-primary: #0071e3;
+    --color-primary-hover: #0077ed;
+    --color-primary-light: rgba(0, 113, 227, 0.1);
     
-    /* Dark mode message backgrounds */
-    --color-user-message-bg: #2c2c2e;
-    --color-assistant-message-bg: #1d1d1f;
+    /* Neutrals */
+    --color-background: #f6f6f6;
+    --color-sidebar-bg: #ebebeb;
+    --color-text: #1d1d1f;
+    --color-text-secondary: #86868b;
+    --color-border: #d2d2d7;
     
-    /* Dark mode status colors */
-    --color-info-light: #17253a;
-    --color-success-light: #1a2e22;
-    --color-warning-light: #332618;
-    --color-danger-light: #331b1a;
+    /* Interaction States */
+    --color-hover: rgba(0, 0, 0, 0.05);
+    --color-selected: rgba(0, 113, 227, 0.1);
     
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, #409cff 100%);
-    --gradient-background: linear-gradient(135deg, #1d1d1f 0%, #2a2a2c 100%);
-    --gradient-sidebar: linear-gradient(180deg, #2c2c2e 0%, #1f1f21 100%);
-    --gradient-message: linear-gradient(180deg, #2c2c2e 0%, #252527 100%);
-    --gradient-user-message: linear-gradient(135deg, #2c2c2e 0%, #35353a 100%);
-    --gradient-assistant-message: linear-gradient(135deg, #1d1d1f 0%, #252527 100%);
+    /* Feedback Colors */
+    --color-danger: #ff3b30;
+    --color-success: #34c759;
+    --color-warning: #ff9500;
     
-    /* Dark mode shadows */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-    --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.6);
-    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Component-Specific Colors */
+    --color-code-bg: #f0f0f0;
+    --color-user-message-bg: #e0e0e5;
+    --color-assistant-message-bg: #ffffff;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-size-xs: 0.75rem;   /* 12px */
+    --font-size-sm: 0.875rem;  /* 14px */
+    --font-size-md: 1rem;      /* 16px */
+    --font-size-lg: 1.25rem;   /* 20px */
+    --font-size-xl: 1.5rem;    /* 24px */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-loose: 1.8;
+    
+    /* Spacing System */
+    --spacing-xs: 0.25rem;  /* 4px */
+    --spacing-sm: 0.5rem;   /* 8px */
+    --spacing-md: 1rem;     /* 16px */
+    --spacing-lg: 1.5rem;   /* 24px */
+    --spacing-xl: 2rem;     /* 32px */
+    --spacing-2xl: 3rem;    /* 48px */
+    
+    /* Border Radius */
+    --border-radius-sm: 0.25rem;  /* 4px */
+    --border-radius-md: 0.5rem;   /* 8px */
+    --border-radius-lg: 0.75rem;  /* 12px */
+    --border-radius-xl: 1rem;     /* 16px */
+    --border-radius-pill: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+    
+    /* Transitions */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.3s;
+    --transition-slow: 0.5s;
+    --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
   }
-}
+  
+  /* Dark Mode Theme */
+  @media (prefers-color-scheme: dark) {
+    :root.dark-theme {
+      /* Primary Colors */
+      --color-primary: #0a84ff;
+      --color-primary-hover: #409cff;
+      --color-primary-light: rgba(10, 132, 255, 0.2);
+      
+      /* Neutrals */
+      --color-background: #1d1d1f;
+      --color-sidebar-bg: #2c2c2e;
+      --color-text: #f5f5f7;
+      --color-text-secondary: #a1a1a6;
+      --color-border: #38383a;
+      
+      /* Interaction States */
+      --color-hover: rgba(255, 255, 255, 0.05);
+      --color-selected: rgba(10, 132, 255, 0.2);
+      
+      /* Component-Specific Colors */
+      --color-code-bg: #2c2c2e;
+      --color-user-message-bg: #3a3a3c;
+      --color-assistant-message-bg: #2c2c2e;
+    }
+  }

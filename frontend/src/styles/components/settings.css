@@ -1,0 +1,39 @@
+/* 
+ * settings.css
+ * Contains only settings-specific styles that aren't in other files
+ */
+
+/* Feedback notification - only these styles are new and unique */
+.setting-feedback {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: settingsFeedbackAnimation 2s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .feedback-content {
+    background-color: var(--color-success);
+    color: white;
+    padding: 8px 12px;
+    border-radius: var(--border-radius-pill);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: var(--shadow-md);
+    font-size: var(--font-size-sm);
+  }
+  
+  .feedback-icon {
+    font-weight: bold;
+  }
+  
+  /* Animation for the feedback notification */
+  @keyframes settingsFeedbackAnimation {
+    0% { opacity: 0; transform: translate(20px, -50%); }
+    15% { opacity: 1; transform: translate(0, -50%); }
+    85% { opacity: 1; transform: translate(0, -50%); }
+    100% { opacity: 0; transform: translate(0, -50%); }
+  }

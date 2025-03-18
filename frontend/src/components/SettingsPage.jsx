@@ -43,23 +43,26 @@ const SettingsPage = ({ onClose }) => {
               <span className="setting-value">{temperature}</span>
             </div>
             <input 
-            id="temperature"
-            type="range" 
-            min="0" 
-            max="1" 
-            step="0.1" 
-            value={temperature}
-            onChange={(e) => handleTemperatureChange(parseFloat(e.target.value))}
-            className="temperature-slider" // Add "temperature" class here
+              id="temperature"
+              type="range" 
+              min="0" 
+              max="1" 
+              step="0.1" 
+              value={temperature}
+              onChange={(e) => handleTemperatureChange(parseFloat(e.target.value))}
+              className="temperature-slider"
             />
             <p className="setting-description">
               Controls randomness: lower values are more focused, higher values more creative.
             </p>
             
-            {/* Feedback message */}
+            {/* Feedback message with improved styling */}
             {showFeedback && (
               <div className="setting-feedback">
-                <p>Temperature updated! This will affect future responses.</p>
+                <div className="feedback-content">
+                  <span className="feedback-icon">✓</span>
+                  <span>Temperature updated</span>
+                </div>
               </div>
             )}
           </div>

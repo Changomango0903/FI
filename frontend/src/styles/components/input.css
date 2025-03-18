@@ -23,7 +23,8 @@
     flex: 1;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius-pill);
-    padding: var(--spacing-md) 3.5rem var(--spacing-md) var(--spacing-md);
+    /* Increased padding on left and right sides for better text alignment */
+    padding: var(--spacing-md) 4rem var(--spacing-md) var(--spacing-lg);
     resize: none;
     outline: none;
     background-color: white;

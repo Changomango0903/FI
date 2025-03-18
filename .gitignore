@@ -66,7 +66,6 @@ yarn-error.log*
 
 # Ollama model files
 *.gguf
-models/
 
 # Temporary files
 *.tmp
@@ -77,3 +76,5 @@ models/
 # System Files
 .DS_Store
 Thumbs.db
+
+__init__.py

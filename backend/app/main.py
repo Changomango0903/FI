@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import chat, models
+from app.routes import chat, models, settings
 import logging
 
 # Configure logging
@@ -41,6 +41,7 @@ app.add_middleware(
 # Include routers
 app.include_router(models.router, prefix="/api", tags=["models"])
 app.include_router(chat.router, prefix="/api", tags=["chat"])
+app.include_router(settings.router, prefix="/api", tags=["settings"])
 
 @app.get("/health")
 async def health_check():

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { fetchModels, sendChatMessage, streamChatMessage } from '../services/api';
+import { fetchModels, sendChatMessage, streamChatMessage, updateTemperature } from '../services/api';
 import { v4 as uuidv4 } from 'uuid';
 
 const ModelContext = createContext();
@@ -61,6 +61,28 @@ export const ModelProvider = ({ children }) => {
       };
     });
   }, [selectedModel]);
+  
+  // Enhanced setTemperature function that updates backend
+  const updateTemperatureValue = useCallback(async (newTemperature) => {
+    try {
+      // Update the local state first for responsive UI
+      setTemperature(newTemperature);
+      
+      // Then update the backend
+      console.log(`Updating backend temperature to: ${newTemperature}`);
+      await updateTemperature(newTemperature);
+      
+      // Save to localStorage
+      localStorage.setItem('fi-temperature', newTemperature.toString());
+      
+      return true;
+    } catch (error) {
+      console.error("Failed to update temperature on backend:", error);
+      // Don't revert the UI as it might be confusing - the next request will use whatever
+      // temperature the backend actually has
+      return false;
+    }
+  }, []);
   
   // Load settings from localStorage
   useEffect(() => {
@@ -374,7 +396,7 @@ export const ModelProvider = ({ children }) => {
           model_id: selectedModel.id,
           messages: updatedMessages, // Use the explicit array we created
           temperature: temperature, // Use the temperature from state
-          max_tokens: 1024,
+          max_tokens: maxTokens,
           messageId: messageId // Add message ID for tracking
         }));
         
@@ -383,7 +405,7 @@ export const ModelProvider = ({ children }) => {
         setIsGenerating(false);
       }
     }
-  }, [currentChat, selectedModel, temperature, initializeWebSocket]); // Add temperature to dependencies
+  }, [currentChat, selectedModel, temperature, maxTokens, initializeWebSocket]); // Add temperature to dependencies
   
   const stopGeneration = useCallback(() => {
     if (wsRef.current) {
@@ -412,9 +434,19 @@ export const ModelProvider = ({ children }) => {
     addMessage,
     stopGeneration,
   
-    // Add these two lines
+    // Temperature with enhanced update function
     temperature,
-    setTemperature
+    setTemperature: updateTemperatureValue,
+    
+    // Other parameters
+    maxTokens,
+    setMaxTokens,
+    topP,
+    setTopP,
+    streaming,
+    setStreaming,
+    systemPrompt,
+    setSystemPrompt
   };
   
   return (

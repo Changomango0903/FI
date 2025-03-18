@@ -284,3 +284,63 @@
   .back-button:hover {
     background-color: rgba(0, 113, 227, 0.08);
   }
+
+  .temperature-notification {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    animation: fadeInNotification 0.3s ease-out;
+    will-change: opacity, transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Success notification styling */
+  .temperature-notification.success {
+    background-color: rgba(0, 113, 227, 0.08);
+  }
+  
+  .temperature-notification.success .notification-icon {
+    background-color: var(--color-primary);
+  }
+  
+  .temperature-notification.success .notification-text {
+    color: var(--color-primary);
+  }
+  
+  /* Error notification styling */
+  .temperature-notification.error {
+    background-color: rgba(255, 59, 48, 0.08);
+  }
+  
+  .temperature-notification.error .notification-icon {
+    background-color: var(--color-danger);
+  }
+  
+  .temperature-notification.error .notification-text {
+    color: var(--color-danger);
+  }
+  
+  /* Checkmark icon styling */
+  .notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  
+  /* Notification text styling */
+  .notification-text {
+    font-size: 13px;
+    font-weight: 500;
+  }

@@ -1,19 +1,7 @@
-# app/config.py
-
 import os
-from typing import List, Dict, Any
 from pydantic_settings import BaseSettings
-import logging
-
-# Configure logger for this module
-logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
-    """Application configuration settings.
-    
-    This class manages all the configuration parameters for the application,
-    using environment variables with sensible defaults.
-    """
     # API settings
     API_PREFIX: str = "/api"
     DEBUG: bool = True
@@ -24,12 +12,8 @@ class Settings(BaseSettings):
     # Ollama settings
     OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     
-    # CORS settings
-    FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:5173")
-    ALLOWED_ORIGINS: List[str] = [FRONTEND_URL]
-    
-    # Default models configuration
-    DEFAULT_MODELS: List[Dict[str, Any]] = [
+    # Default models list - extended with more options
+    DEFAULT_MODELS: list = [
         # Ollama models
         {"id": "llama3:latest", "name": "Llama 3", "provider": "ollama", "description": "Meta's Llama 3 model"},
         {"id": "llama3.1:latest", "name": "Llama 3.1", "provider": "ollama", "description": "Meta's Llama 3.1 model"},
@@ -49,21 +33,6 @@ class Settings(BaseSettings):
     ]
     
     class Config:
-        """Configure settings metadata."""
         env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = True
 
-    def validate_configuration(self) -> None:
-        """Validate the current configuration and log warnings for potential issues."""
-        if not self.HF_API_TOKEN:
-            logger.warning("HF_API_TOKEN not set - HuggingFace API calls may be rate limited")
-        
-        if not os.environ.get("OLLAMA_BASE_URL"):
-            logger.warning("OLLAMA_BASE_URL not set in environment. Using default: http://localhost:11434")
-
-# Create a global settings instance
 settings = Settings()
-
-# Validate the configuration
-settings.validate_configuration()

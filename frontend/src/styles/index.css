@@ -20,7 +20,7 @@
 @import './components/model-selector.css';
 @import './components/settings.css';
 @import './components/theme-toggle.css';
-@import './components/enhanced-settings.css';  /* New import for enhanced settings */
+@import './components/enhanced-settings.css';  /* Enhanced settings import */
 
 /* Utilities */
 @import './utils/markdown.css';

@@ -1,4 +1,4 @@
-/* Enhanced Settings Styles */
+/* Enhanced Settings Styles - Updated for model metadata display */
 
 /* Settings page container */
 .settings-page {
@@ -104,6 +104,38 @@
   .dark-theme .temperature-slider-refined::-moz-range-thumb {
     background-color: var(--color-card-bg);
     border-color: var(--color-primary);
+  }
+  
+  /* New styles for model metadata display */
+  .model-technical-details {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  
+  /* Quantization badge for model size pills */
+  .quantization-badge {
+    font-size: 9px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--color-text-secondary);
+    padding: 1px 3px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: top;
+    font-weight: normal;
+  }
+  
+  .dark-theme .quantization-badge {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Enhance the size options container */
+  .size-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
   }
   
   /* Responsive design adjustments */
@@ -377,13 +409,6 @@
     margin: 0 0 12px 0;
   }
   
-  .size-options-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  
   /* Size pill buttons */
   .size-option-pill {
     height: 36px;
@@ -416,10 +441,11 @@
   .size-description {
     font-size: 13px;
     color: var(--color-text-secondary);
-    padding: 8px 12px;
+    padding: 12px;
     background-color: var(--color-sidebar-bg);
-    border-radius: 4px;
-    margin-top: 8px;
+    border-radius: 8px;
+    margin-top: 12px;
+    line-height: 1.5;
   }
   
   /* Common card styling for all sections */

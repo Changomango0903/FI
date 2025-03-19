@@ -26,12 +26,21 @@ class OllamaService:
                     
                     for model in data.get("models", []):
                         model_name = model.get("name", "")
+                        try:
+                            # Try to get extra model info but don't fail if it's not available
+                            model_info = await self.get_model_metadata(model_name)
+                            description = model_info.get("description", f"Ollama model: {model_name}")
+                        except Exception as e:
+                            # Just log warning and use a default description
+                            logger.warning(f"Failed to fetch metadata for model {model_name}: {response.status}")
+                            description = f"Ollama model: {model_name}"
+                        
                         models.append(
                             ModelInfo(
                                 id=model_name,
                                 name=model_name.split(":")[0].capitalize(),
                                 provider="ollama",
-                                description=f"Ollama model: {model_name}"
+                                description=description
                             )
                         )
                     return models
@@ -39,24 +48,61 @@ class OllamaService:
                 logger.error(f"Error fetching models from Ollama: {str(e)}")
                 return []
 
+    async def get_model_metadata(self, model_id: str) -> dict:
+        """Get detailed metadata about a model but don't fail if not available"""
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.post(
+                    f"{self.base_url}/api/show", 
+                    json={"name": model_id}
+                ) as response:
+                    if response.status != 200:
+                        return {"description": f"Ollama model: {model_id}"}
+                    return await response.json()
+            except Exception as e:
+                logger.error(f"Error fetching model metadata: {str(e)}")
+                return {"description": f"Ollama model: {model_id}"}
+
     async def get_model_info(self, model_id: str) -> ModelDetail:
         """Get detailed information about a specific Ollama model"""
         async with aiohttp.ClientSession() as session:
             try:
-                # Ollama doesn't have a detailed model info endpoint
-                # For now, we'll return some placeholder info
+                # Try to get model metadata from Ollama
+                model_data = await self.get_model_metadata(model_id)
+                
+                # Extract model details from metadata if available
+                description = model_data.get("description", f"Ollama model: {model_id}")
+                parameter_size = model_data.get("parameter_size")
+                context_length = model_data.get("context_length", 4096)
+                
+                # Create parameters dict if we have parameter size
+                parameters = None
+                if parameter_size:
+                    parameters = {
+                        "parameter_size": parameter_size
+                    }
+                
+                return ModelDetail(
+                    id=model_id,
+                    name=model_id.split(":")[0].capitalize(),
+                    provider="ollama",
+                    description=description,
+                    parameters=parameters,
+                    context_length=context_length,
+                    capabilities=["text-generation", "chat"]
+                )
+            except Exception as e:
+                logger.error(f"Error fetching model info from Ollama: {str(e)}")
+                # Return basic model info even if there's an error
                 return ModelDetail(
                     id=model_id,
                     name=model_id.split(":")[0].capitalize(),
                     provider="ollama",
                     description=f"Ollama model: {model_id}",
                     parameters=None,
-                    context_length=4096,  # Typical for many models
+                    context_length=4096,
                     capabilities=["text-generation", "chat"]
                 )
-            except Exception as e:
-                logger.error(f"Error fetching model info from Ollama: {str(e)}")
-                raise
 
     async def generate_text(self, model_id: str, prompt: str, params: dict) -> str:
         """Generate text using an Ollama model"""

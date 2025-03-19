@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useModelContext } from '../context/ModelContext';
 import { useTheme } from '../context/ThemeContext';
-import { groupModelsByFamily, getSizeDescription } from '../utils/modelUtils';
+import { 
+  groupModelsByFamily, 
+  getSizeDescription, 
+  formatParameterSize,
+  formatContextLength
+} from '../utils/modelUtils';
 
 /**
  * Enhanced Settings component with model family grouping and parameter size selection
@@ -140,6 +145,18 @@ const EnhancedSettings = ({ onClose }) => {
     return "More creative and varied responses";
   };
   
+  // Get additional model metadata for display
+  const getModelMetadata = (sizeOption) => {
+    const model = sizeOption.model;
+    if (!model) return null;
+    
+    return {
+      parameterSize: model.metadata?.parameter_size || sizeOption.size,
+      contextLength: model.metadata?.context_length || model.context_length,
+      quantization: model.metadata?.quantization
+    };
+  };
+  
   // Show loading state if models are still loading
   if (isLoadingModels) {
     return (
@@ -190,113 +207,148 @@ const EnhancedSettings = ({ onClose }) => {
           
           {/* Group models by provider */}
           {Object.keys(groupedByProvider).length > 0 && (
-            <div className="provider-groups">
+            <div className="model-selector">
               {/* Ollama Models - Group by family with parameter sizing */}
               {groupedByProvider['ollama'] && (
-                <div className="provider-group">
+                <div className="provider-group settings-card">
                   <div className="provider-header">
                     <h4>Ollama</h4>
                   </div>
                   
-                  {/* Model family cards */}
-                  {groupedByProvider['ollama'].map(family => (
-                    <div 
-                      key={`ollama-${family.exactFamily}`} 
-                      className={`model-family-card ${isModelFamilySelected(family) ? 'selected' : ''}`}
-                    >
-                      {/* Model family info - Clickable header */}
+                  <div className="model-options">
+                    {/* Model family cards */}
+                    {groupedByProvider['ollama'].map(family => (
                       <div 
-                        className="model-family-info"
+                        key={`ollama-${family.exactFamily}`} 
+                        className={`model-option ${isModelFamilySelected(family) ? 'selected' : ''}`}
                         onClick={() => handleModelFamilyClick(family)}
                       >
-                        <h4 className="model-family-name">
-                          {family.exactFamily.charAt(0).toUpperCase() + family.exactFamily.slice(1)}
-                        </h4>
-                        
-                        {/* Show model sizes in a condensed format when not selected */}
-                        {!isModelFamilySelected(family) && (
-                          <p className="model-family-description">
+                        <div className="model-info">
+                          <div className="model-name">
+                            {family.family.charAt(0).toUpperCase() + family.family.slice(1)}
+                          </div>
+                          <div className="model-description">
                             {family.description}
-                            <span className="model-sizes-preview">
-                              Available sizes: {family.sizes.map(size => 
-                                size.displaySize || `${size.size}B`
-                              ).join(', ')}
-                            </span>
-                          </p>
-                        )}
-                        
-                        {/* Normal description when selected */}
-                        {isModelFamilySelected(family) && (
-                          <p className="model-family-description">{family.description}</p>
-                        )}
+                            {!isModelFamilySelected(family) && (
+                              <span className="model-sizes-preview">
+                                Available sizes: {family.sizes.map(size => 
+                                  size.displaySize || `${size.size}B`
+                                ).join(', ')}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                         
                         {/* Selected indicator */}
                         {isModelFamilySelected(family) && (
                           <div className="model-selected-indicator">✓</div>
                         )}
                       </div>
-                      
-                      {/* Parameter size options - only show for selected family */}
-                      {isModelFamilySelected(family) && (
-                        <div className="parameter-size-options">
-                          <p className="parameter-size-label">PARAMETER SIZE:</p>
-                          
-                          <div className="size-options-container">
-                            {family.sizes.map(sizeOption => (
-                              <button
-                                key={sizeOption.id}
-                                className={`size-option-pill ${isModelSizeSelected(family.exactFamily, sizeOption) ? 'selected' : ''}`}
-                                onClick={() => handleSelectModelSize(sizeOption)}
-                              >
-                                {sizeOption.displaySize || `${sizeOption.size}B`}
-                              </button>
-                            ))}
-                          </div>
-                          
-                          {/* Size description for selected size */}
-                          {family.sizes.some(isModelSizeSelected.bind(null, family.exactFamily)) && (
-                            <div className="size-description">
-                              {getSizeDescription(family.sizes.find(
-                                sizeOption => isModelSizeSelected(family.exactFamily, sizeOption)
-                              )?.size)}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
               
-              {/* HuggingFace Models - Flat cards without parameter sizing */}
+              {/* HuggingFace Models */}
               {groupedByProvider['huggingface'] && (
-                <div className="provider-group">
+                <div className="provider-group settings-card">
                   <div className="provider-header">
                     <h4>HuggingFace</h4>
                   </div>
                   
-                  {/* Individual HuggingFace model cards */}
-                  {groupedByProvider['huggingface'].map(model => (
-                    <div 
-                      key={`huggingface-${model.family}`} 
-                      className={`model-card ${isModelFamilySelected(model) ? 'selected' : ''}`}
-                      onClick={() => handleSelectModelSize(model.sizes[0])}
-                    >
-                      <div className="model-info">
-                        <h4 className="model-name">
-                          {model.family}
-                        </h4>
-                        <p className="model-description">{model.description}</p>
+                  <div className="model-options">
+                    {/* Individual HuggingFace model cards */}
+                    {groupedByProvider['huggingface'].map(model => (
+                      <div 
+                        key={`huggingface-${model.family}`} 
+                        className={`model-option ${isModelFamilySelected(model) ? 'selected' : ''}`}
+                        onClick={() => handleSelectModelSize(model.sizes[0])}
+                      >
+                        <div className="model-info">
+                          <div className="model-name">{model.family}</div>
+                          <div className="model-description">{model.description}</div>
+                        </div>
                         
                         {/* Selected indicator */}
                         {isModelFamilySelected(model) && (
                           <div className="model-selected-indicator">✓</div>
                         )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
+            </div>
+          )}
+          
+          {/* Parameter Size Selector - Only show for selected family */}
+          {selectedModel && modelFamilies.some(isModelFamilySelected) && (
+            <div className="settings-card parameter-size-card">
+              <div className="setting-item-refined">
+                <div className="setting-header">
+                  <div className="setting-label">Parameter Size</div>
+                </div>
+                
+                {(() => {
+                  // Find the selected family
+                  const selectedFamily = modelFamilies.find(isModelFamilySelected);
+                  if (!selectedFamily) return null;
+                  
+                  return (
+                    <>
+                      <div className="size-options-container">
+                        {selectedFamily.sizes.map(sizeOption => {
+                          // Get metadata for this model option
+                          const metadata = getModelMetadata(sizeOption);
+                          
+                          return (
+                            <button
+                              key={sizeOption.id}
+                              className={`size-option-pill ${isModelSizeSelected(selectedFamily.exactFamily, sizeOption) ? 'selected' : ''}`}
+                              onClick={() => handleSelectModelSize(sizeOption)}
+                            >
+                              {sizeOption.displaySize || `${sizeOption.size}B`}
+                              {metadata?.quantization && (
+                                <span className="quantization-badge">{metadata.quantization}</span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      
+                      {/* Description of selected size */}
+                      {selectedFamily.sizes.some(
+                        sizeOption => isModelSizeSelected(selectedFamily.exactFamily, sizeOption)
+                      ) && (
+                        <div className="size-description">
+                          {(() => {
+                            const selectedSize = selectedFamily.sizes.find(
+                              sizeOption => isModelSizeSelected(selectedFamily.exactFamily, sizeOption)
+                            );
+                            
+                            if (!selectedSize) return null;
+                            
+                            const metadata = getModelMetadata(selectedSize);
+                            const parameterInfo = metadata?.parameterSize ? 
+                              formatParameterSize(metadata.parameterSize) : "";
+                            const contextInfo = metadata?.contextLength ? 
+                              ` • ${formatContextLength(metadata.contextLength)}` : "";
+                            
+                            return (
+                              <>
+                                {getSizeDescription(metadata?.parameterSize || selectedSize.size)}
+                                <span className="model-technical-details">
+                                  {parameterInfo}{contextInfo}
+                                </span>
+                              </>
+                            );
+                          })()}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
             </div>
           )}
         </section>

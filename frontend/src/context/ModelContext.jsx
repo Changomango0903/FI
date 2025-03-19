@@ -13,14 +13,15 @@ export const ModelProvider = ({ children }) => {
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState(null);
-  
+  const processedModelsRef = useRef(null);
+
   // Model parameters
   const [temperature, setTemperature] = useState(0.7);
   const [maxTokens, setMaxTokens] = useState(1024);
   const [topP, setTopP] = useState(0.9);
   const [streaming, setStreaming] = useState(true);
   const [systemPrompt, setSystemPrompt] = useState('');
-
+  
   // Chat state
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
@@ -30,8 +31,11 @@ export const ModelProvider = ({ children }) => {
   
   // WebSocket reference
   const wsRef = useRef(null);
+  
+  // Flag to prevent redundant localStorage updates
+  const updatingModelRef = useRef(false);
 
-  // DEFINE initializeWebSocket FIRST, before it's used in other functions
+  // Initialize WebSocket connection
   const initializeWebSocket = useCallback(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       console.log("WebSocket already connected");
@@ -91,13 +95,25 @@ export const ModelProvider = ({ children }) => {
   // Process models into family groupings whenever availableModels changes
   useEffect(() => {
     if (availableModels && availableModels.length > 0) {
-      const grouped = groupModelsByFamily(availableModels);
-      setModelFamilies(grouped);
+      // Create a hash of the models to detect real changes
+      const modelsHash = JSON.stringify(availableModels.map(m => m.id).sort());
+      
+      // Only update if the models have actually changed
+      if (processedModelsRef.current !== modelsHash) {
+        processedModelsRef.current = modelsHash;
+        
+        // Process the models outside of React's rendering cycle
+        setTimeout(() => {
+          const grouped = groupModelsByFamily(availableModels);
+          setModelFamilies(grouped);
+        }, 0);
+      }
     }
   }, [availableModels]);
   
-  // Load settings from localStorage
+  // Initial load of settings from localStorage - once only
   useEffect(() => {
+    // Load saved chats
     const savedChats = localStorage.getItem('fi-chats');
     if (savedChats) {
       try {
@@ -128,6 +144,10 @@ export const ModelProvider = ({ children }) => {
     }
     
     // Load generation parameters
+    const savedTemperature = localStorage.getItem('fi-temperature');
+    if (savedTemperature) {
+      setTemperature(parseFloat(savedTemperature));
+    }
     
     const savedMaxTokens = localStorage.getItem('fi-max-tokens');
     if (savedMaxTokens) {
@@ -148,30 +168,29 @@ export const ModelProvider = ({ children }) => {
     if (savedSystemPrompt) {
       setSystemPrompt(savedSystemPrompt);
     }
-  }, []);
-  
-  useEffect(() => {
-    const savedTemperature = localStorage.getItem('fi-temperature');
-    if (savedTemperature) {
-      setTemperature(parseFloat(savedTemperature));
-    }
-  }, []);
+  }, []); // Empty dependency array - run only once
 
-  // Save settings to localStorage when they change
+  // Save chats to localStorage when they change
   useEffect(() => {
     if (chats.length > 0) {
       localStorage.setItem('fi-chats', JSON.stringify(chats));
     }
   }, [chats]);
   
+  // Save current chat ID to localStorage
   useEffect(() => {
     if (currentChat) {
       localStorage.setItem('fi-current-chat', currentChat.id);
     }
-  }, [currentChat]);
+  }, [currentChat?.id]); // Only depend on the ID, not the entire object
   
+  // Handle selected model changes - update localStorage and chat references
   useEffect(() => {
-    if (selectedModel) {
+    if (selectedModel && !updatingModelRef.current) {
+      // Set flag to prevent reentrant updates
+      updatingModelRef.current = true;
+      
+      // Update localStorage
       localStorage.setItem('fi-selected-model', JSON.stringify(selectedModel));
       
       // Update active chat's model reference
@@ -190,25 +209,35 @@ export const ModelProvider = ({ children }) => {
           )
         );
       }
+      
+      // Clear flag after state updates are queued
+      setTimeout(() => {
+        updatingModelRef.current = false;
+      }, 0);
     }
-  }, [selectedModel, currentChat]);
+  }, [selectedModel?.id]); // Only depend on the model ID
   
+  // Save temperature to localStorage
   useEffect(() => {
     localStorage.setItem('fi-temperature', temperature.toString());
   }, [temperature]);
   
+  // Save maxTokens to localStorage
   useEffect(() => {
     localStorage.setItem('fi-max-tokens', maxTokens.toString());
   }, [maxTokens]);
   
+  // Save topP to localStorage
   useEffect(() => {
     localStorage.setItem('fi-top-p', topP.toString());
   }, [topP]);
   
+  // Save streaming to localStorage
   useEffect(() => {
     localStorage.setItem('fi-streaming', streaming.toString());
   }, [streaming]);
   
+  // Save systemPrompt to localStorage
   useEffect(() => {
     localStorage.setItem('fi-system-prompt', systemPrompt);
   }, [systemPrompt]);
@@ -261,7 +290,7 @@ export const ModelProvider = ({ children }) => {
         setCurrentChat(null);
       }
     }
-  }, [chats, currentChat]);
+  }, [chats, currentChat?.id]);
   
   const updateChatTitle = useCallback((chatId, title) => {
     setChats(prevChats => 
@@ -273,24 +302,27 @@ export const ModelProvider = ({ children }) => {
     if (currentChat?.id === chatId) {
       setCurrentChat(prev => ({ ...prev, title }));
     }
-  }, [currentChat]);
+  }, [currentChat?.id]);
   
   const addMessage = useCallback(async (message) => {
     if (!currentChat) return;
     
     // Create a new messages array with the new message
     const updatedMessages = [...currentChat.messages, message];
-    console.log("Adding message, updated messages will be:", updatedMessages);
+    const chatId = currentChat.id; // Store ID locally for closure
     
     // Update UI state
-    setCurrentChat(prev => ({
-      ...prev,
-      messages: updatedMessages
-    }));
+    setCurrentChat(prev => {
+      if (prev?.id !== chatId) return prev;
+      return {
+        ...prev,
+        messages: updatedMessages
+      };
+    });
     
     setChats(prevChats => 
       prevChats.map(chat => 
-        chat.id === currentChat.id ? {
+        chat.id === chatId ? {
           ...chat, 
           messages: updatedMessages
         } : chat
@@ -307,7 +339,6 @@ export const ModelProvider = ({ children }) => {
       try {
         // Ensure WebSocket is connected
         if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-          console.log("Initializing WebSocket connection...");
           await initializeWebSocket();
           
           // Wait for connection to establish
@@ -330,10 +361,6 @@ export const ModelProvider = ({ children }) => {
           });
         }
         
-        // Important: Use the explicitly created updatedMessages array
-        // Don't reference currentChat.messages which might not have updated yet
-        console.log("Sending message with history:", updatedMessages);
-        
         // Clear previous response accumulator
         let fullResponse = '';
         
@@ -345,11 +372,11 @@ export const ModelProvider = ({ children }) => {
             
             if (data.error) {
               console.error(`[${messageId}] Stream error:`, data.error);
-              wsRef.current.removeEventListener('message', responseHandler);
+              wsRef.current?.removeEventListener('message', responseHandler);
               setIsGenerating(false);
             } else if (data.done) {
               console.log(`[${messageId}] Stream complete`);
-              wsRef.current.removeEventListener('message', responseHandler);
+              wsRef.current?.removeEventListener('message', responseHandler);
               setIsGenerating(false);
             } else if (data.token) {
               fullResponse += data.token;
@@ -357,7 +384,7 @@ export const ModelProvider = ({ children }) => {
               // Update the UI with the streaming response
               setCurrentChat(prev => {
                 // Make sure we're updating the right conversation
-                if (!prev || prev.id !== currentChat.id) return prev;
+                if (!prev || prev.id !== chatId) return prev;
                 
                 const messages = [...prev.messages];
                 
@@ -385,7 +412,7 @@ export const ModelProvider = ({ children }) => {
               // Also update the chats state
               setChats(prevChats => 
                 prevChats.map(chat => {
-                  if (chat.id !== currentChat.id) return chat;
+                  if (chat.id !== chatId) return chat;
                   
                   const messages = [...chat.messages];
                   
@@ -452,7 +479,7 @@ export const ModelProvider = ({ children }) => {
   const getSelectedModelInfo = useCallback(() => {
     if (!selectedModel) return null;
     return parseModelInfo(selectedModel.id);
-  }, [selectedModel]);
+  }, [selectedModel?.id]); // Only depend on the ID
   
   const value = {
     availableModels,

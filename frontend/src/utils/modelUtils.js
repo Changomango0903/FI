@@ -63,7 +63,7 @@ export const parseModelInfo = (modelId) => {
       result.displaySize = `${size}B`;
       
       // Try to extract family name by removing the size part
-      const familyPart = id.replace(`${size}b`, '').replace(/[_-:]/g, ' ').trim();
+      const familyPart = id.replace(`${size}b`, '').replace(/[_\-:]/g, ' ').trim();
       if (familyPart) {
         result.exactFamily = familyPart;
         result.family = familyPart.replace(/\d+(\.\d+)*$/, '').trim();
@@ -85,7 +85,7 @@ export const parseModelInfo = (modelId) => {
 };
 
 /**
- * Group models by their family name and extract parameter sizes - different logic for Ollama and HuggingFace
+ * Group models by their family name and extract parameter sizes
  * @param {Array} models - List of model objects
  * @returns {Array} - Grouped model families with parameter size options
  */
@@ -99,9 +99,20 @@ export const groupModelsByFamily = (models) => {
   // Process Ollama models - group by family
   const ollama_results = [];
   if (ollamaModels.length > 0) {
-    // Parse all Ollama models to extract family and size info
+    // Use metadata if available, otherwise parse from name/id
     const parsedModels = ollamaModels.map(model => {
-      // Extract size from name if not present in id
+      // If metadata is available, use it
+      if (model.metadata) {
+        return {
+          ...model,
+          family: model.metadata.family || model.name,
+          exactFamily: model.metadata.exact_family || model.name,
+          size: model.metadata.parameter_size,
+          displaySize: model.metadata.parameter_size ? `${model.metadata.parameter_size}B` : null
+        };
+      }
+      
+      // Fallback to parsing from name if no metadata
       const nameInfo = parseModelInfo(model.name || model.id);
       const idInfo = parseModelInfo(model.id);
       
@@ -224,4 +235,38 @@ export const getSizeDescription = (size) => {
   if (size <= 13) return 'Enhanced capabilities';
   if (size <= 34) return 'Advanced reasoning';
   return 'Highest accuracy and capabilities';
+};
+
+/**
+ * Format parameter size for display
+ * @param {number} size - Size in billions of parameters
+ * @returns {string} - Formatted size string
+ */
+export const formatParameterSize = (size) => {
+  if (!size) return 'Unknown size';
+  
+  if (size >= 1000) {
+    return `${(size / 1000).toFixed(1)}T parameters`;
+  }
+  
+  return `${size}B parameters`;
+};
+
+/**
+ * Format context length for display
+ * @param {number} contextLength - Context window size in tokens
+ * @returns {string} - Formatted context length
+ */
+export const formatContextLength = (contextLength) => {
+  if (!contextLength) return 'Unknown context';
+  
+  if (contextLength >= 1000000) {
+    return `${(contextLength / 1000000).toFixed(1)}M context`;
+  }
+  
+  if (contextLength >= 1000) {
+    return `${(contextLength / 1000).toFixed(1)}K context`;
+  }
+  
+  return `${contextLength} tokens context`;
 };

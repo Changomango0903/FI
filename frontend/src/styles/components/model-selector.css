@@ -38,6 +38,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 260px; /* or some fixed height */
+  overflow-y: auto;
 }
 
 /* Individual model option */

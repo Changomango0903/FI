@@ -1,7 +1,7 @@
 /* 
  * index.css
  * Main stylesheet that imports all other CSS files
- * Updated to include new dark mode styles
+ * Updated to include enhanced settings styles
  */
 
 /* Core styles */
@@ -19,13 +19,14 @@
 @import './components/buttons.css';
 @import './components/model-selector.css';
 @import './components/settings.css';
-@import './components/theme-toggle.css';  /* New import for theme toggle styles */
+@import './components/theme-toggle.css';
+@import './components/enhanced-settings.css';  /* New import for enhanced settings */
 
 /* Utilities */
 @import './utils/markdown.css';
 @import './utils/animations.css';
 @import './utils/responsive.css';
-@import './utils/dark-mode.css';  /* New import for additional dark mode overrides */
+@import './utils/dark-mode.css';
 
 /* Highlight.js styles (for code highlighting) */
 @import 'highlight.js/styles/github.css';

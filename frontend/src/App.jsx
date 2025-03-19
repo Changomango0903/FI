@@ -3,7 +3,7 @@ import { ModelProvider } from './context/ModelContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
-import SettingsPage from './components/SettingsPage';
+import EnhancedSettings from './components/EnhancedSettings'; // Import the new EnhancedSettings component
 import './styles/index.css';
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
             )}
             
             {showSettings ? (
-              <SettingsPage onClose={toggleSettings} />
+              <EnhancedSettings onClose={toggleSettings} />
             ) : (
               <ChatWindow />
             )}

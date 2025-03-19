@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
 import { fetchModels, sendChatMessage, streamChatMessage, updateTemperature } from '../services/api';
+import { groupModelsByFamily, parseModelInfo } from '../utils/modelUtils';
 import { v4 as uuidv4 } from 'uuid';
 
 const ModelContext = createContext();
@@ -23,6 +24,9 @@ export const ModelProvider = ({ children }) => {
   // Chat state
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+
+  // Store grouped models for family-based selection
+  const [modelFamilies, setModelFamilies] = useState([]);
   
   // WebSocket reference
   const wsRef = useRef(null);
@@ -83,6 +87,14 @@ export const ModelProvider = ({ children }) => {
       return false;
     }
   }, []);
+  
+  // Process models into family groupings whenever availableModels changes
+  useEffect(() => {
+    if (availableModels && availableModels.length > 0) {
+      const grouped = groupModelsByFamily(availableModels);
+      setModelFamilies(grouped);
+    }
+  }, [availableModels]);
   
   // Load settings from localStorage
   useEffect(() => {
@@ -161,8 +173,25 @@ export const ModelProvider = ({ children }) => {
   useEffect(() => {
     if (selectedModel) {
       localStorage.setItem('fi-selected-model', JSON.stringify(selectedModel));
+      
+      // Update active chat's model reference
+      if (currentChat) {
+        setCurrentChat(prev => ({
+          ...prev,
+          model: selectedModel
+        }));
+        
+        setChats(prevChats => 
+          prevChats.map(chat => 
+            chat.id === currentChat.id ? {
+              ...chat,
+              model: selectedModel
+            } : chat
+          )
+        );
+      }
     }
-  }, [selectedModel]);
+  }, [selectedModel, currentChat]);
   
   useEffect(() => {
     localStorage.setItem('fi-temperature', temperature.toString());
@@ -390,14 +419,13 @@ export const ModelProvider = ({ children }) => {
         wsRef.current.addEventListener('message', responseHandler);
         
         // Send the request with the full conversation history
-        // USE THE CURRENT TEMPERATURE STATE HERE
         wsRef.current.send(JSON.stringify({
           provider: selectedModel.provider,
           model_id: selectedModel.id,
-          messages: updatedMessages, // Use the explicit array we created
-          temperature: temperature, // Use the temperature from state
+          messages: updatedMessages,
+          temperature: temperature,
           max_tokens: maxTokens,
-          messageId: messageId // Add message ID for tracking
+          messageId: messageId
         }));
         
       } catch (err) {
@@ -405,7 +433,7 @@ export const ModelProvider = ({ children }) => {
         setIsGenerating(false);
       }
     }
-  }, [currentChat, selectedModel, temperature, maxTokens, initializeWebSocket]); // Add temperature to dependencies
+  }, [currentChat, selectedModel, temperature, maxTokens, initializeWebSocket]);
   
   const stopGeneration = useCallback(() => {
     if (wsRef.current) {
@@ -414,6 +442,17 @@ export const ModelProvider = ({ children }) => {
     }
     setIsGenerating(false);
   }, []);
+  
+  // Get the model families information
+  const getModelFamilies = useCallback(() => {
+    return modelFamilies;
+  }, [modelFamilies]);
+  
+  // Get model info (family and size) for the currently selected model
+  const getSelectedModelInfo = useCallback(() => {
+    if (!selectedModel) return null;
+    return parseModelInfo(selectedModel.id);
+  }, [selectedModel]);
   
   const value = {
     availableModels,
@@ -446,7 +485,12 @@ export const ModelProvider = ({ children }) => {
     streaming,
     setStreaming,
     systemPrompt,
-    setSystemPrompt
+    setSystemPrompt,
+    
+    // New model family and parameter size functions
+    modelFamilies,
+    getModelFamilies,
+    getSelectedModelInfo
   };
   
   return (

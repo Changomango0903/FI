@@ -3,7 +3,13 @@ import { useModelContext } from '../context/ModelContext';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
 
-const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
+const Sidebar = ({ 
+  closeMobileMenu, 
+  onToggleSettings, 
+  onToggleLibrary,
+  showSettings,
+  showLibrary
+}) => {
   const { chats, currentChat, createNewChat, switchChat, deleteChat } = useModelContext();
   const { isDarkMode } = useTheme();
   
@@ -66,6 +72,14 @@ const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
             {showSettings ? '← Back to Chat' : '⚙️ Settings'}
           </button>
         </div>
+        
+        <button 
+          className={`library-button ${showLibrary ? 'active' : ''}`}
+          onClick={onToggleLibrary}
+        >
+          {showLibrary ? '← Back to Chat' : '📚 Model Library'}
+        </button>
+        
         <div className="theme-indicator">
           {isDarkMode ? 'Dark Mode' : 'Light Mode'}
         </div>

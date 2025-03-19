@@ -21,6 +21,7 @@
 @import './components/settings.css';
 @import './components/theme-toggle.css';
 @import './components/enhanced-settings.css';  /* Enhanced settings import */
+@import './components/model-library.css';
 
 /* Utilities */
 @import './utils/markdown.css';

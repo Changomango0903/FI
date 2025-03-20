@@ -7,7 +7,12 @@ import { useTheme } from '../context/ThemeContext';
 import ProjectList from './ProjectList';
 import ProjectSelector from './ProjectSelector';
 
-const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
+const Sidebar = ({ 
+  closeMobileMenu, 
+  onToggleSettings, 
+  showSettings,
+  onNavigateToProject 
+}) => {
   const { 
     chats, 
     currentChat, 
@@ -95,7 +100,10 @@ const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
       </div>
       
       {/* Project list */}
-      <ProjectList closeMobileMenu={closeMobileMenu} />
+      <ProjectList 
+        closeMobileMenu={closeMobileMenu} 
+        onNavigateToProject={onNavigateToProject}
+      />
       
       {/* Chat list */}
       <div className="chat-list">

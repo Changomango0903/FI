@@ -6,7 +6,7 @@ import ModelSelector from './ModelSelector';
 import Settings from './Settings';
 import ProjectHeader from './ProjectHeader';
 
-const ChatWindow = () => {
+const ChatWindow = ({ onNavigateToProject }) => {
   const { 
     currentChat, 
     selectedModel, 
@@ -89,8 +89,11 @@ const ChatWindow = () => {
       <div className="chat-header">
         <div className="chat-info">
           <h2>{currentChat.title || `Chat ${currentChat.id.substr(0, 8)}`}</h2>
-          {/* Add project header */}
-          <ProjectHeader chatId={currentChat.id} />
+          {/* Add project header with navigation */}
+          <ProjectHeader 
+            chatId={currentChat.id} 
+            onNavigateToProject={onNavigateToProject}
+          />
           {selectedModel && (
             <div className="model-badge">
               {selectedModel.name}

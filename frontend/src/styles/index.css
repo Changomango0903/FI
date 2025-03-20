@@ -1,7 +1,7 @@
 /* 
  * index.css
  * Main stylesheet that imports all other CSS files
- * Updated to include new project styles
+ * Updated to include refined project styles
  */
 
 /* Core styles */
@@ -20,7 +20,7 @@
 @import './components/model-selector.css';
 @import './components/settings.css';
 @import './components/theme-toggle.css';
-@import './components/projects.css';  /* New import for project styles */
+@import './components/projects.css';  /* Make sure this points to the updated CSS file */
 
 /* Utilities */
 @import './utils/markdown.css';

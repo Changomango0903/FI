@@ -1,340 +1,1044 @@
-/* frontend/src/styles/components/projects.css */
+/* Enhanced Apple-inspired projects.css with refined aesthetics */
 
 /* Project list container */
 .project-list {
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .project-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .project-list h2 {
-    font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin: 0;
-  }
-  
-  .new-project-button {
-    width: 24px;
-    height: 24px;
-    background-color: var(--color-sidebar-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
-  }
-  
-  .new-project-button:hover {
-    background-color: var(--color-hover);
-    color: var(--color-text);
-  }
-  
-  /* Project items list */
-  .project-items {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
-  }
-  
-  .project-item {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    margin-bottom: var(--spacing-xs);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-    position: relative;
-  }
-  
-  .project-item:hover {
-    background-color: var(--color-hover);
-  }
-  
-  .project-item.active {
-    background-color: var(--color-selected);
-  }
-  
-  .project-color-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: var(--spacing-sm);
-    flex-shrink: 0;
-  }
-  
-  .project-info {
-    flex: 1;
-    min-width: 0; /* Enables text truncation */
-  }
-  
-  .project-name {
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .project-chat-count {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-secondary);
-  }
-  
-  .delete-project-button {
-    background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    cursor: pointer;
+  max-height: 40vh; /* Adjust based on your needs */
+  overflow-y: auto;
+  margin-bottom: var(--spacing-lg);
+  padding: 0 var(--spacing-xs);
+  /* Add momentum scrolling for touch devices */
+  -webkit-overflow-scrolling: touch;
+}
+
+.project-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.project-list h2 {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 0;
+  letter-spacing: 0.7px;
+  font-weight: 600;
+}
+
+/* Refined new project button with Apple-style aesthetics */
+.new-project-button {
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-primary-light);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.new-project-button:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.new-project-button:active {
+  transform: scale(0.95);
+}
+
+/* Project items list with improved spacing */
+.project-items {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+/* Enhanced project item with more subtle and clean design */
+.project-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  /* Use a faster transition specifically for background-color and transform */
+  transition: background-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Make the entire item a click target */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.project-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.project-item.active {
+  background-color: rgba(0, 113, 227, 0.12);
+  border-color: rgba(0, 113, 227, 0.3);
+}
+
+/* Add active state for touch devices */
+.project-item:active {
+  background-color: rgba(0, 113, 227, 0.08);
+  transform: scale(0.98);
+}
+
+/* Refined color indicator */
+.project-color-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.project-info {
+  flex: 1;
+  min-width: 0; /* Enables text truncation */
+  padding: 2px 0;
+  /* Make this area take up all available space */
+  display: block;
+  pointer-events: none; /* Let clicks pass through to parent */
+}
+
+.project-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.project-chat-count {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+}
+
+/* Subtle project action buttons */
+.project-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.delete-project-button {
+  pointer-events: auto;
+  /* Make delete button more responsive */
+  transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  /* Improve click target size */
+  width: 24px;
+  height: 24px;
+  /* Position better */
+  margin-left: 4px;
+}
+
+.project-item:hover .delete-project-button {
+  opacity: 0.7;
+}
+
+.delete-project-button:hover {
+  opacity: 1 !important;
+  color: var(--color-danger);
+  background-color: rgba(255, 59, 48, 0.08);
+}
+
+/* Modal styles with Apple's clean aesthetic */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: scaleUp 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@keyframes scaleUp {
+  0% {
     opacity: 0;
-    transition: opacity var(--transition-fast), color var(--transition-fast);
-    padding: 4px;
-    font-size: 12px;
+    transform: scale(0.98);
   }
-  
-  .project-item:hover .delete-project-button {
+  100% {
     opacity: 1;
+    transform: scale(1);
   }
-  
-  .delete-project-button:hover {
-    color: var(--color-danger);
-  }
-  
-  /* Modal styles */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-  }
-  
-  .modal-container {
-    background-color: white;
-    border-radius: var(--border-radius-lg);
-    width: 100%;
-    max-width: 500px;
-    box-shadow: var(--shadow-lg);
-    animation: scaleUp 0.2s ease;
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-bottom: 1px solid var(--color-border);
-  }
-  
-  .modal-header h3 {
-    margin: 0;
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-bold);
-  }
-  
-  .modal-close-button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-  }
-  
-  .modal-form {
-    padding: var(--spacing-lg);
-  }
-  
-  .form-group {
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: var(--spacing-xs);
-    font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-sm);
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: var(--spacing-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    font-size: var(--font-size-md);
-    font-family: var(--font-family);
-  }
-  
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
-  }
-  
-  /* Color picker */
-  .color-picker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-xs);
-  }
-  
-  .color-option {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  }
-  
-  .color-option:hover {
-    transform: scale(1.1);
-  }
-  
-  .color-option.active {
-    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-primary);
-  }
-  
-  .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
-  }
-  
-  /* Project selector for moving chats */
-  .project-selector {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 200px;
-    background-color: white;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-md);
-    z-index: 10;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-  }
-  
-  .project-selector-header {
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-sidebar-bg);
-  }
-  
-  .project-selector-header h4 {
-    margin: 0;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-  }
-  
-  .project-selector-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 250px;
-    overflow-y: auto;
-  }
-  
-  .project-selector-item {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .project-selector-item:hover {
-    background-color: var(--color-hover);
-  }
-  
-  .project-selector-item.active {
-    background-color: var(--color-selected);
-  }
-  
-  .project-selector-name {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .current-project-indicator {
-    color: var(--color-primary);
-    font-weight: var(--font-weight-bold);
-    margin-left: var(--spacing-sm);
-  }
-  
-  /* Dark mode adjustments */
-  .dark-theme .modal-container {
-    background-color: var(--color-sidebar-bg);
-    border: 1px solid var(--color-border);
-  }
-  
-  .dark-theme .project-selector {
-    background-color: var(--color-sidebar-bg);
-    border: 1px solid var(--color-border);
-  }
-  
-  .dark-theme .color-option.active {
-    box-shadow: 0 0 0 2px var(--color-sidebar-bg), 0 0 0 4px var(--color-primary);
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 576px) {
-    .modal-container {
-      width: 90%;
-    }
-    
-    .project-selector {
-      width: 180px;
-    }
-  }
+}
 
-  /* Add to components/projects.css */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background-color: rgba(248, 248, 248, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 
-/* Project header in chat view */
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-text);
+}
+
+.modal-form {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  transition: all var(--transition-fast);
+  background-color: rgba(248, 248, 248, 0.5);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+  background-color: white;
+}
+
+/* Refined color picker with Apple's design language */
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.color-option {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Apple-style buttons */
+.button-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.button-primary:active {
+  transform: translateY(0);
+}
+
+.button-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.button-secondary {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-text);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.button-secondary:active {
+  transform: translateY(0);
+}
+
+/* Project selector with subtler styling */
+.project-selector {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 220px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  animation: fadeInDown 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-selector-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background-color: rgba(248, 248, 248, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.project-selector-header h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.project-selector-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.project-selector-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-selector-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.project-selector-item.active {
+  background-color: rgba(0, 113, 227, 0.08);
+}
+
+.project-selector-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.current-project-indicator {
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* Clean project header in chat view */
 .project-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 12px;
+  transition: background-color 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Make it focusable with keyboard */
+  outline: none;
+}
+
+.project-color-badge {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  pointer-events: none; /* Let clicks go through to parent */
+}
+
+.project-badge {
+  font-size: 11px;
+  background-color: rgba(0, 0, 0, 0.04);
+  color: var(--color-text-secondary);
+  padding: 3px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: all 0.15s ease; /* Faster transition */
+  pointer-events: none; /* Let clicks go through to parent */
+}
+
+.project-header:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Active state animation */
+.project-header:active .project-badge {
+  transform: scale(0.95);
+}
+
+/* When focused with keyboard */
+.project-header:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* New Project Page Styles with Apple design language */
+.project-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f8f8fa;
+}
+
+.project-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.project-page-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.project-page-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.project-page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.project-page-description {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  margin: 4px 0 0 0;
+  opacity: 0.8;
+}
+
+.project-page-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.project-page-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.project-chats-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-chats-header h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.new-chat-in-project {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-weight: 500;
+}
+
+.new-chat-in-project:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.new-chat-in-project:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Apple-style card grid */
+.project-chat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.project-chat-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-chat-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.project-chat-card:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.project-chat-card-title {
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.project-chat-card-preview {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 14px;
+  min-height: 36px;
+  line-height: 1.4;
+}
+
+.project-chat-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+}
+
+.project-chat-card-timestamp {
+  opacity: 0.8;
+}
+
+.project-chat-card-message-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.project-chat-card-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.project-chat-card:hover .project-chat-card-actions {
+  opacity: 1;
+}
+
+.project-chat-action-button {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.04);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all var(--transition-fast);
+}
+
+.project-chat-action-button:hover {
+  background-color: rgba(0, 113, 227, 0.1);
+  color: var(--color-text);
+}
+
+.delete-chat-button:hover {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: var(--color-danger);
+}
+
+/* Beautiful empty state */
+.empty-project-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--color-text-secondary);
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin: 10px auto;
+  max-width: 500px;
+}
+
+.empty-project-state h3 {
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.empty-project-state p {
+  margin-bottom: 24px;
+  max-width: 400px;
+  line-height: 1.5;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Apple-style back button */
+.back-to-chat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.back-to-chat:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.back-to-chat:active {
+  transform: translateY(0);
+}
+
+/* Project editing form */
+.project-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.project-edit-form input,
+.project-edit-form textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  transition: all var(--transition-fast);
+  background-color: white;
+}
+
+.project-edit-form input:focus,
+.project-edit-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+.project-edit-form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Alert dialog styling */
+.alert-dialog {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: scaleUp 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-align: center;
+}
+
+.alert-dialog h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.alert-dialog p {
+  margin-bottom: 24px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.alert-dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.alert-dialog-cancel {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-text);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  flex: 1;
+  max-width: 120px;
+}
+
+.alert-dialog-confirm {
+  background-color: var(--color-danger);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  flex: 1;
+  max-width: 120px;
+}
+
+.alert-dialog-cancel:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.alert-dialog-confirm:hover {
+  background-color: #ff483a;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.loading::after {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-left-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  .project-color-badge {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
+}
+
+/* Dark mode refinements */
+
+.dark-theme .project-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .project-header:active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .project-badge {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .modal-container,
+.dark-theme .project-selector,
+.dark-theme .project-chat-card,
+.dark-theme .empty-project-state {
+  background-color: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .modal-header,
+.dark-theme .project-selector-header,
+.dark-theme .project-page-header {
+  background-color: rgba(44, 44, 46, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .form-group input,
+.dark-theme .form-group textarea,
+.dark-theme .project-edit-form input,
+.dark-theme .project-edit-form textarea {
+  background-color: rgba(28, 28, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-text);
+}
+
+.dark-theme .form-group input:focus,
+.dark-theme .form-group textarea:focus,
+.dark-theme .project-edit-form input:focus,
+.dark-theme .project-edit-form textarea:focus {
+  background-color: rgba(28, 28, 30, 0.95);
+  border-color: var(--color-primary);
+}
+
+.dark-theme .color-option.active {
+  box-shadow: 0 0 0 2px #2c2c2e, 0 0 0 4px var(--color-primary);
+}
+
+.dark-theme .new-project-button {
+  background-color: rgba(10, 132, 255, 0.2);
+  border-color: transparent;
+}
+
+.dark-theme .project-page {
+  background-color: #1c1c1e;
+}
+
+.dark-theme .button-secondary,
+.dark-theme .back-to-chat {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+}
+
+.dark-theme .button-secondary:hover,
+.dark-theme .back-to-chat:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark-theme .project-badge {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .project-chat-action-button {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .project-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .project-item.active {
+  background-color: rgba(0, 113, 227, 0.2);
+  border-color: rgba(0, 113, 227, 0.4);
+}
+
+.dark-theme .project-item:active {
+  background-color: rgba(0, 113, 227, 0.15);
+}
+
+.dark-theme .project-selector-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .project-selector-item.active {
+  background-color: rgba(10, 132, 255, 0.15);
+}
+
+.dark-theme .loading {
+  background-color: rgba(28, 28, 30, 0.6);
+}
+
+.dark-theme .loading::after {
+  border-color: rgba(255, 255, 255, 0.2);
+  border-left-color: var(--color-primary);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .project-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
   }
-  
-  .project-badge {
-    font-size: var(--font-size-xs);
-    background-color: var(--color-sidebar-bg);
-    color: var(--color-text-secondary);
-    padding: 2px 8px;
-    border-radius: var(--border-radius-pill);
-    white-space: nowrap;
+
+  .project-page-actions {
+    width: 100%;
+    margin-top: 4px;
   }
-  
-  /* Dark mode adjustments */
-  .dark-theme .project-badge {
-    background-color: rgba(255, 255, 255, 0.1);
+
+  .project-chat-grid {
+    grid-template-columns: 1fr;
   }
+
+  .project-page-content {
+    padding: 16px;
+  }
+
+  .project-chats-header {
+    margin-bottom: 16px;
+  }
+
+  .empty-project-state {
+    padding: 24px 16px;
+  }
+
+  .modal-container {
+    width: 90%;
+    max-width: none;
+    margin: 0 16px;
+  }
+
+  .project-selector {
+    width: 180px;
+    right: -60px;
+  }
+
+  .alert-dialog {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .project-item {
+    /* Ensure proper highlighting on iOS */
+    -webkit-tap-highlight-color: rgba(0, 113, 227, 0.15);
+  }
+}

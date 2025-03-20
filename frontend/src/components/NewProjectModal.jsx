@@ -1,4 +1,3 @@
-// frontend/src/components/NewProjectModal.jsx
 import React, { useState } from 'react';
 import { useProjectContext } from '../context/ProjectContext';
 
@@ -16,6 +15,7 @@ const NewProjectModal = ({ onClose }) => {
     }
   };
 
+  // Apple-inspired color palette
   const predefinedColors = [
     '#0071e3', // Blue
     '#34c759', // Green
@@ -25,6 +25,10 @@ const NewProjectModal = ({ onClose }) => {
     '#af52de', // Pink
     '#ff2d55', // Rose
     '#007aff', // Light Blue
+    '#64d2ff', // Cyan
+    '#bf5af2', // Magenta
+    '#ffd60a', // Yellow
+    '#00c7be', // Mint
   ];
 
   return (

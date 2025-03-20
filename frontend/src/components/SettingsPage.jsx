@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useModelContext } from '../context/ModelContext';
 import { useTheme } from '../context/ThemeContext';
 import ModelSelector from './ModelSelector';
+import ProjectSettings from './ProjectSettings';
 
 const SettingsPage = ({ onClose }) => {
   const { temperature, setTemperature } = useModelContext();
@@ -189,7 +190,9 @@ const SettingsPage = ({ onClose }) => {
             </div>
           </div>
         </section>
-        
+        <section className="settings-section projects-management-section">
+          <ProjectSettings />
+        </section>
         <section className="settings-section future-features-section">
           <div className="settings-section-header">
             <h3>Coming Soon</h3>

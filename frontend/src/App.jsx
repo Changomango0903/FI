@@ -1,6 +1,8 @@
+// frontend/src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { ModelProvider } from './context/ModelContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { ProjectProvider } from './context/ProjectContext';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import SettingsPage from './components/SettingsPage';
@@ -35,33 +37,35 @@ function App() {
   return (
     <ThemeProvider>
       <ModelProvider>
-        <div className="app">
-          <div className={`sidebar-container ${isMobileMenuOpen ? 'open' : ''}`}>
-            <Sidebar 
-              closeMobileMenu={() => setIsMobileMenuOpen(false)} 
-              onToggleSettings={toggleSettings}
-              showSettings={showSettings}
-            />
-          </div>
-          
-          <div className="main-content">
-            {windowWidth < 768 && (
-              <button 
-                className="menu-toggle" 
-                onClick={toggleMobileMenu}
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? '✕' : '☰'}
-              </button>
-            )}
+        <ProjectProvider>
+          <div className="app">
+            <div className={`sidebar-container ${isMobileMenuOpen ? 'open' : ''}`}>
+              <Sidebar 
+                closeMobileMenu={() => setIsMobileMenuOpen(false)} 
+                onToggleSettings={toggleSettings}
+                showSettings={showSettings}
+              />
+            </div>
             
-            {showSettings ? (
-              <SettingsPage onClose={toggleSettings} />
-            ) : (
-              <ChatWindow />
-            )}
+            <div className="main-content">
+              {windowWidth < 768 && (
+                <button 
+                  className="menu-toggle" 
+                  onClick={toggleMobileMenu}
+                  aria-label="Toggle menu"
+                >
+                  {isMobileMenuOpen ? '✕' : '☰'}
+                </button>
+              )}
+              
+              {showSettings ? (
+                <SettingsPage onClose={toggleSettings} />
+              ) : (
+                <ChatWindow />
+              )}
+            </div>
           </div>
-        </div>
+        </ProjectProvider>
       </ModelProvider>
     </ThemeProvider>
   );

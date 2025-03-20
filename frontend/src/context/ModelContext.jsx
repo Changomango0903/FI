@@ -210,8 +210,8 @@ export const ModelProvider = ({ children }) => {
     setChats(prevChats => [newChat, ...prevChats]);
     setCurrentChat(newChat);
     
-    // Don't try to generate a response for an empty chat
-    // Wait until the user sends the first message
+    // Return the new chat object so it can be added to a project
+    return newChat;
   }, [selectedModel]);
   
   const switchChat = useCallback((chatId) => {
@@ -232,6 +232,9 @@ export const ModelProvider = ({ children }) => {
         setCurrentChat(null);
       }
     }
+    
+    // Note: The project-related cleanup will be handled in the Sidebar component
+    // when the deleteChat function is called
   }, [chats, currentChat]);
   
   const updateChatTitle = useCallback((chatId, title) => {

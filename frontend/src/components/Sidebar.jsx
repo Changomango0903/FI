@@ -1,11 +1,83 @@
-import React from 'react';
+// frontend/src/components/Sidebar.jsx
+import React, { useState, useEffect } from 'react';
 import { useModelContext } from '../context/ModelContext';
+import { useProjectContext } from '../context/ProjectContext';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
+import ProjectList from './ProjectList';
+import ProjectSelector from './ProjectSelector';
 
 const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
-  const { chats, currentChat, createNewChat, switchChat, deleteChat } = useModelContext();
+  const { 
+    chats, 
+    currentChat, 
+    createNewChat, 
+    switchChat, 
+    deleteChat 
+  } = useModelContext();
+  
+  const { 
+    currentProject, 
+    addChatToProject, 
+    removeChatFromProject,
+    getProjectChats 
+  } = useProjectContext();
+  
   const { isDarkMode } = useTheme();
+  const [showProjectSelector, setShowProjectSelector] = useState(false);
+  const [activeChatId, setActiveChatId] = useState(null);
+  
+  // Get chats for the current project
+  const currentProjectChats = currentProject
+    ? chats.filter(chat => currentProject.chatIds.includes(chat.id))
+    : [];
+  
+  const handleCreateNewChat = () => {
+    const newChat = createNewChat();
+    // Add the new chat to the current project
+    if (currentProject && newChat) {
+      addChatToProject(currentProject.id, newChat.id);
+    }
+    closeMobileMenu();
+  };
+  
+  const handleDeleteChat = (e, chatId) => {
+    e.stopPropagation();
+    
+    // Remove chat from project before deleting it
+    if (currentProject) {
+      removeChatFromProject(currentProject.id, chatId);
+    }
+    
+    // Delete the chat
+    deleteChat(chatId);
+  };
+  
+  const handleShowProjectSelector = (e, chatId) => {
+    e.stopPropagation();
+    setActiveChatId(chatId);
+    setShowProjectSelector(true);
+  };
+  
+  const handleCloseProjectSelector = () => {
+    setShowProjectSelector(false);
+    setActiveChatId(null);
+  };
+  
+  // Click outside to close project selector
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (showProjectSelector) {
+        setShowProjectSelector(false);
+        setActiveChatId(null);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showProjectSelector]);
   
   return (
     <aside className="sidebar">
@@ -16,22 +88,23 @@ const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
         </div>
         <button 
           className="new-chat-button" 
-          onClick={() => {
-            createNewChat();
-            closeMobileMenu();
-          }}
+          onClick={handleCreateNewChat}
         >
           + New Chat
         </button>
       </div>
       
+      {/* Project list */}
+      <ProjectList closeMobileMenu={closeMobileMenu} />
+      
+      {/* Chat list */}
       <div className="chat-list">
-        <h2>Your Chats</h2>
-        {chats.length === 0 ? (
-          <p className="no-chats">No chats yet. Create a new chat to get started.</p>
+        <h2>Chats</h2>
+        {currentProjectChats.length === 0 ? (
+          <p className="no-chats">No chats in this project. Create a new chat to get started.</p>
         ) : (
           <ul>
-            {chats.map(chat => (
+            {currentProjectChats.map(chat => (
               <li 
                 key={chat.id} 
                 className={chat.id === currentChat?.id ? 'active' : ''}
@@ -41,15 +114,32 @@ const Sidebar = ({ closeMobileMenu, onToggleSettings, showSettings }) => {
                 }}
               >
                 <span className="chat-title">{chat.title || `Chat ${chat.id.substr(0, 8)}`}</span>
-                <button 
-                  className="delete-chat" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteChat(chat.id);
-                  }}
-                >
-                  ✕
-                </button>
+                <div className="chat-actions">
+                  <button 
+                    className="move-chat-button" 
+                    onClick={(e) => handleShowProjectSelector(e, chat.id)}
+                    title="Move to project"
+                  >
+                    ⋮
+                  </button>
+                  <button 
+                    className="delete-chat" 
+                    onClick={(e) => handleDeleteChat(e, chat.id)}
+                    title="Delete chat"
+                  >
+                    ✕
+                  </button>
+                </div>
+                
+                {/* Project selector dropdown */}
+                {showProjectSelector && activeChatId === chat.id && (
+                  <div onClick={e => e.stopPropagation()}>
+                    <ProjectSelector 
+                      chatId={chat.id} 
+                      onClose={handleCloseProjectSelector} 
+                    />
+                  </div>
+                )}
               </li>
             ))}
           </ul>

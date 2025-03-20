@@ -4,6 +4,7 @@ import Message from './Message';
 import { useModelContext } from '../context/ModelContext';
 import ModelSelector from './ModelSelector';
 import Settings from './Settings';
+import ProjectHeader from './ProjectHeader';
 
 const ChatWindow = () => {
   const { 
@@ -88,6 +89,8 @@ const ChatWindow = () => {
       <div className="chat-header">
         <div className="chat-info">
           <h2>{currentChat.title || `Chat ${currentChat.id.substr(0, 8)}`}</h2>
+          {/* Add project header */}
+          <ProjectHeader chatId={currentChat.id} />
           {selectedModel && (
             <div className="model-badge">
               {selectedModel.name}

@@ -4,7 +4,7 @@ import { useModelContext } from '../context/ModelContext';
 import AlertDialog from './AlertDialog';
 
 const ProjectPage = ({ projectId, onNavigateToChat, onBack }) => {
-  const { projects, updateProject } = useProjectContext();
+  const { projects, updateProject, addChatToProject } = useProjectContext();
   const { chats, createNewChat, switchChat, deleteChat } = useModelContext();
   const [editMode, setEditMode] = useState(false);
   const [editName, setEditName] = useState('');
@@ -20,6 +20,11 @@ const ProjectPage = ({ projectId, onNavigateToChat, onBack }) => {
   const projectChats = project 
     ? chats.filter(chat => project.chatIds.includes(chat.id))
     : [];
+    
+  console.log('Project:', project);
+  console.log('Project chatIds:', project?.chatIds || []);
+  console.log('All chats:', chats.map(c => c.id));
+  console.log('Filtered project chats:', projectChats.map(c => c.id));
 
   useEffect(() => {
     if (project) {
@@ -36,7 +41,9 @@ const ProjectPage = ({ projectId, onNavigateToChat, onBack }) => {
   const handleCreateNewChat = () => {
     const newChat = createNewChat();
     if (newChat) {
-      // Add chat to project is handled automatically in ModelContext
+      // Explicitly add chat to this project
+      addChatToProject(project.id, newChat.id);
+      console.log(`Added new chat ${newChat.id} to project ${project.id}`);
       onNavigateToChat(newChat.id);
     }
   };

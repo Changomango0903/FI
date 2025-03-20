@@ -207,6 +207,7 @@ export const ModelProvider = ({ children }) => {
       createdAt: new Date().toISOString()
     };
     
+    // Add the new chat to the chats array
     setChats(prevChats => [newChat, ...prevChats]);
     setCurrentChat(newChat);
     

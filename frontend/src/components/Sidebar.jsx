@@ -37,14 +37,16 @@ const Sidebar = ({
     ? chats.filter(chat => currentProject.chatIds.includes(chat.id))
     : [];
   
-  const handleCreateNewChat = () => {
-    const newChat = createNewChat();
-    // Add the new chat to the current project
-    if (currentProject && newChat) {
-      addChatToProject(currentProject.id, newChat.id);
-    }
-    closeMobileMenu();
-  };
+    const handleCreateNewChat = () => {
+      const newChat = createNewChat();
+      // Add the new chat to the current project
+      if (currentProject && newChat) {
+        addChatToProject(currentProject.id, newChat.id);
+        console.log(`Added new chat ${newChat.id} to project ${currentProject.id}`);
+        console.log('Current project chatIds:', [...currentProject.chatIds, newChat.id]);
+      }
+      closeMobileMenu();
+    };
   
   const handleDeleteChat = (e, chatId) => {
     e.stopPropagation();

@@ -136,9 +136,14 @@ export const ProjectProvider = ({ children }) => {
 
   // Add a chat to a project
   const addChatToProject = useCallback((projectId, chatId) => {
+    // FIX: First make sure we're not adding duplicates
+    if (!chatId) return;
+
+    // Update the projects state
     setProjects(prevProjects => 
       prevProjects.map(project => {
         if (project.id === projectId && !project.chatIds.includes(chatId)) {
+          // Add chat to this project
           return {
             ...project,
             chatIds: [...project.chatIds, chatId]
@@ -147,10 +152,25 @@ export const ProjectProvider = ({ children }) => {
         return project;
       })
     );
-  }, []);
+    
+    // FIX: Also update currentProject if it's the one being modified
+    if (currentProject?.id === projectId) {
+      setCurrentProject(prev => {
+        // Make sure we're not duplicating chat IDs
+        if (prev.chatIds.includes(chatId)) {
+          return prev;
+        }
+        return {
+          ...prev,
+          chatIds: [...prev.chatIds, chatId]
+        };
+      });
+    }
+  }, [currentProject]);
 
   // Remove a chat from a project
   const removeChatFromProject = useCallback((projectId, chatId) => {
+    // Update the projects state
     setProjects(prevProjects => 
       prevProjects.map(project => {
         if (project.id === projectId) {
@@ -162,30 +182,62 @@ export const ProjectProvider = ({ children }) => {
         return project;
       })
     );
-  }, []);
+    
+    // FIX: Also update currentProject if it's the one being modified
+    if (currentProject?.id === projectId) {
+      setCurrentProject(prev => ({
+        ...prev,
+        chatIds: prev.chatIds.filter(id => id !== chatId)
+      }));
+    }
+  }, [currentProject]);
 
   // Move a chat from one project to another
   const moveChatToProject = useCallback((chatId, fromProjectId, toProjectId) => {
     if (fromProjectId === toProjectId) return;
     
-    setProjects(prevProjects => 
-      prevProjects.map(project => {
+    setProjects(prevProjects => {
+      // Create a new projects array with the chat moved
+      const newProjects = prevProjects.map(project => {
         if (project.id === fromProjectId) {
+          // Remove from source project
           return {
             ...project,
             chatIds: project.chatIds.filter(id => id !== chatId)
           };
         }
         if (project.id === toProjectId && !project.chatIds.includes(chatId)) {
+          // Add to destination project
           return {
             ...project,
             chatIds: [...project.chatIds, chatId]
           };
         }
         return project;
-      })
-    );
-  }, []);
+      });
+      
+      return newProjects;
+    });
+    
+    // FIX: Also update currentProject if it's affected
+    if (currentProject?.id === fromProjectId) {
+      setCurrentProject(prev => ({
+        ...prev,
+        chatIds: prev.chatIds.filter(id => id !== chatId)
+      }));
+    } else if (currentProject?.id === toProjectId) {
+      setCurrentProject(prev => {
+        // Avoid duplicates
+        if (prev.chatIds.includes(chatId)) {
+          return prev;
+        }
+        return {
+          ...prev,
+          chatIds: [...prev.chatIds, chatId]
+        };
+      });
+    }
+  }, [currentProject]);
 
   // Get all chats in a project
   const getProjectChats = useCallback((projectId) => {

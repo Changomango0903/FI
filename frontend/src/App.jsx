@@ -45,8 +45,14 @@ function App() {
     setShowSettings(false);
   };
   
-  // Navigate to chat view
-  const navigateToChat = () => {
+  // Navigate to chat view and ensure the chat is selected
+  const navigateToChat = (chatId) => {
+    // If chatId is provided, ensure the chat is selected
+    if (chatId) {
+      // Here we could add additional logic to ensure the chat is switched
+      console.log(`Navigating to chat: ${chatId}`);
+    }
+    
     setCurrentView('chat');
   };
   

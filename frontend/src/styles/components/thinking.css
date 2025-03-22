@@ -1,0 +1,138 @@
+/* 
+ * components/thinking.css
+ * Thinking content component styles for reasoning models
+ */
+
+/* Message content container */
+.message-content-container {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    line-height: var(--line-height-normal);
+  }
+  
+  /* Thinking content container */
+  .thinking-content {
+    background-color: rgba(0, 113, 227, 0.05);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-sm);
+    border-left: 3px solid var(--color-primary);
+    overflow: hidden;
+    transition: all var(--transition-medium);
+  }
+  
+  /* Thinking header (always visible) */
+  .thinking-header {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-md);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--transition-fast);
+  }
+  
+  .thinking-header:hover {
+    background-color: rgba(0, 113, 227, 0.1);
+  }
+  
+  /* Thinking toggle icon */
+  .thinking-icon {
+    margin-right: var(--spacing-xs);
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    transition: transform var(--transition-fast);
+  }
+  
+  .thinking-content.expanded .thinking-icon {
+    transform: rotate(0deg);
+  }
+  
+  .thinking-content.collapsed .thinking-icon {
+    transform: rotate(-90deg);
+  }
+  
+  /* Thinking content body */
+  .thinking-body {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md) var(--spacing-md);
+    border-top: 1px solid rgba(0, 113, 227, 0.1);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height var(--transition-medium);
+  }
+  
+  /* Dark mode adjustments */
+  .dark-theme .thinking-content {
+    background-color: rgba(10, 132, 255, 0.1);
+    border-left-color: var(--color-primary);
+  }
+  
+  .dark-theme .thinking-header:hover {
+    background-color: rgba(10, 132, 255, 0.15);
+  }
+  
+  .dark-theme .thinking-body {
+    border-top-color: rgba(10, 132, 255, 0.2);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .thinking-body {
+      max-height: 300px;
+    }
+  }
+  
+  /* Animation for expanding and collapsing */
+  .thinking-content.expanded .thinking-body {
+    animation: expandThinking 0.3s ease;
+  }
+  
+  .thinking-content.collapsed .thinking-body {
+    animation: collapseThinking 0.3s ease;
+    max-height: 0;
+    padding: 0 var(--spacing-md);
+    border-top: none;
+  }
+  
+  @keyframes expandThinking {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 500px;
+      opacity: 1;
+    }
+  }
+  
+  @keyframes collapseThinking {
+    from {
+      max-height: 500px;
+      opacity: 1;
+    }
+    to {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+  
+  /* Indicator for messages with thinking content */
+  .message.assistant.has-thinking {
+    position: relative;
+  }
+  
+  .message.assistant.has-thinking::before {
+    content: "💭";
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    font-size: 16px;
+    background-color: var(--color-background);
+    border-radius: 50%;
+    padding: 2px;
+    opacity: 0.8;
+  }

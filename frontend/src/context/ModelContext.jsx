@@ -19,7 +19,8 @@ export const ModelProvider = ({ children }) => {
   const [topP, setTopP] = useState(0.9);
   const [streaming, setStreaming] = useState(true);
   const [systemPrompt, setSystemPrompt] = useState('');
-
+  const [showThinking, setShowThinking] = useState(true); // New state for showing thinking process
+  
   // Chat state
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
@@ -27,7 +28,7 @@ export const ModelProvider = ({ children }) => {
   // WebSocket reference
   const wsRef = useRef(null);
 
-  // DEFINE initializeWebSocket FIRST, before it's used in other functions
+  // Initialize WebSocket
   const initializeWebSocket = useCallback(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       console.log("WebSocket already connected");
@@ -84,6 +85,26 @@ export const ModelProvider = ({ children }) => {
     }
   }, []);
   
+  // Toggle whether to show the thinking process
+  const toggleShowThinking = useCallback(() => {
+    const newValue = !showThinking;
+    setShowThinking(newValue);
+    localStorage.setItem('fi-show-thinking', newValue.toString());
+    return newValue;
+  }, [showThinking]);
+  
+  // Check if a model is a reasoning model
+  const isReasoningModel = useCallback((model) => {
+    if (!model) return false;
+    
+    const reasoningModelKeywords = ['deepseek', 'qwen', 'mistral', 'mixtral', 'yi', 'claude', 'r1'];
+    return reasoningModelKeywords.some(keyword => 
+      model.id.toLowerCase().includes(keyword.toLowerCase()) || 
+      (model.name && model.name.toLowerCase().includes(keyword.toLowerCase())) ||
+      (model.has_reasoning === true)
+    );
+  }, []);
+  
   // Load settings from localStorage
   useEffect(() => {
     const savedChats = localStorage.getItem('fi-chats');
@@ -116,7 +137,6 @@ export const ModelProvider = ({ children }) => {
     }
     
     // Load generation parameters
-    
     const savedMaxTokens = localStorage.getItem('fi-max-tokens');
     if (savedMaxTokens) {
       setMaxTokens(parseInt(savedMaxTokens));
@@ -135,6 +155,11 @@ export const ModelProvider = ({ children }) => {
     const savedSystemPrompt = localStorage.getItem('fi-system-prompt');
     if (savedSystemPrompt) {
       setSystemPrompt(savedSystemPrompt);
+    }
+    
+    const savedShowThinking = localStorage.getItem('fi-show-thinking');
+    if (savedShowThinking !== null) {
+      setShowThinking(savedShowThinking === 'true');
     }
   }, []);
   
@@ -183,6 +208,10 @@ export const ModelProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('fi-system-prompt', systemPrompt);
   }, [systemPrompt]);
+  
+  useEffect(() => {
+    localStorage.setItem('fi-show-thinking', showThinking.toString());
+  }, [showThinking]);
   
   const fetchAvailableModels = useCallback(async () => {
     setIsLoadingModels(true);
@@ -233,9 +262,6 @@ export const ModelProvider = ({ children }) => {
         setCurrentChat(null);
       }
     }
-    
-    // Note: The project-related cleanup will be handled in the Sidebar component
-    // when the deleteChat function is called
   }, [chats, currentChat]);
   
   const updateChatTitle = useCallback((chatId, title) => {
@@ -311,6 +337,8 @@ export const ModelProvider = ({ children }) => {
         
         // Clear previous response accumulator
         let fullResponse = '';
+        let thinkingContent = '';
+        let currentPhase = 'response'; // Start in response phase
         
         // Create a unique handler for this specific message
         const messageId = Date.now();
@@ -327,7 +355,16 @@ export const ModelProvider = ({ children }) => {
               wsRef.current.removeEventListener('message', responseHandler);
               setIsGenerating(false);
             } else if (data.token) {
-              fullResponse += data.token;
+              // Process token based on its type
+              const tokenType = data.type || 'response';
+              
+              if (tokenType === 'response') {
+                fullResponse += data.token;
+                currentPhase = 'response';
+              } else if (tokenType === 'thinking') {
+                thinkingContent += data.token;
+                currentPhase = 'thinking';
+              }
               
               // Update the UI with the streaming response
               setCurrentChat(prev => {
@@ -338,16 +375,18 @@ export const ModelProvider = ({ children }) => {
                 
                 // Check if we already have an assistant response
                 if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
-                  // Update existing assistant message
+                  // Update existing assistant message with both content and thinking
                   messages[messages.length - 1] = {
                     ...messages[messages.length - 1],
-                    content: fullResponse
+                    content: fullResponse,
+                    thinking: thinkingContent || undefined
                   };
                 } else {
                   // Add new assistant message
                   messages.push({
                     role: 'assistant',
-                    content: fullResponse
+                    content: fullResponse,
+                    thinking: thinkingContent || undefined
                   });
                 }
                 
@@ -368,13 +407,15 @@ export const ModelProvider = ({ children }) => {
                     // Update existing assistant message
                     messages[messages.length - 1] = {
                       ...messages[messages.length - 1],
-                      content: fullResponse
+                      content: fullResponse,
+                      thinking: thinkingContent || undefined
                     };
                   } else {
                     // Add new assistant message
                     messages.push({
                       role: 'assistant',
-                      content: fullResponse
+                      content: fullResponse,
+                      thinking: thinkingContent || undefined
                     });
                   }
                   
@@ -394,14 +435,14 @@ export const ModelProvider = ({ children }) => {
         wsRef.current.addEventListener('message', responseHandler);
         
         // Send the request with the full conversation history
-        // USE THE CURRENT TEMPERATURE STATE HERE
         wsRef.current.send(JSON.stringify({
           provider: selectedModel.provider,
           model_id: selectedModel.id,
-          messages: updatedMessages, // Use the explicit array we created
-          temperature: temperature, // Use the temperature from state
+          messages: updatedMessages,
+          temperature: temperature,
           max_tokens: maxTokens,
-          messageId: messageId // Add message ID for tracking
+          show_thinking: showThinking,
+          messageId: messageId
         }));
         
       } catch (err) {
@@ -409,7 +450,7 @@ export const ModelProvider = ({ children }) => {
         setIsGenerating(false);
       }
     }
-  }, [currentChat, selectedModel, temperature, maxTokens, initializeWebSocket]); // Add temperature to dependencies
+  }, [currentChat, selectedModel, temperature, maxTokens, showThinking, initializeWebSocket]);
   
   const stopGeneration = useCallback(() => {
     if (wsRef.current) {
@@ -450,7 +491,12 @@ export const ModelProvider = ({ children }) => {
     streaming,
     setStreaming,
     systemPrompt,
-    setSystemPrompt
+    setSystemPrompt,
+    
+    // Reasoning model specific
+    showThinking,
+    toggleShowThinking,
+    isReasoningModel
   };
   
   return (

@@ -41,7 +41,7 @@ export async function sendChatMessage(payload) {
 
 // Stream a chat message
 export async function streamChatMessage(payload, callbacks) {
-  const { onToken, onDone, onError } = callbacks;
+  const { onToken, onThinkingToken, onDone, onError } = callbacks;
   
   // Create WebSocket connection
   const ws = new WebSocket(`ws://localhost:8000/api/chat/stream`);
@@ -64,7 +64,14 @@ export async function streamChatMessage(payload, callbacks) {
           if (onDone) onDone();
           ws.close();
         } else if (data.token) {
-          if (onToken) onToken(data.token);
+          // Handle different token types
+          const tokenType = data.type || 'response';
+          
+          if (tokenType === 'thinking' && onThinkingToken) {
+            onThinkingToken(data.token);
+          } else if (onToken) {
+            onToken(data.token, tokenType);
+          }
         }
       } catch (error) {
         if (onError) onError(error);
@@ -83,7 +90,7 @@ export async function streamChatMessage(payload, callbacks) {
   });
 }
 
-// New function to update temperature setting
+// Update temperature setting
 export async function updateTemperature(temperature) {
   return apiRequest('/settings/temperature', {
     method: 'POST',
@@ -101,4 +108,16 @@ export async function analyzeContextWindow(provider, modelId, messages) {
       messages
     })
   });
+}
+
+// Check if a model is a reasoning model
+export function isReasoningModel(model) {
+  if (!model) return false;
+  
+  const reasoningModelKeywords = ['deepseek', 'qwen', 'mistral', 'mixtral', 'yi', 'claude', 'r1'];
+  return reasoningModelKeywords.some(keyword => 
+    model.id.toLowerCase().includes(keyword.toLowerCase()) || 
+    (model.name && model.name.toLowerCase().includes(keyword.toLowerCase())) ||
+    (model.has_reasoning === true)
+  );
 }

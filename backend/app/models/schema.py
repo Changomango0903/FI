@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Union
 
 class ModelInfo(BaseModel):
     """Basic model information"""
@@ -35,3 +35,22 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     """Response from chat generation"""
     response: str
+
+class ContextWindowRequest(BaseModel):
+    """Request for context window analysis"""
+    provider: str
+    model_id: str
+    messages: List[Dict[str, str]]
+
+class RoleBreakdown(BaseModel):
+    """Token breakdown by role"""
+    count: int
+    tokens: int
+
+class ContextWindowInfo(BaseModel):
+    """Information about context window usage"""
+    token_count: int
+    context_window: int
+    usage_percentage: float
+    role_breakdown: Dict[str, RoleBreakdown]
+    status: str  # "ok" or "warning"

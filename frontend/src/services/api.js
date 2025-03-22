@@ -90,3 +90,15 @@ export async function updateTemperature(temperature) {
     body: JSON.stringify({ temperature })
   });
 }
+
+// Function to analyze context window
+export async function analyzeContextWindow(provider, modelId, messages) {
+  return apiRequest('/context-window', {
+    method: 'POST',
+    body: JSON.stringify({
+      provider,
+      model_id: modelId,
+      messages
+    })
+  });
+}

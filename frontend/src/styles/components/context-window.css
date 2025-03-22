@@ -1,0 +1,190 @@
+/* frontend/src/styles/components/context-window.css */
+
+/* Chat header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    background-color: white;
+    z-index: 5;
+  }
+  
+  .chat-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .chat-info h2 {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0;
+  }
+  
+  /* Context info toggle button */
+  .context-info-toggle {
+    font-size: var(--font-size-xs);
+    padding: 6px 10px;
+    background-color: var(--color-sidebar-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .context-info-toggle:hover {
+    background-color: var(--color-hover);
+    color: var(--color-text);
+  }
+  
+  .dark-theme .context-info-toggle {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .dark-theme .context-info-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+.context-window-info {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--color-card-bg);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-sm);
+  }
+  
+  .context-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .context-window-header h4 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .context-status {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .context-status.ok {
+    background-color: rgba(52, 199, 89, 0.2);
+    color: var(--color-success);
+  }
+  
+  .context-status.warning {
+    background-color: rgba(255, 149, 0, 0.2);
+    color: var(--color-warning);
+  }
+  
+  .context-window-progress {
+    position: relative;
+    height: 8px;
+    background-color: var(--color-hover);
+    border-radius: var(--border-radius-pill);
+    margin-bottom: var(--spacing-xs);
+    overflow: hidden;
+  }
+  
+  .context-window-progress-bar {
+    height: 100%;
+    border-radius: var(--border-radius-pill);
+    transition: width 0.3s ease;
+  }
+  
+  .context-window-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .context-window-details {
+    margin-top: var(--spacing-sm);
+  }
+  
+  .context-window-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  
+  .detail-label {
+    color: var(--color-text-secondary);
+  }
+  
+  .context-window-breakdown {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .role-breakdown {
+    display: flex;
+    margin-bottom: 4px;
+  }
+  
+  .role-name {
+    flex: 0 0 80px;
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .role-count {
+    flex: 1;
+  }
+  
+  .role-tokens {
+    flex: 0 0 80px;
+    text-align: right;
+  }
+  
+  .context-window-warning {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background-color: rgba(255, 149, 0, 0.1);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-warning);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  /* Loading and error states */
+  .context-window-info.loading,
+  .context-window-info.error {
+    text-align: center;
+    padding: var(--spacing-sm);
+    color: var(--color-text-secondary);
+  }
+  
+  .context-window-info.error {
+    color: var(--color-danger);
+  }
+  
+  /* Dark mode adjustments */
+  .dark-theme .context-window-progress {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark-theme .context-status.ok {
+    background-color: rgba(52, 199, 89, 0.3);
+  }
+  
+  .dark-theme .context-status.warning {
+    background-color: rgba(255, 149, 0, 0.3);
+  }
+  
+  .dark-theme .context-window-warning {
+    background-color: rgba(255, 149, 0, 0.2);
+  }

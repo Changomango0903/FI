@@ -21,6 +21,7 @@
 @import './components/settings.css';
 @import './components/theme-toggle.css';
 @import './components/projects.css';  /* Make sure this points to the updated CSS file */
+@import './components/context-window.css';  /* New context window styles */
 
 /* Utilities */
 @import './utils/markdown.css';

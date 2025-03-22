@@ -1,6 +1,7 @@
 // frontend/src/components/ChatWindow.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import Message from './Message';
+import ContextWindow from './ContextWindow';
 import { useModelContext } from '../context/ModelContext';
 import ModelSelector from './ModelSelector';
 import Settings from './Settings';
@@ -18,6 +19,7 @@ const ChatWindow = ({ onNavigateToProject }) => {
   
   const [showSettings, setShowSettings] = useState(false);
   const [input, setInput] = useState('');
+  const [showContextInfo, setShowContextInfo] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   
@@ -54,6 +56,10 @@ const ChatWindow = ({ onNavigateToProject }) => {
 
   const handleCloseSettings = () => {
     setShowSettings(false);
+  };
+  
+  const toggleContextInfo = () => {
+    setShowContextInfo(!showContextInfo);
   };
   
   // If settings are being shown, display the settings interface
@@ -100,7 +106,21 @@ const ChatWindow = ({ onNavigateToProject }) => {
             </div>
           )}
         </div>
+        
+        {/* Add context info toggle button */}
+        <button 
+          className="context-info-toggle"
+          onClick={toggleContextInfo}
+          title={showContextInfo ? "Hide context info" : "Show context info"}
+        >
+          {showContextInfo ? "Hide Context Info" : "Show Context Info"}
+        </button>
       </div>
+      
+      {/* Show context window information if enabled */}
+      {showContextInfo && selectedModel && currentChat.messages.length > 0 && (
+        <ContextWindow />
+      )}
       
       <div className="messages-container">
         {currentChat.messages.length === 0 ? (

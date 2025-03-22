@@ -1,0 +1,149 @@
+/* 
+ * tabs.css
+ * Styles for tab navigation components
+ */
+
+/* Tab container */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Tab navigation */
+.tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-md);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.tab-nav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Tab items */
+.tab-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 2px solid transparent;
+  margin-right: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.tab-item:hover {
+  color: var(--color-text);
+}
+
+.tab-item.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Tab content */
+.tab-content {
+  flex: 1;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* Vertical tabs */
+.tabs--vertical {
+  flex-direction: row;
+}
+
+.tabs--vertical .tab-nav {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: 1px solid var(--color-border);
+  margin-bottom: 0;
+  margin-right: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.tabs--vertical .tab-item {
+  margin-right: 0;
+  margin-bottom: var(--spacing-sm);
+  border-bottom: none;
+  border-right: 2px solid transparent;
+}
+
+.tabs--vertical .tab-item.active {
+  border-right-color: var(--color-primary);
+}
+
+/* Tabs with icons */
+.tab-item-icon {
+  margin-right: var(--spacing-xs);
+  font-size: 1.1em;
+}
+
+/* Tab badge */
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.5em;
+  border-radius: 1em;
+  background-color: var(--color-text-secondary);
+  color: white;
+  font-size: var(--font-size-xs);
+  margin-left: var(--spacing-xs);
+}
+
+.tab-badge--primary {
+  background-color: var(--color-primary);
+}
+
+.tab-badge--success {
+  background-color: var(--color-success);
+}
+
+.tab-badge--warning {
+  background-color: var(--color-warning);
+}
+
+.tab-badge--danger {
+  background-color: var(--color-danger);
+}
+
+/* Responsive tabs */
+@media (max-width: 768px) {
+  .tabs--responsive {
+    flex-direction: column;
+  }
+  
+  .tabs--responsive.tabs--vertical .tab-nav {
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    margin-right: 0;
+    margin-bottom: var(--spacing-md);
+    padding-right: 0;
+    overflow-x: auto;
+  }
+  
+  .tabs--responsive.tabs--vertical .tab-item {
+    margin-bottom: 0;
+    margin-right: var(--spacing-md);
+    border-right: none;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tabs--responsive.tabs--vertical .tab-item.active {
+    border-right-color: transparent;
+    border-bottom-color: var(--color-primary);
+  }
+} 

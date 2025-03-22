@@ -1,0 +1,327 @@
+/*
+ * display.css
+ * Utility classes for display, visibility, and overflow
+ */
+
+/* Display properties */
+.d-none {
+  display: none !important;
+}
+
+.d-inline {
+  display: inline !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+.d-grid {
+  display: grid !important;
+}
+
+.d-inline-grid {
+  display: inline-grid !important;
+}
+
+.d-table {
+  display: table !important;
+}
+
+.d-table-row {
+  display: table-row !important;
+}
+
+.d-table-cell {
+  display: table-cell !important;
+}
+
+/* Visibility */
+.visible {
+  visibility: visible !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
+}
+
+.opacity-25 {
+  opacity: 0.25 !important;
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+.opacity-75 {
+  opacity: 0.75 !important;
+}
+
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+/* Overflow control */
+.overflow-auto {
+  overflow: auto !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+.overflow-scroll {
+  overflow: scroll !important;
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.overflow-x-visible {
+  overflow-x: visible !important;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll !important;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden !important;
+}
+
+.overflow-y-visible {
+  overflow-y: visible !important;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll !important;
+}
+
+/* Scrolling behavior */
+.scroll-smooth {
+  scroll-behavior: smooth !important;
+}
+
+.scroll-touch {
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.no-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Thin scrollbar */
+.thin-scrollbar {
+  scrollbar-width: thin !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Z-index utilities */
+.z-0 {
+  z-index: 0 !important;
+}
+
+.z-10 {
+  z-index: 10 !important;
+}
+
+.z-20 {
+  z-index: 20 !important;
+}
+
+.z-30 {
+  z-index: 30 !important;
+}
+
+.z-40 {
+  z-index: 40 !important;
+}
+
+.z-50 {
+  z-index: 50 !important;
+}
+
+.z-100 {
+  z-index: 100 !important;
+}
+
+.z-auto {
+  z-index: auto !important;
+}
+
+.z-top {
+  z-index: 9999 !important;
+}
+
+/* Responsive display utilities */
+@media (max-width: 576px) {
+  .d-none-xs {
+    display: none !important;
+  }
+  
+  .d-block-xs {
+    display: block !important;
+  }
+  
+  .d-flex-xs {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .d-none-sm {
+    display: none !important;
+  }
+  
+  .d-block-sm {
+    display: block !important;
+  }
+  
+  .d-flex-sm {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .d-none-md {
+    display: none !important;
+  }
+  
+  .d-block-md {
+    display: block !important;
+  }
+  
+  .d-flex-md {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .d-none-lg {
+    display: none !important;
+  }
+  
+  .d-block-lg {
+    display: block !important;
+  }
+  
+  .d-flex-lg {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .d-none-xl {
+    display: none !important;
+  }
+  
+  .d-block-xl {
+    display: block !important;
+  }
+  
+  .d-flex-xl {
+    display: flex !important;
+  }
+}
+
+/* Show only on specific screen sizes */
+.xs-only {
+  display: none !important;
+}
+
+.sm-only {
+  display: none !important;
+}
+
+.md-only {
+  display: none !important;
+}
+
+.lg-only {
+  display: none !important;
+}
+
+.xl-only {
+  display: none !important;
+}
+
+@media (max-width: 576px) {
+  .xs-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .sm-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .md-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .lg-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xl-only {
+    display: block !important;
+  }
+} 

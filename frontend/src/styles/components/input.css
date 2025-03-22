@@ -1,101 +1,114 @@
 /* 
  * components/input.css
- * Input form styles
+ * Input form styles with Apple-inspired design
  */
 
-/* Input form container */
-.input-form {
-    padding: var(--spacing-md) var(--spacing-lg);
+/* Message input form container */
+.message-input-form {
+    padding: var(--space-4);
     border-top: 1px solid var(--color-border);
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  
-  .input-container {
+    background-color: var(--color-background);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    position: relative;
+}
+
+.input-container {
     position: relative;
     display: flex;
     align-items: center;
-  }
-  
-  /* Textarea styling */
-  .input-form textarea {
+    margin-bottom: var(--space-2);
+}
+
+/* Textarea styling */
+.message-input {
     flex: 1;
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-pill);
-    /* Increased padding on left and right sides for better text alignment */
-    padding: var(--spacing-md) 4rem var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    padding: var(--space-3) var(--space-8) var(--space-3) var(--space-4);
     resize: none;
     outline: none;
-    background-color: white;
+    background-color: var(--color-card-bg);
     font-family: var(--font-family);
     font-size: var(--font-size-md);
     line-height: var(--line-height-normal);
-    min-height: 3rem;
-    max-height: 10rem;
+    min-height: 52px; /* Fixed height for consistent appearance */
+    max-height: 160px; /* Maximum expansion height */
     overflow-y: auto;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
-  }
-  
-  .input-form textarea:focus {
+    transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.message-input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-  }
-  
-  .input-form textarea:disabled {
+    box-shadow: var(--shadow-focus);
+}
+
+.message-input:disabled {
     opacity: 0.7;
     cursor: not-allowed;
-  }
-  
-  /* Send/Stop buttons */
-  .send-button,
-  .stop-button {
-    position: absolute;
-    right: var(--spacing-sm);
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
+    background-color: var(--color-hover);
+}
+
+/* Model info bar */
+.model-info-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: none;
-    color: white;
-    font-size: var(--font-size-md);
-    transition: background-color var(--transition-fast);
-    z-index: 2;
-  }
-  
-  /* Send button */
-  .send-button {
-    background-color: var(--color-primary);
-  }
-  
-  .send-button:hover {
-    background-color: var(--color-primary-hover);
-  }
-  
-  .send-button:disabled {
-    background-color: var(--color-border);
-    cursor: not-allowed;
-  }
-  
-  /* Stop button - used during generation */
-  .stop-button {
-    background-color: var(--color-danger);
-  }
-  
-  .stop-button:hover {
-    background-color: #ff4d4d;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 480px) {
-    .input-form {
-      padding: var(--spacing-md);
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    margin-top: var(--space-2);
+}
+
+.model-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.info-label {
+    font-weight: var(--font-weight-medium);
+}
+
+.model-badge {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+}
+
+.info-value {
+    color: var(--color-text);
+}
+
+/* No model warning */
+.no-model-warning {
+    text-align: center;
+    color: var(--color-warning);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2);
+    background-color: rgba(255, 149, 0, 0.1);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .message-input-form {
+        padding: var(--space-3);
     }
     
-    .input-form textarea {
-      padding: var(--spacing-md) 3rem var(--spacing-md) var(--spacing-sm);
+    .message-input {
+        padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
     }
-  }
+    
+    .model-info-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

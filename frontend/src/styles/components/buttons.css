@@ -3,191 +3,234 @@
  * Button styles across the app
  */
 
-/* Base button styles */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: background-color var(--transition-fast), 
-                color var(--transition-fast), 
-                border-color var(--transition-fast), 
-                box-shadow var(--transition-fast);
-    white-space: nowrap;
-    text-align: center;
-    user-select: none;
-    border: 1px solid transparent;
-    font-size: var(--font-size-md);
-    line-height: 1.5;
-  }
-  
-  /* Button sizes */
-  .btn-sm {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-  
-  .btn-lg {
-    padding: var(--spacing-md) var(--spacing-lg);
-    font-size: var(--font-size-lg);
-  }
-  
-  /* Button variants */
-  .btn-primary {
-    background-color: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-  }
-  
-  .btn-primary:hover,
-  .btn-primary:focus {
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
-  }
-  
-  .btn-secondary {
-    background-color: var(--color-sidebar-bg);
-    color: var(--color-text);
-    border-color: var(--color-border);
-  }
-  
-  .btn-secondary:hover,
-  .btn-secondary:focus {
-    background-color: var(--color-hover);
-  }
-  
-  .btn-outline {
-    background-color: transparent;
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-  }
-  
-  .btn-outline:hover,
-  .btn-outline:focus {
-    background-color: var(--color-primary-light);
-  }
-  
-  .btn-danger {
-    background-color: var(--color-danger);
-    color: white;
-  }
-  
-  .btn-danger:hover,
-  .btn-danger:focus {
-    background-color: #ff4d4d;
-  }
-  
-  .btn-success {
-    background-color: var(--color-success);
-    color: white;
-  }
-  
-  .btn-success:hover,
-  .btn-success:focus {
-    background-color: #2fb750;
-  }
-  
-  .btn-warning {
-    background-color: var(--color-warning);
-    color: white;
-  }
-  
-  .btn-warning:hover,
-  .btn-warning:focus {
-    background-color: #e78a00;
-  }
-  
-  .btn-text {
-    background-color: transparent;
-    color: var(--color-text);
-    border-color: transparent;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  
-  .btn-text:hover,
-  .btn-text:focus {
-    color: var(--color-primary);
-    text-decoration: underline;
-  }
-  
-  /* Disabled state */
-  .btn:disabled,
-  .btn.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-  
-  /* Button with icon */
-  .btn-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-sm);
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  
-  .btn-icon-sm {
-    width: 2rem;
-    height: 2rem;
-    padding: var(--spacing-xs);
-  }
-  
-  .btn-icon-lg {
-    width: 3rem;
-    height: 3rem;
-    padding: var(--spacing-md);
-  }
-  
-  /* Button with icon and text */
-  .btn-with-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-  
-  .btn-with-icon svg,
-  .btn-with-icon i {
-    font-size: 1.2em;
-  }
-  
-  /* Button groups */
-  .btn-group {
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .btn-group .btn {
-    border-radius: 0;
-  }
-  
-  .btn-group .btn:first-child {
-    border-top-left-radius: var(--border-radius-md);
-    border-bottom-left-radius: var(--border-radius-md);
-  }
-  
-  .btn-group .btn:last-child {
-    border-top-right-radius: var(--border-radius-md);
-    border-bottom-right-radius: var(--border-radius-md);
-  }
-  
-  .btn-group .btn:not(:first-child) {
-    margin-left: -1px;
-  }
-  
-  /* Full-width button */
-  .btn-block {
-    display: block;
-    width: 100%;
-  }
+/* Base Button */
+.fi-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+  user-select: none;
+  gap: var(--space-2);
+  max-width: 100%;
+  border: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
 
-  /* Theme toggle button */
+.fi-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button Sizes */
+.fi-button--small {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  height: 32px;
+}
+
+.fi-button--medium {
+  padding: var(--space-2) var(--space-4);
+  height: 38px;
+}
+
+.fi-button--large {
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--font-size-md);
+  height: 44px;
+}
+
+/* Button Variants */
+.fi-button--default {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-text);
+}
+
+.fi-button--default:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.fi-button--primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.fi-button--primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.fi-button--secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.fi-button--secondary:hover {
+  background-color: var(--color-primary-light);
+}
+
+.fi-button--ghost {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.fi-button--ghost:hover {
+  background-color: var(--color-hover);
+}
+
+.fi-button--danger {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+.fi-button--danger:hover {
+  background-color: rgba(var(--color-danger-rgb), 0.9);
+}
+
+.fi-button--text {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: var(--space-1);
+}
+
+.fi-button--text:hover {
+  background-color: transparent;
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Button States */
+.fi-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fi-button--disabled:hover {
+  background-color: inherit;
+}
+
+.fi-button--full-width {
+  width: 100%;
+}
+
+.fi-button:active:not(.fi-button--disabled) {
+  transform: scale(0.98);
+}
+
+/* Icon styling */
+.fi-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fi-button--with-icon .fi-button__text {
+  margin-left: var(--space-1);
+}
+
+/* Dark mode adjustments */
+.dark-theme .fi-button--default {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .fi-button--default:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark-theme .fi-button--ghost:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* For touch devices */
+@media (hover: none) {
+  .fi-button:hover {
+    background-color: inherit;
+  }
+  
+  .fi-button--primary:hover {
+    background-color: var(--color-primary);
+  }
+  
+  .fi-button--danger:hover {
+    background-color: var(--color-danger);
+  }
+}
+
+/* Icon Buttons */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.icon-button:hover {
+  background-color: var(--color-hover);
+}
+
+.icon-button:active {
+  background-color: var(--color-active);
+}
+
+.icon-button--small {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-button--large {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Button groups */
+.button-group {
+  display: flex;
+}
+
+.button-group .button {
+  border-radius: 0;
+}
+
+.button-group .button:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.button-group .button:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.button-group--vertical {
+  flex-direction: column;
+}
+
+.button-group--vertical .button:first-child {
+  border-radius: 0;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.button-group--vertical .button:last-child {
+  border-radius: 0;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/* Theme toggle button */
 .theme-toggle-button {
   display: flex;
   align-items: center;

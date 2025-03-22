@@ -1,507 +1,98 @@
-import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { fetchModels, sendChatMessage, streamChatMessage, updateTemperature } from '../services/api';
-import { v4 as uuidv4 } from 'uuid';
+import React, { createContext, useContext } from 'react';
+import { useModels, useChat, useSettings } from '../hooks';
 
-const ModelContext = createContext();
+// Create the context with default values
+const ModelContext = createContext({
+  // Models
+  availableModels: [],
+  selectedModel: null,
+  isLoadingModels: false,
+  setSelectedModel: () => {},
+  isReasoningModel: () => false,
+  
+  // Chat
+  chats: [],
+  currentChatId: null,
+  currentChat: null,
+  isLoading: false,
+  createNewChat: () => {},
+  deleteChat: () => {},
+  switchChat: () => {},
+  updateChatTitle: () => {},
+  sendMessage: async () => {},
+  clearCurrentChat: () => {},
+  
+  // Settings
+  temperature: 0.7,
+  maxTokens: 1000,
+  topP: 0.95,
+  streaming: true,
+  systemPrompt: '',
+  showThinking: false,
+  updateTemperature: () => {},
+  updateMaxTokens: () => {},
+  updateTopP: () => {},
+  toggleStreaming: () => {},
+  updateSystemPrompt: () => {},
+  toggleShowThinking: () => {},
+  resetSettings: () => {},
+  
+  // Errors
+  error: null,
+});
 
-export const useModelContext = () => useContext(ModelContext);
-
-export const ModelProvider = ({ children }) => {
-  const [availableModels, setAvailableModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState(null);
-  const [isLoadingModels, setIsLoadingModels] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState(null);
+/**
+ * Provider component for model context
+ */
+export function ModelProvider({ children }) {
+  // Use the hooks to manage state
+  const models = useModels();
+  const settings = useSettings();
+  const chat = useChat({ selectedModel: models.selectedModel });
   
-  // Model parameters
-  const [temperature, setTemperature] = useState(0.7);
-  const [maxTokens, setMaxTokens] = useState(1024);
-  const [topP, setTopP] = useState(0.9);
-  const [streaming, setStreaming] = useState(true);
-  const [systemPrompt, setSystemPrompt] = useState('');
-  const [showThinking, setShowThinking] = useState(true); // New state for showing thinking process
-  
-  // Chat state
-  const [chats, setChats] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
-  
-  // WebSocket reference
-  const wsRef = useRef(null);
-
-  // Initialize WebSocket
-  const initializeWebSocket = useCallback(() => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      console.log("WebSocket already connected");
-      return Promise.resolve();
-    }
+  // Combine all state and methods from the hooks
+  const contextValue = {
+    // Models
+    availableModels: models.availableModels,
+    selectedModel: models.selectedModel,
+    isLoadingModels: models.isLoadingModels,
+    setSelectedModel: models.setSelectedModel,
+    isReasoningModel: models.isReasoningModel,
     
-    console.log("Initializing new WebSocket connection");
-    return new Promise((resolve, reject) => {
-      const ws = new WebSocket(`ws://localhost:8000/api/chat/stream`);
-      
-      ws.onopen = () => {
-        console.log("WebSocket connection established");
-        wsRef.current = ws;
-        resolve();
-      };
-      
-      ws.onclose = (event) => {
-        console.log("WebSocket connection closed", event.code, event.reason);
-        wsRef.current = null;
-        
-        // Only attempt reconnection if not intentionally closed
-        if (selectedModel && event.code !== 1000) {
-          console.log("Attempting to reconnect...");
-          setTimeout(() => initializeWebSocket(), 2000);
-        }
-      };
-      
-      ws.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        reject(error);
-      };
-    });
-  }, [selectedModel]);
-  
-  // Enhanced setTemperature function that updates backend
-  const updateTemperatureValue = useCallback(async (newTemperature) => {
-    try {
-      // Update the local state first for responsive UI
-      setTemperature(newTemperature);
-      
-      // Then update the backend
-      console.log(`Updating backend temperature to: ${newTemperature}`);
-      await updateTemperature(newTemperature);
-      
-      // Save to localStorage
-      localStorage.setItem('fi-temperature', newTemperature.toString());
-      
-      return true;
-    } catch (error) {
-      console.error("Failed to update temperature on backend:", error);
-      // Don't revert the UI as it might be confusing - the next request will use whatever
-      // temperature the backend actually has
-      return false;
-    }
-  }, []);
-  
-  // Toggle whether to show the thinking process
-  const toggleShowThinking = useCallback(() => {
-    const newValue = !showThinking;
-    setShowThinking(newValue);
-    localStorage.setItem('fi-show-thinking', newValue.toString());
-    return newValue;
-  }, [showThinking]);
-  
-  // Check if a model is a reasoning model
-  const isReasoningModel = useCallback((model) => {
-    if (!model) return false;
+    // Chat
+    chats: chat.chats,
+    currentChatId: chat.currentChatId,
+    currentChat: chat.currentChat,
+    isLoading: chat.isLoading,
+    createNewChat: chat.createNewChat,
+    deleteChat: chat.deleteChat,
+    switchChat: chat.switchChat,
+    updateChatTitle: chat.updateChatTitle,
+    sendMessage: (message) => chat.sendMessage(message, {
+      streaming: settings.streaming,
+      systemPrompt: settings.systemPrompt,
+      temperature: settings.temperature,
+      maxTokens: settings.maxTokens,
+    }),
+    clearCurrentChat: chat.clearCurrentChat,
     
-    const reasoningModelKeywords = ['deepseek', 'qwen', 'mistral', 'mixtral', 'yi', 'claude', 'r1'];
-    return reasoningModelKeywords.some(keyword => 
-      model.id.toLowerCase().includes(keyword.toLowerCase()) || 
-      (model.name && model.name.toLowerCase().includes(keyword.toLowerCase())) ||
-      (model.has_reasoning === true)
-    );
-  }, []);
-  
-  // Load settings from localStorage
-  useEffect(() => {
-    const savedChats = localStorage.getItem('fi-chats');
-    if (savedChats) {
-      try {
-        const parsedChats = JSON.parse(savedChats);
-        setChats(parsedChats);
-        
-        // Set current chat if available
-        const currentChatId = localStorage.getItem('fi-current-chat');
-        if (currentChatId) {
-          const chat = parsedChats.find(c => c.id === currentChatId);
-          if (chat) {
-            setCurrentChat(chat);
-          }
-        }
-      } catch (e) {
-        console.error('Failed to parse saved chats', e);
-      }
-    }
+    // Settings
+    ...settings,
     
-    // Load model settings
-    const savedModel = localStorage.getItem('fi-selected-model');
-    if (savedModel) {
-      try {
-        setSelectedModel(JSON.parse(savedModel));
-      } catch (e) {
-        console.error('Failed to parse saved model', e);
-      }
-    }
-    
-    // Load generation parameters
-    const savedMaxTokens = localStorage.getItem('fi-max-tokens');
-    if (savedMaxTokens) {
-      setMaxTokens(parseInt(savedMaxTokens));
-    }
-    
-    const savedTopP = localStorage.getItem('fi-top-p');
-    if (savedTopP) {
-      setTopP(parseFloat(savedTopP));
-    }
-    
-    const savedStreaming = localStorage.getItem('fi-streaming');
-    if (savedStreaming !== null) {
-      setStreaming(savedStreaming === 'true');
-    }
-    
-    const savedSystemPrompt = localStorage.getItem('fi-system-prompt');
-    if (savedSystemPrompt) {
-      setSystemPrompt(savedSystemPrompt);
-    }
-    
-    const savedShowThinking = localStorage.getItem('fi-show-thinking');
-    if (savedShowThinking !== null) {
-      setShowThinking(savedShowThinking === 'true');
-    }
-  }, []);
-  
-  useEffect(() => {
-    const savedTemperature = localStorage.getItem('fi-temperature');
-    if (savedTemperature) {
-      setTemperature(parseFloat(savedTemperature));
-    }
-  }, []);
-
-  // Save settings to localStorage when they change
-  useEffect(() => {
-    if (chats.length > 0) {
-      localStorage.setItem('fi-chats', JSON.stringify(chats));
-    }
-  }, [chats]);
-  
-  useEffect(() => {
-    if (currentChat) {
-      localStorage.setItem('fi-current-chat', currentChat.id);
-    }
-  }, [currentChat]);
-  
-  useEffect(() => {
-    if (selectedModel) {
-      localStorage.setItem('fi-selected-model', JSON.stringify(selectedModel));
-    }
-  }, [selectedModel]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-temperature', temperature.toString());
-  }, [temperature]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-max-tokens', maxTokens.toString());
-  }, [maxTokens]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-top-p', topP.toString());
-  }, [topP]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-streaming', streaming.toString());
-  }, [streaming]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-system-prompt', systemPrompt);
-  }, [systemPrompt]);
-  
-  useEffect(() => {
-    localStorage.setItem('fi-show-thinking', showThinking.toString());
-  }, [showThinking]);
-  
-  const fetchAvailableModels = useCallback(async () => {
-    setIsLoadingModels(true);
-    setError(null);
-    
-    try {
-      const data = await fetchModels();
-      setAvailableModels(data.models);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch models');
-    } finally {
-      setIsLoadingModels(false);
-    }
-  }, []);
-  
-  const createNewChat = useCallback(() => {
-    const newChat = {
-      id: uuidv4(),
-      title: '',
-      model: selectedModel,
-      messages: [],
-      createdAt: new Date().toISOString()
-    };
-    
-    // Add the new chat to the chats array
-    setChats(prevChats => [newChat, ...prevChats]);
-    setCurrentChat(newChat);
-    
-    // Return the new chat object so it can be added to a project
-    return newChat;
-  }, [selectedModel]);
-  
-  const switchChat = useCallback((chatId) => {
-    const chat = chats.find(c => c.id === chatId);
-    if (chat) {
-      setCurrentChat(chat);
-    }
-  }, [chats]);
-  
-  const deleteChat = useCallback((chatId) => {
-    setChats(prevChats => prevChats.filter(c => c.id !== chatId));
-    
-    if (currentChat?.id === chatId) {
-      const remainingChats = chats.filter(c => c.id !== chatId);
-      if (remainingChats.length > 0) {
-        setCurrentChat(remainingChats[0]);
-      } else {
-        setCurrentChat(null);
-      }
-    }
-  }, [chats, currentChat]);
-  
-  const updateChatTitle = useCallback((chatId, title) => {
-    setChats(prevChats => 
-      prevChats.map(chat => 
-        chat.id === chatId ? { ...chat, title } : chat
-      )
-    );
-    
-    if (currentChat?.id === chatId) {
-      setCurrentChat(prev => ({ ...prev, title }));
-    }
-  }, [currentChat]);
-  
-  const addMessage = useCallback(async (message) => {
-    if (!currentChat) return;
-    
-    // Create a new messages array with the new message
-    const updatedMessages = [...currentChat.messages, message];
-    console.log("Adding message, updated messages will be:", updatedMessages);
-    
-    // Update UI state
-    setCurrentChat(prev => ({
-      ...prev,
-      messages: updatedMessages
-    }));
-    
-    setChats(prevChats => 
-      prevChats.map(chat => 
-        chat.id === currentChat.id ? {
-          ...chat, 
-          messages: updatedMessages
-        } : chat
-      )
-    );
-    
-    // Wait a moment for state to update
-    await new Promise(resolve => setTimeout(resolve, 50));
-    
-    // Only generate a response if it's a user message
-    if (message.role === 'user' && selectedModel) {
-      setIsGenerating(true);
-      
-      try {
-        // Ensure WebSocket is connected
-        if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-          console.log("Initializing WebSocket connection...");
-          await initializeWebSocket();
-          
-          // Wait for connection to establish
-          await new Promise((resolve, reject) => {
-            const checkInterval = setInterval(() => {
-              if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-                clearInterval(checkInterval);
-                resolve();
-              } else if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
-                clearInterval(checkInterval);
-                reject(new Error("Failed to establish WebSocket connection"));
-              }
-            }, 100);
-            
-            // Set a timeout to prevent waiting forever
-            setTimeout(() => {
-              clearInterval(checkInterval);
-              reject(new Error("WebSocket connection timeout"));
-            }, 5000);
-          });
-        }
-        
-        // Important: Use the explicitly created updatedMessages array
-        // Don't reference currentChat.messages which might not have updated yet
-        console.log("Sending message with history:", updatedMessages);
-        
-        // Clear previous response accumulator
-        let fullResponse = '';
-        let thinkingContent = '';
-        let currentPhase = 'response'; // Start in response phase
-        
-        // Create a unique handler for this specific message
-        const messageId = Date.now();
-        const responseHandler = (event) => {
-          try {
-            const data = JSON.parse(event.data);
-            
-            if (data.error) {
-              console.error(`[${messageId}] Stream error:`, data.error);
-              wsRef.current.removeEventListener('message', responseHandler);
-              setIsGenerating(false);
-            } else if (data.done) {
-              console.log(`[${messageId}] Stream complete`);
-              wsRef.current.removeEventListener('message', responseHandler);
-              setIsGenerating(false);
-            } else if (data.token) {
-              // Process token based on its type
-              const tokenType = data.type || 'response';
-              
-              if (tokenType === 'response') {
-                fullResponse += data.token;
-                currentPhase = 'response';
-              } else if (tokenType === 'thinking') {
-                thinkingContent += data.token;
-                currentPhase = 'thinking';
-              }
-              
-              // Update the UI with the streaming response
-              setCurrentChat(prev => {
-                // Make sure we're updating the right conversation
-                if (!prev || prev.id !== currentChat.id) return prev;
-                
-                const messages = [...prev.messages];
-                
-                // Check if we already have an assistant response
-                if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
-                  // Update existing assistant message with both content and thinking
-                  messages[messages.length - 1] = {
-                    ...messages[messages.length - 1],
-                    content: fullResponse,
-                    thinking: thinkingContent || undefined
-                  };
-                } else {
-                  // Add new assistant message
-                  messages.push({
-                    role: 'assistant',
-                    content: fullResponse,
-                    thinking: thinkingContent || undefined
-                  });
-                }
-                
-                return {
-                  ...prev,
-                  messages
-                };
-              });
-              
-              // Also update the chats state
-              setChats(prevChats => 
-                prevChats.map(chat => {
-                  if (chat.id !== currentChat.id) return chat;
-                  
-                  const messages = [...chat.messages];
-                  
-                  if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
-                    // Update existing assistant message
-                    messages[messages.length - 1] = {
-                      ...messages[messages.length - 1],
-                      content: fullResponse,
-                      thinking: thinkingContent || undefined
-                    };
-                  } else {
-                    // Add new assistant message
-                    messages.push({
-                      role: 'assistant',
-                      content: fullResponse,
-                      thinking: thinkingContent || undefined
-                    });
-                  }
-                  
-                  return {
-                    ...chat,
-                    messages
-                  };
-                })
-              );
-            }
-          } catch (err) {
-            console.error(`[${messageId}] Error parsing WebSocket message:`, err);
-          }
-        };
-        
-        // Add the message event listener
-        wsRef.current.addEventListener('message', responseHandler);
-        
-        // Send the request with the full conversation history
-        wsRef.current.send(JSON.stringify({
-          provider: selectedModel.provider,
-          model_id: selectedModel.id,
-          messages: updatedMessages,
-          temperature: temperature,
-          max_tokens: maxTokens,
-          show_thinking: showThinking,
-          messageId: messageId
-        }));
-        
-      } catch (err) {
-        console.error("Error in message handling:", err);
-        setIsGenerating(false);
-      }
-    }
-  }, [currentChat, selectedModel, temperature, maxTokens, showThinking, initializeWebSocket]);
-  
-  const stopGeneration = useCallback(() => {
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-    setIsGenerating(false);
-  }, []);
-  
-  const value = {
-    availableModels,
-    selectedModel,
-    setSelectedModel,
-    isLoadingModels,
-    isGenerating,
-    error,
-    fetchModels: fetchAvailableModels,
-    
-    // Chat functions
-    chats,
-    currentChat,
-    createNewChat,
-    switchChat,
-    deleteChat,
-    updateChatTitle,
-    addMessage,
-    stopGeneration,
-  
-    // Temperature with enhanced update function
-    temperature,
-    setTemperature: updateTemperatureValue,
-    
-    // Other parameters
-    maxTokens,
-    setMaxTokens,
-    topP,
-    setTopP,
-    streaming,
-    setStreaming,
-    systemPrompt,
-    setSystemPrompt,
-    
-    // Reasoning model specific
-    showThinking,
-    toggleShowThinking,
-    isReasoningModel
+    // Errors - combine errors from all hooks
+    error: models.error || chat.error,
   };
   
   return (
-    <ModelContext.Provider value={value}>
+    <ModelContext.Provider value={contextValue}>
       {children}
     </ModelContext.Provider>
   );
-};
+}
+
+/**
+ * Custom hook to use the model context
+ */
+export const useModelContext = () => useContext(ModelContext);
+
+export default ModelContext; 

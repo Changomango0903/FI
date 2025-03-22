@@ -1,0 +1,257 @@
+/*
+ * cards.css
+ * Styles for card components and containers
+ */
+
+/* Base card styling */
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--color-border);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Card header */
+.card-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.card-subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* Card body */
+.card-body {
+  padding: var(--space-4);
+}
+
+/* Card footer */
+.card-footer {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* Card variants */
+.card--primary {
+  border-top: 4px solid var(--color-primary);
+}
+
+.card--success {
+  border-top: 4px solid var(--color-success);
+}
+
+.card--warning {
+  border-top: 4px solid var(--color-warning);
+}
+
+.card--danger {
+  border-top: 4px solid var(--color-danger);
+}
+
+.card--info {
+  border-top: 4px solid var(--color-info);
+}
+
+/* Card sizes */
+.card--small {
+  max-width: 300px;
+}
+
+.card--medium {
+  max-width: 500px;
+}
+
+.card--large {
+  max-width: 800px;
+}
+
+/* Card with image */
+.card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-img-top {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.card-img-bottom {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* Horizontal card */
+.card--horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.card--horizontal .card-img {
+  width: 30%;
+  object-fit: cover;
+}
+
+.card--horizontal .card-content {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .card--horizontal {
+    flex-direction: column;
+  }
+  
+  .card--horizontal .card-img {
+    width: 100%;
+  }
+}
+
+/* Card group */
+.card-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Interactive cards */
+.card--interactive {
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card--interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--interactive:active {
+  transform: translateY(-2px);
+}
+
+/* Card with icon */
+.card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+/* Card badges */
+.card-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+}
+
+/* Card with overlay */
+.card-overlay {
+  position: relative;
+}
+
+.card-overlay-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-overlay-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-4);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  color: white;
+}
+
+/* Project card specific styles */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-card__body {
+  padding: var(--space-4);
+  flex: 1;
+}
+
+.project-card__title {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.project-card__meta {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.project-card__date {
+  margin-right: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.project-card__count {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.project-card__footer {
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card__actions {
+  display: flex;
+  gap: var(--space-2);
+} 

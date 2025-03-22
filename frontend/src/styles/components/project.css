@@ -1,0 +1,311 @@
+/* 
+ * project.css
+ * Styles for project components
+ */
+
+/* Project list */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) 0;
+}
+
+/* Project list item */
+.project-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.project-item:hover {
+  background-color: var(--color-hover);
+}
+
+.project-item--active {
+  background-color: var(--color-selected);
+}
+
+.project-item--active:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* Project color indicator */
+.project-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Project content */
+.project-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.project-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-actions {
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.project-item:hover .project-actions {
+  opacity: 1;
+}
+
+/* Project page */
+.project-page {
+  padding: var(--spacing-md);
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.project-title-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.project-title-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.project-meta {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.project-edit-form {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Project chats section */
+.project-chats {
+  margin-top: var(--spacing-lg);
+}
+
+.project-section-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.chat-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+.chat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.chat-card__title {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-card__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.chat-card__actions {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.chat-card:hover .chat-card__actions {
+  opacity: 1;
+}
+
+/* Create new chat card */
+.create-chat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background-color: rgba(var(--color-primary-rgb), 0.05);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  height: 100%;
+  min-height: 150px;
+  transition: all var(--transition-fast);
+}
+
+.create-chat-card:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-color: var(--color-primary);
+}
+
+.create-chat-icon {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.create-chat-text {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+}
+
+/* Project settings */
+.project-settings {
+  padding: var(--spacing-md);
+}
+
+.project-settings-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
+
+.color-selector {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option--selected {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-card-bg), 0 0 0 4px var(--color-border);
+}
+
+/* Project in header (chat page) */
+.project-header-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-radius: var(--border-radius-pill);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  margin-bottom: var(--spacing-sm);
+}
+
+.project-header-pill:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.2);
+}
+
+.project-header-color {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: var(--spacing-xs);
+}
+
+.project-selector {
+  padding: var(--spacing-md);
+  max-width: 300px;
+}
+
+.project-selector-title {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Empty state */
+.project-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.project-empty-icon {
+  font-size: 3rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.project-empty-title {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-sm);
+}
+
+.project-empty-description {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+} 

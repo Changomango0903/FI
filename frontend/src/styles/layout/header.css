@@ -1,0 +1,279 @@
+/* 
+ * header.css
+ * Styles for the application header
+ */
+
+/* Main header container */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 var(--spacing-md);
+  background-color: var(--color-card-bg);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 10;
+}
+
+/* Header sections */
+.header__left,
+.header__center,
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header__left {
+  justify-content: flex-start;
+}
+
+.header__center {
+  justify-content: center;
+  flex: 1;
+}
+
+.header__right {
+  justify-content: flex-end;
+}
+
+/* Logo in header */
+.header__logo {
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.header__logo-image {
+  height: 28px;
+  margin-right: var(--spacing-sm);
+}
+
+/* Navigation */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header__nav-item {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.header__nav-item:hover {
+  color: var(--color-primary);
+}
+
+.header__nav-item--active {
+  color: var(--color-primary);
+}
+
+/* Mobile header */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .header__center {
+    display: none;
+  }
+  
+  .header__logo-text {
+    display: none;
+  }
+}
+
+/* Buttons in header */
+.header__button {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.header__button:hover {
+  background-color: var(--color-hover);
+}
+
+/* Header dropdown */
+.header__dropdown {
+  position: relative;
+}
+
+/* 
+ * header.css
+ * Styling for headers with Apple-inspired design
+ */
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-3) var(--space-4) 0;
+  border-radius: var(--radius-lg);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  z-index: 10;
+}
+
+.dark-theme .chat-header {
+  background-color: rgba(40, 40, 40, 0.7);
+  border: 1px solid rgba(70, 70, 70, 0.5);
+}
+
+.chat-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.chat-info h2 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.project-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .project-link {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .project-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.project-icon {
+  font-size: 12px;
+}
+
+.chat-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.model-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-full);
+}
+
+.dark-theme .model-badge {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.model-icon {
+  font-size: 14px;
+}
+
+.model-name {
+  font-weight: var(--font-weight-medium);
+}
+
+/* Welcome screen styling */
+.welcome-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+  align-items: center;
+}
+
+.feature-list {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-radius: var(--radius-full);
+}
+
+.feature-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .chat-header {
+    margin-top: 0;
+    border-radius: 0;
+    padding: var(--space-4) var(--space-4);
+  }
+  
+  .chat-info h2 {
+    max-width: 140px;
+  }
+  
+  .feature-list {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .feature-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-3);
+  }
+  
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+} 

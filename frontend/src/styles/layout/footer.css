@@ -1,0 +1,79 @@
+/* 
+ * footer.css
+ * Styles for the application footer
+ */
+
+/* Main footer container */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background-color: var(--color-card-bg);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Footer sections */
+.footer__left,
+.footer__center,
+.footer__right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.footer__left {
+  justify-content: flex-start;
+}
+
+.footer__center {
+  justify-content: center;
+  flex: 1;
+}
+
+.footer__right {
+  justify-content: flex-end;
+}
+
+/* Links in footer */
+.footer__link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__link:hover {
+  color: var(--color-primary);
+}
+
+/* Footer version info */
+.footer__version {
+  font-size: var(--font-size-xs);
+}
+
+/* Mobile footer */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    text-align: center;
+  }
+  
+  .footer__left,
+  .footer__center,
+  .footer__right {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Sticky footer at bottom */
+.footer--sticky {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+} 

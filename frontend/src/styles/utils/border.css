@@ -1,0 +1,284 @@
+/*
+ * border.css
+ * Utility classes for borders and border-radius
+ */
+
+/* Border width */
+.border {
+  border: 1px solid var(--color-border) !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-top {
+  border-top: 1px solid var(--color-border) !important;
+}
+
+.border-top-0 {
+  border-top: 0 !important;
+}
+
+.border-right {
+  border-right: 1px solid var(--color-border) !important;
+}
+
+.border-right-0 {
+  border-right: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+
+.border-left {
+  border-left: 1px solid var(--color-border) !important;
+}
+
+.border-left-0 {
+  border-left: 0 !important;
+}
+
+/* Border thickness */
+.border-thin {
+  border-width: 1px !important;
+}
+
+.border-medium {
+  border-width: 2px !important;
+}
+
+.border-thick {
+  border-width: 3px !important;
+}
+
+.border-x-thin {
+  border-left-width: 1px !important;
+  border-right-width: 1px !important;
+}
+
+.border-x-medium {
+  border-left-width: 2px !important;
+  border-right-width: 2px !important;
+}
+
+.border-x-thick {
+  border-left-width: 3px !important;
+  border-right-width: 3px !important;
+}
+
+.border-y-thin {
+  border-top-width: 1px !important;
+  border-bottom-width: 1px !important;
+}
+
+.border-y-medium {
+  border-top-width: 2px !important;
+  border-bottom-width: 2px !important;
+}
+
+.border-y-thick {
+  border-top-width: 3px !important;
+  border-bottom-width: 3px !important;
+}
+
+/* Border style */
+.border-solid {
+  border-style: solid !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
+
+.border-dotted {
+  border-style: dotted !important;
+}
+
+.border-double {
+  border-style: double !important;
+}
+
+.border-groove {
+  border-style: groove !important;
+}
+
+.border-ridge {
+  border-style: ridge !important;
+}
+
+.border-inset {
+  border-style: inset !important;
+}
+
+.border-outset {
+  border-style: outset !important;
+}
+
+/* Border radius */
+.rounded {
+  border-radius: var(--border-radius-md) !important;
+}
+
+.rounded-0 {
+  border-radius: 0 !important;
+}
+
+.rounded-xs {
+  border-radius: var(--border-radius-xs) !important;
+}
+
+.rounded-sm {
+  border-radius: var(--border-radius-sm) !important;
+}
+
+.rounded-md {
+  border-radius: var(--border-radius-md) !important;
+}
+
+.rounded-lg {
+  border-radius: var(--border-radius-lg) !important;
+}
+
+.rounded-xl {
+  border-radius: var(--border-radius-xl) !important;
+}
+
+.rounded-pill {
+  border-radius: var(--border-radius-pill) !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+/* Specific corners */
+.rounded-top {
+  border-top-left-radius: var(--border-radius-md) !important;
+  border-top-right-radius: var(--border-radius-md) !important;
+}
+
+.rounded-right {
+  border-top-right-radius: var(--border-radius-md) !important;
+  border-bottom-right-radius: var(--border-radius-md) !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: var(--border-radius-md) !important;
+  border-bottom-left-radius: var(--border-radius-md) !important;
+}
+
+.rounded-left {
+  border-top-left-radius: var(--border-radius-md) !important;
+  border-bottom-left-radius: var(--border-radius-md) !important;
+}
+
+.rounded-top-left {
+  border-top-left-radius: var(--border-radius-md) !important;
+}
+
+.rounded-top-right {
+  border-top-right-radius: var(--border-radius-md) !important;
+}
+
+.rounded-bottom-right {
+  border-bottom-right-radius: var(--border-radius-md) !important;
+}
+
+.rounded-bottom-left {
+  border-bottom-left-radius: var(--border-radius-md) !important;
+}
+
+/* Border colors - using existing color variables */
+/* Borders should use the border-{color} classes from color.css */
+
+/* Special borders */
+.border-dashed-neutral {
+  border: 1px dashed var(--color-border) !important;
+}
+
+.border-dotted-neutral {
+  border: 1px dotted var(--color-border) !important;
+}
+
+.border-focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.25) !important;
+}
+
+.border-hover:hover {
+  border-color: var(--color-primary) !important;
+  transition: border-color var(--transition-fast) !important;
+}
+
+/* Interactive borders */
+.border-interactive {
+  border: 1px solid var(--color-border) !important;
+  transition: border-color var(--transition-fast) !important;
+}
+
+.border-interactive:hover {
+  border-color: var(--color-text-secondary) !important;
+}
+
+.border-interactive:focus {
+  border-color: var(--color-primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.25) !important;
+}
+
+/* Dividers */
+.divider {
+  height: 1px !important;
+  background-color: var(--color-border) !important;
+  margin: var(--spacing-md) 0 !important;
+}
+
+.divider-vertical {
+  width: 1px !important;
+  height: 100% !important;
+  background-color: var(--color-border) !important;
+  margin: 0 var(--spacing-md) !important;
+}
+
+.divider-dashed {
+  height: 1px !important;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-border),
+    var(--color-border) 4px,
+    transparent 4px,
+    transparent 8px
+  ) !important;
+  margin: var(--spacing-md) 0 !important;
+}
+
+.divider-dotted {
+  height: 1px !important;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-border),
+    var(--color-border) 1px,
+    transparent 1px,
+    transparent 4px
+  ) !important;
+  margin: var(--spacing-md) 0 !important;
+}
+
+/* Outline */
+.outline-none {
+  outline: none !important;
+}
+
+.focus-ring {
+  outline: none !important;
+}
+
+.focus-ring:focus {
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.4) !important;
+} 

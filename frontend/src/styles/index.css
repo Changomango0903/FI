@@ -5,30 +5,44 @@
  */
 
 /* Core styles */
-@import './variables.css';
-@import './base.css';
+@import '@/styles/variables.css';
+@import '@/styles/base.css';
 
 /* Layout */
-@import './layout/app.css';
-@import './layout/sidebar.css';
-@import './layout/chat-window.css';
+@import '@/styles/layout/grid.css';
+@import '@/styles/layout/flex.css';
+@import '@/styles/layout/container.css';
+@import '@/styles/layout/sidebar.css';
+@import '@/styles/layout/header.css';
+@import '@/styles/layout/footer.css';
 
 /* Components */
-@import './components/messages.css';
-@import './components/input.css';
-@import './components/buttons.css';
-@import './components/model-selector.css';
-@import './components/settings.css';
-@import './components/theme-toggle.css';
-@import './components/projects.css';  /* Make sure this points to the updated CSS file */
-@import './components/context-window.css';  /* New context window styles */
+@import '@/styles/components/buttons.css';
+@import '@/styles/components/cards.css';
+@import '@/styles/components/forms.css';
+@import '@/styles/components/modals.css';
+@import '@/styles/components/spinner.css';
+@import '@/styles/components/toast.css';
+@import '@/styles/components/dropdown.css';
+@import '@/styles/components/theme-toggle.css';
+@import '@/styles/components/model-selector.css';
+@import '@/styles/components/thinking.css';
+@import '@/styles/components/messages.css';
+@import '@/styles/components/context-window.css';
+@import '@/styles/components/input.css';
+@import '@/styles/components/projects.css';
 
 /* Utilities */
-@import './utils/markdown.css';
-@import './utils/animations.css';
-@import './utils/responsive.css';
-@import './utils/dark-mode.css';
+@import '@/styles/utils/spacing.css';
+@import '@/styles/utils/text.css';
+@import '@/styles/utils/color.css';
+@import '@/styles/utils/display.css';
+@import '@/styles/utils/animation.css';
+@import '@/styles/utils/position.css';
+@import '@/styles/utils/border.css';
+@import '@/styles/utils/shadow.css';
+@import '@/styles/utils/size.css';
+@import '@/styles/utils/misc.css';
 
-/* Highlight.js styles (for code highlighting) */
-@import 'highlight.js/styles/github.css';
-@import 'highlight.js/styles/github-dark.css';
+/* Vendors */
+@import '@/vendor/highlight.js/styles/atom-one-dark.css';

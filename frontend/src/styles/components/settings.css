@@ -1,471 +1,415 @@
 /* 
- * Replace the existing settings.css with this refined Apple-esque styling
+ * settings.css
+ * Styles for settings components with Apple-inspired design
  */
 
-/* Settings sections with Apple-inspired design */
-.settings-section {
-  margin-bottom: 32px;
+/* Settings interface */
+.settings-interface {
+  width: 100%;
+  height: 100%;
+  padding: var(--space-5);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
-.settings-section h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 16px;
+/* Glass card effect for settings items */
+.glass-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.dark-theme .glass-card {
+  background-color: rgba(40, 40, 40, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--color-primary-rgb), 0.3);
+}
+
+/* Settings header */
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-3);
+}
+
+.settings-header h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
+  margin: 0;
   color: var(--color-text);
 }
 
-/* Special styling for generation settings section */
-.generation-settings-section {
+/* Settings sections */
+.settings-section {
+  padding: var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0 0 var(--space-3) 0;
+  letter-spacing: -0.01em;
+}
+
+/* Model selector */
+.model-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.provider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.provider-title {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin: 0;
+  padding-left: var(--space-2);
+  font-weight: var(--font-weight-medium);
+}
+
+.model-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.model-option {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4);
+  cursor: pointer;
   position: relative;
+  height: 100%;
 }
 
-.settings-section-header {
-  margin-bottom: 16px;
+.model-option.selected {
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-color: var(--color-primary);
 }
 
-/* Card-like container for settings */
-.settings-card {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s ease;
+.model-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
-.settings-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+.model-name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+  margin: 0;
 }
 
-/* Refined setting item styling */
-.setting-item-refined {
-  position: relative;
+.model-description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0;
 }
 
-/* Setting header with label and value */
+.model-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.model-context-length {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.dark-theme .model-context-length {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.model-selected-indicator {
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.model-selected-indicator .checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-sm);
+}
+
+/* Setting items */
+.setting-item {
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
 .setting-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-3);
 }
 
-.setting-label {
-  font-size: 15px;
-  font-weight: 500;
+.setting-header label {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
   color: var(--color-text);
 }
 
-.setting-value-pill {
-  background-color: var(--color-primary-light);
+.setting-value {
+  font-size: var(--font-size-sm);
   color: var(--color-primary);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 100px;
-  min-width: 36px;
-  text-align: center;
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-1) var(--space-2);
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-radius: var(--radius-full);
 }
 
-/* Slider container */
-.slider-container {
-  margin-bottom: 14px;
-}
-
-/* Refined temperature slider */
-.temperature-slider-refined {
-  width: 100%;
-  height: 4px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: linear-gradient(to right, #3498db, #f39c12);
-  border-radius: 100px;
-  outline: none;
-  margin: 0 0 10px 0;
-}
-
-.temperature-slider-refined::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.temperature-slider-refined::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.temperature-slider-refined::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-.temperature-slider-refined::-moz-range-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Temperature range labels */
-.temperature-range-labels {
+.setting-slider {
   display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-top: 4px;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
-/* Refined setting description */
-.setting-description-refined {
-  font-size: 13px;
+.slider-min, .slider-max {
+  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-  margin-top: 4px;
-  margin-bottom: 0;
+  width: 30px;
+}
+
+.slider-max {
+  text-align: right;
+}
+
+/* Apple-style sliders */
+.temperature-slider-refined,
+.token-slider-refined,
+.topp-slider-refined {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  outline: none;
+  flex: 1;
+}
+
+.temperature-slider-refined::-webkit-slider-thumb,
+.token-slider-refined::-webkit-slider-thumb,
+.topp-slider-refined::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.temperature-slider-refined::-moz-range-thumb,
+.token-slider-refined::-moz-range-thumb,
+.topp-slider-refined::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.temperature-slider-refined::-webkit-slider-thumb:hover,
+.token-slider-refined::-webkit-slider-thumb:hover,
+.topp-slider-refined::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.temperature-slider-refined::-moz-range-thumb:hover,
+.token-slider-refined::-moz-range-thumb:hover,
+.topp-slider-refined::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.temperature-slider-refined::-webkit-slider-runnable-track,
+.token-slider-refined::-webkit-slider-runnable-track,
+.topp-slider-refined::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--radius-full);
+}
+
+.temperature-slider-refined::-moz-range-track,
+.token-slider-refined::-moz-range-track,
+.topp-slider-refined::-moz-range-track {
+  height: 4px;
+  border-radius: var(--radius-full);
+}
+
+/* Setting description */
+.setting-description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
   line-height: 1.4;
 }
 
-/* Temperature update notification */
-.temperature-notification {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: rgba(0, 113, 227, 0.08);
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-top: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  animation: fadeInNotification 0.3s ease-out;
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Checkmark icon styling */
-.notification-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-/* Notification text styling */
-.notification-text {
-  color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-/* Improved animation with better timing */
-@keyframes fadeInNotification {
-  0% {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Refined future features section */
-.future-features-refined {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.feature-badge {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 100px;
-}
-
-/* Make the settings page a flex container */
-.settings-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* Fixed header that stays in place */
-.settings-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  padding: 16px 20px;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+/* Toggle switches */
+.setting-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Scrollable content area */
-.settings-content {
+.toggle-content {
   flex: 1;
-  overflow-y: auto;
-  padding: 24px 20px;
-  /* Add padding at the bottom for better scrolling experience */
-  padding-bottom: 40px;
-  /* Apply momentum-based scrolling on iOS devices */
-  -webkit-overflow-scrolling: touch;
 }
 
-/* Elegant minimal scrollbar styling */
-.settings-content::-webkit-scrollbar {
-  width: 8px;
+.toggle-content h3 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-1) 0;
 }
 
-.settings-content::-webkit-scrollbar-track {
-  background: transparent;
+/* Apple-style toggle */
+.apple-toggle {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 32px;
 }
 
-.settings-content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+.apple-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-.settings-content::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-/* Hide scrollbar when not scrolling - for a cleaner look */
-.settings-content::-webkit-scrollbar-thumb:vertical:active,
-.settings-content::-webkit-scrollbar-thumb:horizontal:active {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-
-/* Hide scrollbar for Firefox */
-.settings-content {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-}
-
-/* Back button styling */
-.back-button {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--color-primary);
-  background: none;
-  border: none;
+.apple-toggle .toggle-slider {
+  position: absolute;
   cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 34px;
+  transition: .3s;
 }
 
-.back-button:hover {
-  background-color: rgba(0, 113, 227, 0.08);
+.apple-toggle .toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 28px;
+  width: 28px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+  box-shadow: var(--shadow-sm);
 }
 
-.temperature-notification {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-top: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  animation: fadeInNotification 0.3s ease-out;
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Success notification styling */
-.temperature-notification.success {
-  background-color: rgba(0, 113, 227, 0.08);
-}
-
-.temperature-notification.success .notification-icon {
+.apple-toggle input:checked + .toggle-slider {
   background-color: var(--color-primary);
 }
 
-.temperature-notification.success .notification-text {
-  color: var(--color-primary);
+.apple-toggle input:checked + .toggle-slider:before {
+  transform: translateX(20px);
 }
 
-/* Error notification styling */
-.temperature-notification.error {
-  background-color: rgba(255, 59, 48, 0.08);
+/* System prompt input */
+.system-prompt-input {
+  width: 100%;
+  padding: var(--space-3);
+  margin-top: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  resize: vertical;
+  min-height: 100px;
+  outline: none;
+  transition: all var(--transition-fast) var(--easing-standard);
 }
 
-.temperature-notification.error .notification-icon {
-  background-color: var(--color-danger);
+.system-prompt-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
 }
 
-.temperature-notification.error .notification-text {
-  color: var(--color-danger);
-}
-
-/* Checkmark icon styling */
-.notification-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  color: white;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-/* Notification text styling */
-.notification-text {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.settings-section {
-  margin-bottom: 32px;
-}
-
-.settings-section-header {
-  margin-bottom: 16px;
-}
-
-.settings-section-header h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 4px;
+.dark-theme .system-prompt-input {
+  background-color: rgba(0, 0, 0, 0.2);
   color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-.section-description {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-/* Common card styling for all sections */
-.settings-card {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-.settings-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-/* Specific styling for the temperature setting item */
-.setting-item-refined {
-  padding: 20px;
-}
-
-/* Make future features card match other styles */
-.future-features-section .settings-card {
-  padding: 20px;
-}
-
-.future-features-refined {
+/* Settings actions */
+.settings-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
 
-.feature-badge {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 100px;
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+  .model-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .settings-interface {
+    padding: var(--space-3);
+  }
+  
+  .setting-toggle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  
+  .apple-toggle {
+    margin-top: var(--space-2);
+  }
 }
-
-/* Section transitions */
-.settings-section {
-  transition: opacity 0.3s ease;
-}
-
-.settings-section:hover {
-  opacity: 1;
-}
-
-.settings-section:not(:hover) {
-  opacity: 0.98;
-}
-
-
-/* Theme toggle pill style in settings */
-.theme-toggle-pill {
-    display: flex;
-    background-color: var(--color-sidebar-bg);
-    border-radius: var(--border-radius-pill);
-    overflow: hidden;
-    width: 160px;
-    height: 36px;
-    padding: 2px;
-  }
-  
-  .theme-option {
-    flex: 1;
-    border: none;
-    background: none;
-    padding: 0 12px;
-    font-size: 14px;
-    cursor: pointer;
-    color: var(--color-text-secondary);
-    border-radius: var(--border-radius-pill);
-    transition: all var(--transition-fast);
-  }
-  
-  .theme-option.active {
-    background-color: var(--color-primary);
-    color: white;
-    font-weight: var(--font-weight-medium);
-  }
-  
-  .theme-option:not(.active):hover {
-    background-color: var(--color-hover);
-    color: var(--color-text);
-  }
-  
-  /* Completed feature badge */
-  .feature-badge.completed {
-    background-color: rgba(52, 199, 89, 0.2);
-    color: var(--color-success);
-  }
-  
-  /* Dark mode styling for theme toggle */
-  .dark-theme .theme-toggle-pill {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Dark mode specific adjustments for the theme toggle */
-  .dark-theme .appearance-section .setting-description-refined {
-    opacity: 0.8;
-  }

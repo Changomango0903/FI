@@ -1,0 +1,341 @@
+/*
+ * color.css
+ * Utility classes for colors and backgrounds
+ */
+
+/* Text colors */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-info {
+  color: var(--color-info);
+}
+
+.text-dark {
+  color: var(--color-text);
+}
+
+.text-light {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-tertiary);
+}
+
+.text-white {
+  color: white;
+}
+
+/* Background colors */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+}
+
+.bg-danger {
+  background-color: var(--color-danger);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+}
+
+.bg-info {
+  background-color: var(--color-info);
+}
+
+.bg-light {
+  background-color: var(--color-background);
+}
+
+.bg-dark {
+  background-color: var(--color-sidebar-bg);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.bg-hover {
+  background-color: var(--color-hover);
+}
+
+.bg-selected {
+  background-color: var(--color-selected);
+}
+
+.bg-card {
+  background-color: var(--color-card-bg);
+}
+
+/* Background opacities */
+.bg-opacity-10 {
+  --bg-opacity: 0.1;
+}
+
+.bg-opacity-20 {
+  --bg-opacity: 0.2;
+}
+
+.bg-opacity-30 {
+  --bg-opacity: 0.3;
+}
+
+.bg-opacity-40 {
+  --bg-opacity: 0.4;
+}
+
+.bg-opacity-50 {
+  --bg-opacity: 0.5;
+}
+
+.bg-opacity-60 {
+  --bg-opacity: 0.6;
+}
+
+.bg-opacity-70 {
+  --bg-opacity: 0.7;
+}
+
+.bg-opacity-80 {
+  --bg-opacity: 0.8;
+}
+
+.bg-opacity-90 {
+  --bg-opacity: 0.9;
+}
+
+/* Background with opacity */
+.bg-primary-opacity {
+  background-color: rgba(var(--color-primary-rgb), var(--bg-opacity, 0.1));
+}
+
+.bg-secondary-opacity {
+  background-color: rgba(var(--color-secondary-rgb), var(--bg-opacity, 0.1));
+}
+
+.bg-success-opacity {
+  background-color: rgba(var(--color-success-rgb), var(--bg-opacity, 0.1));
+}
+
+.bg-danger-opacity {
+  background-color: rgba(var(--color-danger-rgb), var(--bg-opacity, 0.1));
+}
+
+.bg-warning-opacity {
+  background-color: rgba(var(--color-warning-rgb), var(--bg-opacity, 0.1));
+}
+
+.bg-info-opacity {
+  background-color: rgba(var(--color-info-rgb), var(--bg-opacity, 0.1));
+}
+
+/* Border colors */
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-secondary {
+  border-color: var(--color-secondary);
+}
+
+.border-success {
+  border-color: var(--color-success);
+}
+
+.border-danger {
+  border-color: var(--color-danger);
+}
+
+.border-warning {
+  border-color: var(--color-warning);
+}
+
+.border-info {
+  border-color: var(--color-info);
+}
+
+.border-light {
+  border-color: var(--color-border);
+}
+
+.border-dark {
+  border-color: var(--color-text);
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-primary {
+  background: linear-gradient(to right, var(--color-primary), color-mix(in srgb, var(--color-primary) 70%, white));
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(to right, var(--color-secondary), color-mix(in srgb, var(--color-secondary) 70%, white));
+}
+
+.bg-gradient-success {
+  background: linear-gradient(to right, var(--color-success), color-mix(in srgb, var(--color-success) 70%, white));
+}
+
+.bg-gradient-danger {
+  background: linear-gradient(to right, var(--color-danger), color-mix(in srgb, var(--color-danger) 70%, white));
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(to right, var(--color-warning), color-mix(in srgb, var(--color-warning) 70%, white));
+}
+
+.bg-gradient-info {
+  background: linear-gradient(to right, var(--color-info), color-mix(in srgb, var(--color-info) 70%, white));
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(to right, var(--color-sidebar-bg), var(--color-background));
+}
+
+/* Status colors */
+.status-online {
+  background-color: var(--color-success);
+}
+
+.status-offline {
+  background-color: var(--color-text-tertiary);
+}
+
+.status-away {
+  background-color: var(--color-warning);
+}
+
+.status-busy {
+  background-color: var(--color-danger);
+}
+
+/* Color theme classes */
+.color-theme-blue {
+  --theme-color: #3498db;
+  --theme-color-light: rgba(52, 152, 219, 0.1);
+}
+
+.color-theme-green {
+  --theme-color: #2ecc71;
+  --theme-color-light: rgba(46, 204, 113, 0.1);
+}
+
+.color-theme-purple {
+  --theme-color: #9b59b6;
+  --theme-color-light: rgba(155, 89, 182, 0.1);
+}
+
+.color-theme-orange {
+  --theme-color: #e67e22;
+  --theme-color-light: rgba(230, 126, 34, 0.1);
+}
+
+.color-theme-red {
+  --theme-color: #e74c3c;
+  --theme-color-light: rgba(231, 76, 60, 0.1);
+}
+
+.color-theme-teal {
+  --theme-color: #1abc9c;
+  --theme-color-light: rgba(26, 188, 156, 0.1);
+}
+
+.color-theme-yellow {
+  --theme-color: #f1c40f;
+  --theme-color-light: rgba(241, 196, 15, 0.1);
+}
+
+.color-theme-pink {
+  --theme-color: #e84393;
+  --theme-color-light: rgba(232, 67, 147, 0.1);
+}
+
+.color-theme-gray {
+  --theme-color: #7f8c8d;
+  --theme-color-light: rgba(127, 140, 141, 0.1);
+}
+
+/* Theme utility classes */
+.bg-theme {
+  background-color: var(--theme-color, var(--color-primary));
+}
+
+.bg-theme-light {
+  background-color: var(--theme-color-light, var(--color-primary-light));
+}
+
+.text-theme {
+  color: var(--theme-color, var(--color-primary));
+}
+
+.border-theme {
+  border-color: var(--theme-color, var(--color-primary));
+}
+
+/* Text highlight colors */
+.highlight-primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.highlight-secondary {
+  background-color: var(--color-secondary-light);
+  color: var(--color-secondary);
+}
+
+.highlight-success {
+  background-color: rgba(var(--color-success-rgb), 0.15);
+  color: var(--color-success);
+}
+
+.highlight-danger {
+  background-color: rgba(var(--color-danger-rgb), 0.15);
+  color: var(--color-danger);
+}
+
+.highlight-warning {
+  background-color: rgba(var(--color-warning-rgb), 0.15);
+  color: var(--color-warning);
+}
+
+.highlight-info {
+  background-color: rgba(var(--color-info-rgb), 0.15);
+  color: var(--color-info);
+} 

@@ -1,0 +1,104 @@
+/* 
+ * dropdown.css
+ * Styles for dropdown menus
+ */
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown trigger button */
+.dropdown__trigger {
+  background: none;
+  border: none;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.dropdown__trigger:hover {
+  background-color: var(--color-hover);
+}
+
+/* Dropdown menu */
+.dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 160px;
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  border: 1px solid var(--color-border);
+}
+
+.dropdown__menu--open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Left-aligned dropdown */
+.dropdown__menu--left {
+  right: auto;
+  left: 0;
+}
+
+/* Dropdown items */
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  user-select: none;
+}
+
+.dropdown__item:hover {
+  background-color: var(--color-hover);
+}
+
+/* Danger actions */
+.dropdown__item--danger {
+  color: var(--color-danger);
+}
+
+.dropdown__item--danger:hover {
+  background-color: rgba(var(--color-danger-rgb), 0.1);
+}
+
+/* Item with icon */
+.dropdown__item-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Dropdown divider */
+.dropdown__divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--spacing-xs) 0;
+}
+
+/* Dropdown header */
+.dropdown__header {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+} 

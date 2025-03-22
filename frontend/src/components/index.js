@@ -1,4 +1,20 @@
-export { default as ProjectList } from './ProjectList';
-export { default as NewProjectModal } from './NewProjectModal';
-export { default as ProjectSelector } from './ProjectSelector';
-export { default as ProjectHeader } from './ProjectHeader';
+// UI Components
+export * from './ui';
+
+// Chat Components
+export * from './chat';
+
+// Layout Components
+export * from './layout';
+
+// Project Components
+export * from './project';
+
+// Model Components
+export * from './model';
+
+// Error Handling
+export * from './error';
+
+// Settings Components
+export * from './settings';

@@ -1,0 +1,386 @@
+/*
+ * misc.css
+ * Miscellaneous utility classes that don't fit in other categories
+ */
+
+/* Cursor utilities */
+.cursor-auto {
+  cursor: auto !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-help {
+  cursor: help !important;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.cursor-text {
+  cursor: text !important;
+}
+
+.cursor-move {
+  cursor: move !important;
+}
+
+.cursor-grab {
+  cursor: grab !important;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+.cursor-wait {
+  cursor: wait !important;
+}
+
+.cursor-progress {
+  cursor: progress !important;
+}
+
+.cursor-crosshair {
+  cursor: crosshair !important;
+}
+
+.cursor-zoom-in {
+  cursor: zoom-in !important;
+}
+
+.cursor-zoom-out {
+  cursor: zoom-out !important;
+}
+
+/* Pointer events */
+.pointer-events-none {
+  pointer-events: none !important;
+}
+
+.pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+/* User select */
+.select-none {
+  user-select: none !important;
+}
+
+.select-text {
+  user-select: text !important;
+}
+
+.select-all {
+  user-select: all !important;
+}
+
+.select-auto {
+  user-select: auto !important;
+}
+
+/* Resize */
+.resize-none {
+  resize: none !important;
+}
+
+.resize-y {
+  resize: vertical !important;
+}
+
+.resize-x {
+  resize: horizontal !important;
+}
+
+.resize {
+  resize: both !important;
+}
+
+/* List style */
+.list-none {
+  list-style-type: none !important;
+}
+
+.list-disc {
+  list-style-type: disc !important;
+}
+
+.list-circle {
+  list-style-type: circle !important;
+}
+
+.list-square {
+  list-style-type: square !important;
+}
+
+.list-decimal {
+  list-style-type: decimal !important;
+}
+
+.list-inside {
+  list-style-position: inside !important;
+}
+
+.list-outside {
+  list-style-position: outside !important;
+}
+
+/* Break */
+.break-normal {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.break-words {
+  overflow-wrap: break-word !important;
+}
+
+.break-all {
+  word-break: break-all !important;
+}
+
+.break-keep {
+  word-break: keep-all !important;
+}
+
+/* White space */
+.whitespace-normal {
+  white-space: normal !important;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap !important;
+}
+
+.whitespace-pre {
+  white-space: pre !important;
+}
+
+.whitespace-pre-line {
+  white-space: pre-line !important;
+}
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+/* Content */
+.content-none {
+  content: none !important;
+}
+
+/* Appearance */
+.appearance-none {
+  appearance: none !important;
+}
+
+/* Screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}
+
+.not-sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* Focus outline */
+.focus\:outline-none:focus {
+  outline: none !important;
+}
+
+.focus\:outline-auto:focus {
+  outline: auto !important;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Multi-line truncation */
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3,
+.line-clamp-4,
+.line-clamp-5 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+.line-clamp-1 {
+  -webkit-line-clamp: 1 !important;
+}
+
+.line-clamp-2 {
+  -webkit-line-clamp: 2 !important;
+}
+
+.line-clamp-3 {
+  -webkit-line-clamp: 3 !important;
+}
+
+.line-clamp-4 {
+  -webkit-line-clamp: 4 !important;
+}
+
+.line-clamp-5 {
+  -webkit-line-clamp: 5 !important;
+}
+
+/* Object fit */
+.object-contain {
+  object-fit: contain !important;
+}
+
+.object-cover {
+  object-fit: cover !important;
+}
+
+.object-fill {
+  object-fit: fill !important;
+}
+
+.object-none {
+  object-fit: none !important;
+}
+
+.object-scale-down {
+  object-fit: scale-down !important;
+}
+
+/* Object position */
+.object-center {
+  object-position: center !important;
+}
+
+.object-top {
+  object-position: top !important;
+}
+
+.object-right {
+  object-position: right !important;
+}
+
+.object-bottom {
+  object-position: bottom !important;
+}
+
+.object-left {
+  object-position: left !important;
+}
+
+/* Isolation */
+.isolate {
+  isolation: isolate !important;
+}
+
+.isolation-auto {
+  isolation: auto !important;
+}
+
+/* Font smoothing */
+.antialiased {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: auto !important;
+  -moz-osx-font-smoothing: auto !important;
+}
+
+/* Transform origin */
+.origin-center {
+  transform-origin: center !important;
+}
+
+.origin-top {
+  transform-origin: top !important;
+}
+
+.origin-top-right {
+  transform-origin: top right !important;
+}
+
+.origin-right {
+  transform-origin: right !important;
+}
+
+.origin-bottom-right {
+  transform-origin: bottom right !important;
+}
+
+.origin-bottom {
+  transform-origin: bottom !important;
+}
+
+.origin-bottom-left {
+  transform-origin: bottom left !important;
+}
+
+.origin-left {
+  transform-origin: left !important;
+}
+
+.origin-top-left {
+  transform-origin: top left !important;
+}
+
+/* Will-change */
+.will-change-auto {
+  will-change: auto !important;
+}
+
+.will-change-scroll {
+  will-change: scroll-position !important;
+}
+
+.will-change-contents {
+  will-change: contents !important;
+}
+
+.will-change-transform {
+  will-change: transform !important;
+}
+
+.will-change-opacity {
+  will-change: opacity !important;
+}
+
+/* Visually hidden but accessible */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+} 

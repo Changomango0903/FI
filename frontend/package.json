@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "highlight.js": "^11.11.1",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.6.1",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
     "uuid": "^9.0.1"

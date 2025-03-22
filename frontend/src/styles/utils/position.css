@@ -1,0 +1,394 @@
+/*
+ * position.css
+ * Utility classes for positioning elements
+ */
+
+/* Position types */
+.position-static {
+  position: static !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-fixed {
+  position: fixed !important;
+}
+
+.position-sticky {
+  position: sticky !important;
+}
+
+/* Common positioning patterns */
+.absolute-center {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.absolute-center-x {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.absolute-center-y {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Edge positioning */
+.top-0 {
+  top: 0 !important;
+}
+
+.right-0 {
+  right: 0 !important;
+}
+
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+.left-0 {
+  left: 0 !important;
+}
+
+.top-auto {
+  top: auto !important;
+}
+
+.right-auto {
+  right: auto !important;
+}
+
+.bottom-auto {
+  bottom: auto !important;
+}
+
+.left-auto {
+  left: auto !important;
+}
+
+/* Position with spacing */
+.top-xs {
+  top: var(--spacing-xs) !important;
+}
+
+.top-sm {
+  top: var(--spacing-sm) !important;
+}
+
+.top-md {
+  top: var(--spacing-md) !important;
+}
+
+.top-lg {
+  top: var(--spacing-lg) !important;
+}
+
+.top-xl {
+  top: var(--spacing-xl) !important;
+}
+
+.right-xs {
+  right: var(--spacing-xs) !important;
+}
+
+.right-sm {
+  right: var(--spacing-sm) !important;
+}
+
+.right-md {
+  right: var(--spacing-md) !important;
+}
+
+.right-lg {
+  right: var(--spacing-lg) !important;
+}
+
+.right-xl {
+  right: var(--spacing-xl) !important;
+}
+
+.bottom-xs {
+  bottom: var(--spacing-xs) !important;
+}
+
+.bottom-sm {
+  bottom: var(--spacing-sm) !important;
+}
+
+.bottom-md {
+  bottom: var(--spacing-md) !important;
+}
+
+.bottom-lg {
+  bottom: var(--spacing-lg) !important;
+}
+
+.bottom-xl {
+  bottom: var(--spacing-xl) !important;
+}
+
+.left-xs {
+  left: var(--spacing-xs) !important;
+}
+
+.left-sm {
+  left: var(--spacing-sm) !important;
+}
+
+.left-md {
+  left: var(--spacing-md) !important;
+}
+
+.left-lg {
+  left: var(--spacing-lg) !important;
+}
+
+.left-xl {
+  left: var(--spacing-xl) !important;
+}
+
+/* Negative positioning */
+.top-n-xs {
+  top: calc(var(--spacing-xs) * -1) !important;
+}
+
+.top-n-sm {
+  top: calc(var(--spacing-sm) * -1) !important;
+}
+
+.top-n-md {
+  top: calc(var(--spacing-md) * -1) !important;
+}
+
+.top-n-lg {
+  top: calc(var(--spacing-lg) * -1) !important;
+}
+
+.top-n-xl {
+  top: calc(var(--spacing-xl) * -1) !important;
+}
+
+.right-n-xs {
+  right: calc(var(--spacing-xs) * -1) !important;
+}
+
+.right-n-sm {
+  right: calc(var(--spacing-sm) * -1) !important;
+}
+
+.right-n-md {
+  right: calc(var(--spacing-md) * -1) !important;
+}
+
+.right-n-lg {
+  right: calc(var(--spacing-lg) * -1) !important;
+}
+
+.right-n-xl {
+  right: calc(var(--spacing-xl) * -1) !important;
+}
+
+.bottom-n-xs {
+  bottom: calc(var(--spacing-xs) * -1) !important;
+}
+
+.bottom-n-sm {
+  bottom: calc(var(--spacing-sm) * -1) !important;
+}
+
+.bottom-n-md {
+  bottom: calc(var(--spacing-md) * -1) !important;
+}
+
+.bottom-n-lg {
+  bottom: calc(var(--spacing-lg) * -1) !important;
+}
+
+.bottom-n-xl {
+  bottom: calc(var(--spacing-xl) * -1) !important;
+}
+
+.left-n-xs {
+  left: calc(var(--spacing-xs) * -1) !important;
+}
+
+.left-n-sm {
+  left: calc(var(--spacing-sm) * -1) !important;
+}
+
+.left-n-md {
+  left: calc(var(--spacing-md) * -1) !important;
+}
+
+.left-n-lg {
+  left: calc(var(--spacing-lg) * -1) !important;
+}
+
+.left-n-xl {
+  left: calc(var(--spacing-xl) * -1) !important;
+}
+
+/* Percentage positioning */
+.top-25 {
+  top: 25% !important;
+}
+
+.top-50 {
+  top: 50% !important;
+}
+
+.top-75 {
+  top: 75% !important;
+}
+
+.top-100 {
+  top: 100% !important;
+}
+
+.right-25 {
+  right: 25% !important;
+}
+
+.right-50 {
+  right: 50% !important;
+}
+
+.right-75 {
+  right: 75% !important;
+}
+
+.right-100 {
+  right: 100% !important;
+}
+
+.bottom-25 {
+  bottom: 25% !important;
+}
+
+.bottom-50 {
+  bottom: 50% !important;
+}
+
+.bottom-75 {
+  bottom: 75% !important;
+}
+
+.bottom-100 {
+  bottom: 100% !important;
+}
+
+.left-25 {
+  left: 25% !important;
+}
+
+.left-50 {
+  left: 50% !important;
+}
+
+.left-75 {
+  left: 75% !important;
+}
+
+.left-100 {
+  left: 100% !important;
+}
+
+/* Transforms */
+.translate-middle {
+  transform: translate(-50%, -50%) !important;
+}
+
+.translate-middle-x {
+  transform: translateX(-50%) !important;
+}
+
+.translate-middle-y {
+  transform: translateY(-50%) !important;
+}
+
+/* Floats */
+.float-left {
+  float: left !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.float-none {
+  float: none !important;
+}
+
+/* Clear */
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.clear-left {
+  clear: left !important;
+}
+
+.clear-right {
+  clear: right !important;
+}
+
+.clear-both {
+  clear: both !important;
+}
+
+/* Sticky positioning with top offset */
+.sticky-top {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+}
+
+.sticky-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+}
+
+.sticky-sidebar {
+  position: sticky !important;
+  top: var(--spacing-md) !important;
+  height: max-content !important;
+}
+
+/* Full viewport positioning */
+.fixed-top {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  z-index: 1030 !important;
+}
+
+.fixed-bottom {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: 1030 !important;
+}
+
+.cover {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+} 

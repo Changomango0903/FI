@@ -1,0 +1,195 @@
+/*
+ * shadow.css
+ * Utility classes for box-shadow effects
+ */
+
+/* Basic shadow utilities */
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.shadow-xs {
+  box-shadow: var(--shadow-xs) !important;
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl) !important;
+}
+
+/* Directional shadows */
+.shadow-top {
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-right {
+  box-shadow: 4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-bottom {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-left {
+  box-shadow: -4px 0 6px -1px rgba(0, 0, 0, 0.1), -2px 0 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Special shadow effects */
+.shadow-inner {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-outline {
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.5) !important;
+}
+
+.shadow-focus {
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.4) !important;
+}
+
+.shadow-solid {
+  box-shadow: 0 0 0 2px var(--color-border) !important;
+}
+
+/* Colored shadows */
+.shadow-primary {
+  box-shadow: 0 4px 14px 0 rgba(var(--color-primary-rgb), 0.25) !important;
+}
+
+.shadow-success {
+  box-shadow: 0 4px 14px 0 rgba(var(--color-success-rgb), 0.25) !important;
+}
+
+.shadow-warning {
+  box-shadow: 0 4px 14px 0 rgba(var(--color-warning-rgb), 0.25) !important;
+}
+
+.shadow-danger {
+  box-shadow: 0 4px 14px 0 rgba(var(--color-danger-rgb), 0.25) !important;
+}
+
+.shadow-info {
+  box-shadow: 0 4px 14px 0 rgba(var(--color-info-rgb), 0.25) !important;
+}
+
+/* Interactive shadows */
+.shadow-hover {
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast) !important;
+}
+
+.shadow-hover:hover {
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+.shadow-active {
+  transition: box-shadow var(--transition-fast) !important;
+}
+
+.shadow-active:active {
+  box-shadow: var(--shadow-xs) !important;
+}
+
+/* Card shadows */
+.shadow-card {
+  box-shadow: var(--shadow-sm) !important;
+  transition: box-shadow var(--transition-fast) !important;
+}
+
+.shadow-card:hover {
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Button shadows */
+.shadow-button {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.shadow-button:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+}
+
+.shadow-button:active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Floating shadows */
+.shadow-float {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.05) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.shadow-float:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* Modal/Dialog shadows */
+.shadow-modal {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dropdown shadows */
+.shadow-dropdown {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Tooltip shadows */
+.shadow-tooltip {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Neuomorphic effect */
+.shadow-neu {
+  box-shadow: 8px 8px 16px #e0e0e0, -8px -8px 16px #ffffff !important;
+  border-radius: var(--border-radius-lg) !important;
+  background: var(--color-background) !important;
+}
+
+.shadow-neu-inset {
+  box-shadow: inset 8px 8px 16px #e0e0e0, inset -8px -8px 16px #ffffff !important;
+  border-radius: var(--border-radius-lg) !important;
+  background: var(--color-background) !important;
+}
+
+/* Layer shadow (stacked UI elements) */
+.shadow-layer-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+}
+
+.shadow-layer-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+}
+
+.shadow-layer-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;
+}
+
+.shadow-layer-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+}
+
+.shadow-layer-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* Text shadow */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.text-shadow-none {
+  text-shadow: none !important;
+} 

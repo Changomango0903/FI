@@ -1,61 +1,133 @@
-/* Base styles for theme toggle elements */
-.theme-toggle-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-sidebar-bg);
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-  
-  .theme-toggle-button:hover {
-    background-color: var(--color-hover);
-    transform: scale(1.05);
-  }
-  
-  .theme-toggle-button:active {
-    transform: scale(0.95);
-  }
-  
-  /* Position for the theme toggle in different containers */
-  .sidebar-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .sidebar-controls .settings-button {
-    flex: 1;
-  }
-  
-  .theme-indicator {
-    font-size: var(--font-size-xs);
-    text-align: center;
-    color: var(--color-text-secondary);
-    margin-top: 8px;
-  }
-  
-  /* Dark mode specific styles for the theme toggle */
-  .dark-theme .theme-toggle-button {
-    background-color: var(--color-sidebar-bg);
-    border-color: #3a3a3c;
-    color: var(--color-text);
-  }
-  
-  .dark-theme .theme-toggle-button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-  
-  /* Animation for the theme toggle icon */
-  .theme-toggle-button svg {
-    transition: transform var(--transition-medium);
-  }
-  
-  .theme-toggle-button:hover svg {
-    transform: rotate(15deg);
-  }
+/* 
+ * Apple-inspired theme toggle component styles
+ */
+
+.theme-toggle {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  border-radius: 20px;
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.3s var(--easing-standard);
+  outline: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s var(--easing-decelerate);
+  z-index: 2;
+}
+
+/* Dark mode toggle */
+.theme-toggle--dark {
+  background-color: #2c2c2e;
+  border-color: #3a3a3c;
+}
+
+.theme-toggle--dark::after {
+  transform: translateX(22px);
+  background-color: #505050;
+}
+
+/* Light mode toggle */
+.theme-toggle--light {
+  background-color: #e9e9ea;
+}
+
+.theme-toggle--light::after {
+  transform: translateX(0);
+  background-color: white;
+}
+
+/* Icon container */
+.theme-toggle__icon-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Icons */
+.theme-toggle__icon {
+  font-size: 14px;
+  transition: all 0.3s var(--easing-standard);
+}
+
+.theme-toggle__icon--sun {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.theme-toggle--dark .theme-toggle__icon--sun {
+  opacity: 0.5;
+  transform: rotate(90deg);
+}
+
+.theme-toggle__icon--moon {
+  opacity: 0.5;
+  transform: rotate(-90deg);
+}
+
+.theme-toggle--dark .theme-toggle__icon--moon {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+/* Focus styles */
+.theme-toggle:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+/* Hover effect */
+.theme-toggle:hover::after {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:active::after {
+  transform: scale(0.9) translateX(22px);
+}
+
+.theme-toggle--light:active::after {
+  transform: scale(0.9) translateX(0);
+}
+
+/* Position for the theme toggle in different containers */
+.sidebar-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar-controls .settings-button {
+  flex: 1;
+}
+
+.theme-indicator {
+  font-size: var(--font-size-xs);
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-top: 8px;
+}

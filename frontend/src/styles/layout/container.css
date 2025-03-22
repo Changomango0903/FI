@@ -1,0 +1,99 @@
+/* 
+ * container.css
+ * Container layout styles for the application
+ */
+
+/* Base container */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+/* Container sizes */
+.container-sm {
+  max-width: 540px;
+}
+
+.container-md {
+  max-width: 720px;
+}
+
+.container-lg {
+  max-width: 960px;
+}
+
+.container-xl {
+  max-width: 1140px;
+}
+
+.container-fluid {
+  max-width: none;
+}
+
+/* Container with padding variations */
+.container-padded {
+  padding: var(--spacing-md);
+}
+
+.container-padded-lg {
+  padding: var(--spacing-lg);
+}
+
+/* Responsive containers */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* Content container */
+.content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Layouts */
+.container-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container with box shadow */
+.container-shadow {
+  box-shadow: var(--shadow-md);
+}
+
+/* Container with border */
+.container-bordered {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+} 
